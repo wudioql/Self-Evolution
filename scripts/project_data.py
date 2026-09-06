@@ -529,7 +529,9 @@ def sync_views(root=ROOT, check=False):
     stale = []
     for path, text in outputs.items():
         if not path.exists() or path.read_text(encoding='utf-8') != text:
-            stale.append(str(path.relative_to(root)))
+            # 统一输出正斜杠相对路径：str(relative_to) 在 Windows 产出反斜杠，
+            # 该结果会进入 check-docs.py 详情与 sync-plan.py 输出（与文档键约定一致）
+            stale.append(path.relative_to(root).as_posix())
             if not check:
                 atomic_write(path, text)
     return stale

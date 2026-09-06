@@ -79,7 +79,7 @@ class ProjectTests(unittest.TestCase):
         self.assertEqual(p['stats']['doneTasks'], 1)
         self.assertEqual(task_index(p)['1-0']['completedOn'], '2026-09-06')
         self.assertEqual(p['checkins'], [])
-        self.assertIn('- [x] **`1-0`**', (self.root / 'progress/进度总览.md').read_text())
+        self.assertIn('- [x] **`1-0`**', (self.root / 'progress/进度总览.md').read_text(encoding='utf-8'))
         self.assertEqual(sync_views(self.root, check=True), [])
         # A fresh process sees file state, not Python / chat memory.
         r = self.cli('today', '--date', '2026-09-06', '--json')
@@ -163,7 +163,7 @@ class ProjectTests(unittest.TestCase):
         p['meta']['futureField'] = {'a': 42}
         p['_orphans'] = [{'id': 'old-task', 'note': '保留'}]
         task_index(p)['1-2']['futureTaskField'] = '保留'
-        (self.root / PLAN_PATH).write_text(dump(p))
+        (self.root / PLAN_PATH).write_text(dump(p), encoding='utf-8')
         sync_views(self.root)
         before = self.files()
         self.assertEqual(sync_views(self.root, check=True), [])
@@ -182,7 +182,7 @@ class ProjectTests(unittest.TestCase):
         self.cli('fault', 'update', 'FM-0001', '--data', '{"rootCause":"仍待确认","downtimeMin":0,"isSolved":false}')
         self.assertEqual(self.f()['items'][0]['unknownExtension'], {'value': '保留'})
         self.assertEqual(self.p()['stats']['doneTasks'], 0)
-        self.assertIn('测试现象', (self.root / 'data/故障模式库.local.md').read_text())
+        self.assertIn('测试现象', (self.root / 'data/故障模式库.local.md').read_text(encoding='utf-8'))
         self.assertEqual(sync_views(self.root, check=True), [])
 
     def test_fault_delete_requires_explicit_flag_and_works(self):
@@ -248,13 +248,13 @@ class ProjectTests(unittest.TestCase):
         secret = 'SYNTHETIC_PRIVATE_TOKEN'
         self.cli('fault', 'add', '--data', json.dumps({'symptom': secret}))
         for name in ('tools/故障模式库.html', 'tools/90天进度表.html', 'progress/进度总览.md', PLAN_PATH):
-            self.assertNotIn(secret, (self.root / name).read_text())
-        self.assertIn(secret, (self.root / 'tools/故障模式库.local.html').read_text())
+            self.assertNotIn(secret, (self.root / name).read_text(encoding='utf-8'))
+        self.assertIn(secret, (self.root / 'tools/故障模式库.local.html').read_text(encoding='utf-8'))
 
     def test_embedded_user_text_cannot_close_script_tag(self):
         payload = {'symptom': '</script><script>alert("NO")</script>'}
         self.cli('fault', 'add', '--data', json.dumps(payload))
-        html = (self.root / 'tools/故障模式库.local.html').read_text()
+        html = (self.root / 'tools/故障模式库.local.html').read_text(encoding='utf-8')
         self.assertNotIn(payload['symptom'], html)
         self.assertIn('\\u003c/script\\u003e', html)
         import re
@@ -264,31 +264,31 @@ class ProjectTests(unittest.TestCase):
     def test_atomic_write_rejects_stale_read_and_preserves_newer_value(self):
         path = self.root / 'test.json'
         atomic_write(path, 'first')
-        raw = path.read_text()
+        raw = path.read_text(encoding='utf-8')
         atomic_write(path, 'newer')
         with self.assertRaises(ValueError):
             atomic_write(path, 'stale overwrite', expected=raw, backup=True)
-        self.assertEqual(path.read_text(), 'newer')
+        self.assertEqual(path.read_text(encoding='utf-8'), 'newer')
         self.assertFalse(path.with_name('test.json.lock').exists())
 
     def test_lock_conflict_does_not_delete_other_writers_lock(self):
         path = self.root / 'test.json'
         lock = self.root / 'test.json.lock'
-        lock.write_text('other writer')
+        lock.write_text('other writer', encoding='utf-8')
         with self.assertRaises(ValueError):
             atomic_write(path, 'bad')
         self.assertTrue(lock.exists())
         self.assertFalse(path.exists())
 
     def test_known_private_value_is_rejected_from_public_progress(self):
-        (self.root / '01-个人档案.local.md').write_text('| 公开 | 真值（本地） |\n|---|---|\n| 代称 | SYNTHETIC_SECRET |\n')
+        (self.root / '01-个人档案.local.md').write_text('| 公开 | 真值（本地） |\n|---|---|\n| 代称 | SYNTHETIC_SECRET |\n', encoding='utf-8')
         before = self.files()
         self.cli('note', '1-2', '--text', 'SYNTHETIC_SECRET', ok=False)
         self.assertEqual(before, self.files())
 
     def test_broken_json_is_not_silently_reset(self):
         path = self.root / FAULT_PATH
-        path.write_text('{ broken file')
+        path.write_text('{ broken file', encoding='utf-8')
         before = self.files()
         self.cli('fault', 'add', '--data', '{"symptom":"not written"}', ok=False)
         self.assertEqual(before, self.files())
@@ -311,13 +311,13 @@ class ProjectTests(unittest.TestCase):
     def test_b1_missing_duplicate_reversed_markers_reject_without_writes(self):
         from project_data import replace_block
         target = self.root / '03-90天计划.md'
-        original = target.read_text()
+        original = target.read_text(encoding='utf-8')
         begin, end = '<!-- PLAN-SCHEDULE:BEGIN -->', '<!-- PLAN-SCHEDULE:END -->'
         corruptions = [original.replace(begin, ''), original.replace(end, ''),
                        original.replace(begin, begin + begin), original.replace(end, end + end),
                        original.replace(begin, 'SWAP').replace(end, begin).replace('SWAP', end)]
         for corrupted in corruptions:
-            target.write_text(corrupted)
+            target.write_text(corrupted, encoding='utf-8')
             before = self.files()
             for check in (True, False):
                 with self.subTest(check=check, markers=corruptions.index(corrupted)):
@@ -336,7 +336,7 @@ class ProjectTests(unittest.TestCase):
 
     def test_b1_cli_reports_saved_json_separately_from_failed_views(self):
         target = self.root / '03-90天计划.md'
-        target.write_text(target.read_text().replace('<!-- PLAN-SCHEDULE:END -->', ''))
+        target.write_text(target.read_text(encoding='utf-8').replace('<!-- PLAN-SCHEDULE:END -->', ''))
         r = self.cli('done', '1-0', '--on', '2026-09-06', ok=False)
         self.assertIn('JSON 已保存', r.stderr)
         self.assertTrue(task_index(self.p())['1-0']['done'])
@@ -353,7 +353,7 @@ class ProjectTests(unittest.TestCase):
         cases.append(v2)
         for payload in cases:
             file = self.root / 'incoming.local.json'
-            file.write_text(dump(payload))
+            file.write_text(dump(payload), encoding='utf-8')
             before = self.files()
             self.cli('import-plan', '--file', str(file), ok=False)
             self.assertEqual(before, self.files())
@@ -393,7 +393,7 @@ class ProjectTests(unittest.TestCase):
             atomic_write(path, 'second writer', expected=None, backup=True)
         self.assertEqual(self.files(), before)
         atomic_write(path, 'intentional generated replacement')
-        self.assertEqual(path.read_text(), 'intentional generated replacement')
+        self.assertEqual(path.read_text(encoding='utf-8'), 'intentional generated replacement')
 
     def test_b3_two_initializers_cannot_overwrite_new_fault_library(self):
         import contextlib
@@ -430,7 +430,7 @@ class ProjectTests(unittest.TestCase):
             a = pool.submit(write, 'A')
             b = pool.submit(write, 'B')
             self.assertEqual(sum([a.result(), b.result()]), 1)
-        self.assertIn(path.read_text(), ('A', 'B'))
+        self.assertIn(path.read_text(encoding='utf-8'), ('A', 'B'))
         self.assertFalse(path.with_name(path.name + '.lock').exists())
 
     def test_b5_notes_only_and_week_notes_are_additive_and_repeatable(self):

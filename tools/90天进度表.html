@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-06T21:30:44+08:00",
+    "updated": "2026-09-07T00:38:31+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 2,
+    "revision": 3,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -246,26 +246,26 @@
           "id": "1-0",
           "track": "sound",
           "text": "Tiny+ 拆箱上电，Studio One 里弹响一个音",
-          "done": false,
+          "done": true,
           "note": "",
           "scheduledDate": "2026-09-06",
           "dueDate": "2026-09-07",
           "output": "Studio One 接到 MIDI 输入并确实发声；本人确认即可",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-07",
           "evidence": []
         },
         {
           "id": "1-1",
           "track": "sound",
           "text": "确认现有 music-log/ 三首歌目录，补 README 三行（目标曲 / 交付 / 不做清单）",
-          "done": false,
+          "done": true,
           "note": "",
           "scheduledDate": "2026-09-07",
           "dueDate": "2026-09-07",
           "output": "music-log/README.md 三行说明；目录复用，不必另开仓库",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-07",
           "evidence": []
         },
         {
@@ -305,13 +305,13 @@
           "id": "1-4",
           "track": "jp",
           "text": "Kaishi 每日新卡降到 10 张",
-          "done": false,
+          "done": true,
           "note": "",
           "scheduledDate": "2026-09-06",
           "dueDate": "2026-09-07",
           "output": "本人确认 Kaishi 每日新卡上限为 10",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-07",
           "evidence": []
         },
         {
@@ -1776,8 +1776,8 @@
   "checkins": [],
   "stats": {
     "totalTasks": 92,
-    "doneTasks": 0,
-    "pct": 0,
+    "doneTasks": 3,
+    "pct": 3,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -3054,6 +3054,66 @@
         "8-5"
       ],
       "summary": "只校正参考标题、和声表述与发音项编号；不改排期、验收、ID 或学习状态"
+    },
+    {
+      "at": "2026-09-07T00:31:46+08:00",
+      "action": "done",
+      "ids": [
+        "1-0",
+        "1-4"
+      ],
+      "on": "2026-09-07",
+      "before": [
+        {
+          "id": "1-0",
+          "track": "sound",
+          "text": "Tiny+ 拆箱上电，Studio One 里弹响一个音",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-06",
+          "dueDate": "2026-09-07",
+          "output": "Studio One 接到 MIDI 输入并确实发声；本人确认即可",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-4",
+          "track": "jp",
+          "text": "Kaishi 每日新卡降到 10 张",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-06",
+          "dueDate": "2026-09-07",
+          "output": "本人确认 Kaishi 每日新卡上限为 10",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-07T00:38:31+08:00",
+      "action": "done",
+      "ids": [
+        "1-1"
+      ],
+      "on": "2026-09-07",
+      "before": [
+        {
+          "id": "1-1",
+          "track": "sound",
+          "text": "确认现有 music-log/ 三首歌目录，补 README 三行（目标曲 / 交付 / 不做清单）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-07",
+          "dueDate": "2026-09-07",
+          "output": "music-log/README.md 三行说明；目录复用，不必另开仓库",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
     }
   ]
 }

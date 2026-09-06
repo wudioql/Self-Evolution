@@ -38,6 +38,11 @@ def chk(cid, item, ok, detail=''):
     results.append((cid, item, bool(ok), detail))
 
 
+def as_posix(p):
+    # glob 在 Windows 返回反斜杠路径；文档 / HTML 字典键统一正斜杠（AUDIT.md / CHANGELOG.md 2026-09-07）
+    return p.replace('\\', '/')
+
+
 # Prune only known private/dependency/cache directories, not all dot-directories.
 SKIP_DIRS = {'.git', '.backups', '__pycache__', 'node_modules', '.venv', 'venv', '.cache',
              '.pytest_cache', '.mypy_cache', '.ruff_cache', '.npm', '.next', 'coverage'}
@@ -128,7 +133,10 @@ public, read_errors = project_texts()
 all_docs = {f: s for f, s in public.items() if Path(f).suffix.lower() == '.md'}
 docs = {f: s for f, s in all_docs.items() if not upstream_reference(f)}
 # Private generated views also need syntax/structural checks, but never a public scan.
-htmls = {f: Path(f).read_text(encoding='utf-8') for f in sorted(glob.glob('tools/*.html'))}
+# glob 在 Windows 返回反斜杠路径：键先归一化为正斜杠，再经 ROOT 重定位读取
+# （直接 Path(f) 读反斜杠相对路径在非 Windows 上不存在，且字典键与文档约定不一致）
+htmls = {p: (Path(ROOT) / p).read_text(encoding='utf-8')
+         for p in map(as_posix, sorted(glob.glob('tools/*.html')))}
 base = os.path.basename
 chk('扫描', '公开文本可读取（含隐藏目录；排除私有 / 缓存）', not read_errors, '; '.join(read_errors[:5]))
 
@@ -200,6 +208,7 @@ chk('§6.1', '执行层无「怎么做」残留（指针行不算）', not leak,
 # ── §6 手册模板：定位说明 + 与执行层的对接（三列固定）────
 bad_tpl = []
 for f in sorted(glob.glob('manuals/*.md')):
+    f = as_posix(f)
     s = docs[f]
     if not ('定位说明' in s[:1500] or '不通读' in s[:1500]):
         bad_tpl.append(f'{base(f)} 缺定位说明')

@@ -19,18 +19,18 @@ class DocumentationChecks(unittest.TestCase):
         self.root = Path(self.tmp.name) / 'project'
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns(
             '.git', '__pycache__', '.backups', '*.local.*', 'node_modules', '.venv', '.cache'))
-        p = json.loads((self.root / PLAN_PATH).read_text())
+        p = json.loads((self.root / PLAN_PATH).read_text(encoding='utf-8'))
         for t in tasks(p) + p['deliverables']:
             t.update(done=False, completedOn=None, note='', evidence=[])
         for w in p['weeks']:
             w['note'] = ''
         p.update(checkins=[], dailyLogs={}, overrides=[], history=[], _orphans=[])
         p['stats'] = calc_stats(p)
-        (self.root / PLAN_PATH).write_text(dump(p))
+        (self.root / PLAN_PATH).write_text(dump(p), encoding='utf-8')
         sync_views(self.root)
         self.secret = 'SYNTHETIC_' + uuid.uuid4().hex
         (self.root / '01-个人档案.local.md').write_text(
-            '| 公开 | 真值（本地） |\n|---|---|\n| 代称 | ' + self.secret + ' |\n')
+            '| 公开 | 真值（本地） |\n|---|---|\n| 代称 | ' + self.secret + ' |\n', encoding='utf-8')
 
     def put(self, relative, text):
         f = self.root / relative
@@ -99,6 +99,27 @@ class DocumentationChecks(unittest.TestCase):
         self.assertIn('隐私', self.check(expected=1).stdout)
         self.put('.agents/skills/neat-freak/references/probe.md', '[x](missing.md)\n')
         self.assertIn('链接', self.check(expected=1).stdout)
+
+
+    def test_b7_windows_backslash_glob_results_still_check_manuals_and_shell(self):
+        # Windows 的 glob 返回反斜杠路径；注入同型结果，防止 docs/htmls 键分隔符回归
+        # （修复前：docs[f] KeyError 必崩，且 'tools/故障模式库.html' 壳检查漏报）
+        code = (
+            "import glob, sys; _orig = glob.glob\n"
+            "glob.glob = lambda p: [x.replace('/', chr(92)) for x in _orig(p)]\n"
+            "sys.path.insert(0, 'scripts')\n"
+            "g = {'__name__': 'check_docs_probe', '__file__': 'scripts/check-docs.py'}\n"
+            "exec(compile(open('scripts/check-docs.py', encoding='utf-8').read(),\n"
+            "             'scripts/check-docs.py', 'exec'), g)\n"
+        )
+        env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONIOENCODING='utf-8')
+        before = self.files()
+        r = subprocess.run([sys.executable, '-c', code], cwd=self.root, env=env,
+                           capture_output=True, text=True, encoding='utf-8')
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertNotIn(self.secret, r.stdout + r.stderr)
+        self.assertIn('通过', r.stdout)
+        self.assertEqual(before, self.files())
 
 
 if __name__ == '__main__':
