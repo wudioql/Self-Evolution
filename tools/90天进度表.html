@@ -1,0 +1,3452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>90 天进度表 · 2026-09-07 → 2026-12-13</title>
+<style>
+  :root{
+    --bg:#12161c; --bg2:#181d25; --bg3:#1f252f; --bd:#2b3341; --bd2:#3a4454;
+    --fg:#e6ebf2; --fg2:#a3aec0; --fg3:#6b7686;
+    --ac:#4da3ff; --ac2:#3d8ce0;
+    --ok:#3ecf8e; --warn:#f0b23c; --err:#f2685f; --purple:#a97bf0; --pink:#f06fb0; --teal:#3ecfcf;
+    --radius:10px;
+  }
+  html[data-theme="light"]{
+    --bg:#f5f7fa; --bg2:#ffffff; --bg3:#eef2f7; --bd:#dde3ec; --bd2:#c6cfdb;
+    --fg:#1a2029; --fg2:#5a6675; --fg3:#8b96a5;
+    --ac:#1f7ae0; --ac2:#1867c0;
+    --ok:#129b62; --warn:#b57a10; --err:#d1483e; --purple:#7d4fd1; --pink:#c94b8c; --teal:#1a9c9c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:6px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+
+  header{position:sticky;top:0;z-index:60;background:var(--bg2);border-bottom:1px solid var(--bd);padding:11px 18px;margin-bottom:18px}
+  .hdr-in{max-width:1080px;margin:0 auto}
+  .hdr-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{font-size:16px;font-weight:700;letter-spacing:.3px}
+  .logo span{color:var(--ac)}
+  .spacer{flex:1}
+  .hdr-btns{display:flex;gap:6px;flex-wrap:wrap}
+
+  button,.btn{padding:7px 13px;background:var(--bg3);border:1px solid var(--bd);border-radius:7px;
+    color:var(--fg);font-size:13px;cursor:pointer;font-family:inherit;transition:.12s;white-space:nowrap}
+  button:hover,.btn:hover{background:var(--bd);border-color:var(--bd2)}
+  .btn-pri{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+  .btn-pri:hover{background:var(--ac2);border-color:var(--ac2)}
+  .btn-sm{padding:4px 9px;font-size:12px;border-radius:6px}
+  .btn-ghost{background:transparent}
+  .btn-danger{color:var(--err)}
+  .srcbar{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .src-badge{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--bd);color:var(--fg3);background:var(--bg3)}
+  .src-badge.ok{color:#3fb950;border-color:#3fb950}
+  .src-badge.warn{color:#d29922;border-color:#d29922}
+
+  /* overall progress */
+  .bigbar{background:var(--bg3);border-radius:6px;height:12px;overflow:hidden;margin-top:10px;position:relative}
+  .bigbar .fi{height:100%;background:linear-gradient(90deg,var(--ac),var(--ok));transition:width .4s;border-radius:6px}
+  .biglbl{display:flex;justify-content:space-between;font-size:12px;color:var(--fg2);margin-top:6px}
+
+  /* deliverables */
+  .deliv{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px}
+  .deliv h3{font-size:12px;color:var(--fg3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:11px}
+  .dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px}
+  .dbox{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;background:var(--bg3);
+    border:1px solid var(--bd);border-radius:8px;cursor:pointer;transition:.12s}
+  .dbox:hover{border-color:var(--bd2)}
+  .dbox.on{border-color:var(--ok);background:rgba(62,207,142,.08)}
+  .dbox .bx{width:17px;height:17px;border:2px solid var(--bd2);border-radius:4px;flex-shrink:0;margin-top:2px;
+    display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;transition:.12s}
+  .dbox.on .bx{background:var(--ok);border-color:var(--ok);color:#0b1a13}
+  .dbox .tx{font-size:13px;line-height:1.45}
+  .dbox .tx small{display:block;color:var(--fg3);font-size:11.5px;margin-top:1px}
+
+  /* checkin */
+  .checkin{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--bg2);
+    border:1px solid var(--bd);border-radius:var(--radius);padding:13px 16px;margin-bottom:16px}
+  .streak{font-size:26px;font-weight:700;color:var(--warn);line-height:1}
+  .streak small{display:block;font-size:11px;color:var(--fg3);font-weight:400;letter-spacing:.5px;text-transform:uppercase}
+  .dots{display:flex;gap:4px;flex-wrap:wrap}
+  .dot{width:19px;height:19px;border-radius:5px;background:var(--bg3);border:1px solid var(--bd);
+    font-size:9px;display:flex;align-items:center;justify-content:center;color:var(--fg3)}
+  .dot.on{background:var(--ok);border-color:var(--ok);color:#0b1a13;font-weight:700}
+  .dot.today{outline:2px solid var(--warn);outline-offset:1px}
+
+  /* filters */
+  .filters{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+  .chip{padding:4px 11px;background:var(--bg3);border:1px solid var(--bd);border-radius:20px;
+    font-size:12px;color:var(--fg2);cursor:pointer;user-select:none}
+  .chip:hover{border-color:var(--bd2);color:var(--fg)}
+  .chip.on{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+
+  /* weeks */
+  .phase-h{font-size:12px;color:var(--ac);font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+    margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
+  .week{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
+  .week.done{border-color:var(--ok)}
+  .week.exempt{border-color:var(--warn);border-style:dashed}
+  .week.now{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+  .whead{padding:11px 15px;cursor:pointer;display:flex;align-items:center;gap:11px}
+  .wnum{font-size:15px;font-weight:700;min-width:34px}
+  .wtitle{flex:1;min-width:0}
+  .wtitle .d{font-size:11.5px;color:var(--fg3)}
+  .wpct{font-size:12px;color:var(--fg2);font-variant-numeric:tabular-nums}
+  .wbar{background:var(--bg3);height:5px;overflow:hidden;border-radius:3px;margin-top:5px}
+  .wbar .fi{height:100%;background:var(--ok);transition:width .3s;border-radius:3px}
+  .badge{padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
+  .badge.ex{background:var(--warn);color:#2a1c00}
+  .badge.mil{background:var(--pink);color:#fff}
+  .badge.now{background:var(--ac);color:#fff}
+
+  .wbody{display:none;padding:0 15px 14px;border-top:1px solid var(--bd);padding-top:12px}
+  .week.open .wbody{display:block}
+
+  .tk{display:flex;align-items:flex-start;gap:9px;padding:6px 0;cursor:pointer;border-radius:6px}
+  .tk:hover{background:var(--bg3)}
+  .tk .bx{width:16px;height:16px;border:2px solid var(--bd2);border-radius:4px;flex-shrink:0;margin-top:3px;
+    display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:.12s}
+  .tk.on .bx{background:var(--ok);border-color:var(--ok);color:#0b1a13}
+  .tk .tx{flex:1;font-size:13.5px;line-height:1.5}
+  .tk.on .tx{color:var(--fg3);text-decoration:line-through}
+  .tk .tr{font-size:10px;padding:1.5px 6px;border-radius:4px;flex-shrink:0;margin-top:3px;font-weight:600;letter-spacing:.3px}
+  .tr.sound{background:rgba(77,163,255,.16);color:var(--ac)}
+  .tr.equip{background:rgba(169,123,240,.16);color:var(--purple)}
+  .tr.jp{background:rgba(62,207,142,.16);color:var(--ok)}
+  .tr.pub{background:rgba(240,111,176,.16);color:var(--pink)}
+  .tr.key{background:rgba(240,178,60,.18);color:var(--warn)}
+  .tr.ipa{background:rgba(62,207,207,.16);color:var(--teal)}
+
+  .note{margin-top:11px;padding-top:11px;border-top:1px dashed var(--bd)}
+  .note label{font-size:11px;color:var(--fg3);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
+  .note textarea{width:100%;min-height:52px;padding:8px 10px;background:var(--bg3);border:1px solid var(--bd);
+    border-radius:7px;color:var(--fg);font-size:13px;font-family:inherit;resize:vertical;outline:none}
+  .note textarea:focus{border-color:var(--ac)}
+
+  .wcheck{margin-top:10px;padding:8px 11px;background:rgba(240,178,60,.08);border-left:3px solid var(--warn);
+    border-radius:0 6px 6px 0;font-size:12.5px;color:var(--fg2)}
+  .wcheck b{color:var(--warn)}
+
+  .banner{background:rgba(240,178,60,.12);border:1px solid var(--warn);color:var(--warn);
+    padding:9px 13px;border-radius:8px;margin-bottom:14px;font-size:13px}
+  .banner.err{background:rgba(242,104,95,.12);border-color:var(--err);color:var(--err)}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+    background:var(--ok);color:#fff;padding:10px 20px;border-radius:8px;font-size:13.5px;font-weight:600;
+    z-index:500;opacity:0;transition:.25s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+  .toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+
+  @media print{
+    header,.hdr-btns,.filters,.note textarea,.toast,.banner{display:none!important}
+    body{background:#fff;color:#000}
+    .week{break-inside:avoid;border-color:#999}
+    .wbody{display:block!important}
+    .note{display:none}
+  }
+
+  .banner.info{background:rgba(77,163,255,.10);border-color:var(--ac);color:var(--fg2)}
+  .dgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .task-detail{font-size:12px;color:var(--fg2);margin:4px 0 7px;white-space:pre-wrap;word-break:break-word}
+  .check-button{padding:0;width:25px;height:25px;flex-shrink:0;color:var(--ok);font-size:18px;line-height:1;margin-top:2px}
+  .week-head-button{width:100%;text-align:left;background:transparent;border:0;border-radius:0;white-space:normal}
+  .wtitle .d{display:block;margin:2px 0}.tk{cursor:default}.muted{color:var(--fg3)}
+  .daily{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--ac);border-radius:12px;padding:18px;margin-bottom:18px}
+  .daily h2{font-size:19px}.daily ul{list-style:none;margin:12px 0}.daily li{padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}
+  .daily li b{color:var(--ac);display:block;font-size:11px}.daily p{color:var(--fg2);font-size:12px;margin-top:6px}
+  input[type=date]{background:var(--bg3);color:var(--fg);border:1px solid var(--bd2);padding:5px 8px;border-radius:6px;font-family:inherit}
+  code{font-size:11px;color:var(--fg3)}button[hidden]{display:none}.dbox{cursor:default}.srcbar{flex-wrap:wrap}
+  @media(max-width:760px){.dgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:600px){header{position:static}.dgrid{grid-template-columns:1fr}.tr{display:none}.wrap{padding:0 12px 50px}.hdr-btns{gap:4px}.hdr-btns button{font-size:11px;padding:5px 8px}.daily h2{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div class="hdr-in">
+  <div class="hdr-top"><div class="logo">90 天<span>进度表</span></div><div class="spacer"></div>
+    <div class="hdr-btns">
+      <button class="btn-pri" onclick="checkin()">✓ 今天打卡</button>
+      <button id="connBtn" onclick="fs.connect()">连接项目 JSON（可选）</button>
+      <button onclick="fs.reload()">重新载入</button><button onclick="fs.exportJSON()">导出 JSON</button>
+      <button onclick="document.getElementById('impFile').click()">导入为草稿</button>
+      <button class="btn-ghost" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </div>
+  <div class="bigbar"><div class="fi" id="bigfi" style="width:0%"></div></div>
+  <div class="biglbl"><span id="bigl"></span><span id="bigr"></span></div>
+  <div class="srcbar"><b id="dayBadge"></b><span class="muted">Day 0 09/06 · Day 1 09/07 · Day 90 12/05 · Day 98 12/13 收尾</span></div>
+</div></header>
+<div class="wrap">
+  <div id="sourceStatus" class="banner info"></div>
+  <section class="daily">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><h2 id="dailyTitle"></h2><input type="date" id="dailyDate" aria-label="查看哪天的安排"></div>
+    <p id="dailyMin"></p><ul id="dailyActions"></ul><p id="dailyCheckpoints"></p><p id="dailyFoot"></p>
+  </section>
+  <div class="deliv"><h3>🎯 六项交付物 · 不以到期代替完成</h3><div class="dgrid" id="deliv"></div></div>
+  <div class="checkin"><div class="streak"><span id="streakN">0</span><small>连续打卡（天）</small></div>
+    <div style="flex:1;min-width:220px"><div class="muted">最近 21 天 · Asia/Shanghai</div><div class="dots" id="dots"></div></div>
+    <div style="font-size:12px;color:var(--fg3);max-width:300px">只做 25 分钟也算达标；日期过去不会自动打卡。<br>IPA 是甜点，音乐落后就停它。</div>
+  </div>
+  <div class="filters">
+    <button class="chip on" data-f="all" onclick="setF('all')">全部</button><button class="chip" data-f="todo" onclick="setF('todo')">未完成</button>
+    <button class="chip" data-f="done" onclick="setF('done')">已完成</button><button class="chip" data-f="now" onclick="setF('now')">本周</button>
+    <button class="btn-sm" onclick="expandAll(true)">全部展开</button><button class="btn-sm" onclick="expandAll(false)">全部收起</button>
+    <button class="btn-sm" onclick="window.print()">打印</button>
+  </div>
+  <div id="weeks"></div>
+  <details style="margin-top:24px"><summary class="muted">可选的手动编辑与恢复（平时不用）</summary>
+    <p class="muted" style="margin:8px 0">正常用法：在对话里告诉 agent，文件与总览自动同步。下面仅给想手动改的人；草稿不自动并入项目。</p>
+    <button onclick="fs.enableDraft()">临时编辑</button><button id="restoreBtn" onclick="fs.restoreDraft()" hidden>恢复浏览器旧草稿</button>
+    <button class="btn-danger" onclick="resetAll()">重置当前进度</button>
+  </details>
+</div>
+<input type="file" id="impFile" accept=".json" style="display:none"><div class="toast" id="toast"></div>
+<script type="application/json" id="project-data">
+{
+  "schema": "self-evolution/plan90/v2",
+  "meta": {
+    "title": "90 天进度",
+    "day0": "2026-09-06",
+    "day1": "2026-09-07",
+    "day98": "2026-12-13",
+    "totalDays": 98,
+    "totalWeeks": 14,
+    "planSource": "progress/plan90.json",
+    "stateOwner": "progress/plan90.json",
+    "updated": "2026-09-06T21:30:44+08:00",
+    "day90": "2026-12-05",
+    "end": "2026-12-13",
+    "timezone": "Asia/Shanghai",
+    "revision": 2,
+    "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
+  },
+  "tracks": {
+    "sound": "声音",
+    "equip": "设备",
+    "jp": "日语",
+    "ipa": "音韵",
+    "pub": "发布",
+    "key": "检查点"
+  },
+  "weeks": [
+    {
+      "n": 1,
+      "d": "09/07–09/13",
+      "p": 1,
+      "days": "1–7",
+      "start": "2026-09-07",
+      "end": "2026-09-13",
+      "tasks": [
+        {
+          "id": "1-0",
+          "track": "sound",
+          "text": "Tiny+ 拆箱上电，Studio One 里弹响一个音",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-06",
+          "dueDate": "2026-09-07",
+          "output": "Studio One 接到 MIDI 输入并确实发声；本人确认即可",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-1",
+          "track": "sound",
+          "text": "确认现有 music-log/ 三首歌目录，补 README 三行（目标曲 / 交付 / 不做清单）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-07",
+          "dueDate": "2026-09-07",
+          "output": "music-log/README.md 三行说明；目录复用，不必另开仓库",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-2",
+          "track": "sound",
+          "text": "扒《Lemon》前 8 小节主旋律 → 导出 melody.mid",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-08",
+          "dueDate": "2026-09-10",
+          "output": "music-log/01-lemon/melody.mid（前 8 小节）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-0",
+            "1-1"
+          ]
+        },
+        {
+          "id": "1-3",
+          "track": "sound",
+          "text": "用 Praat 打开人声干声，看一眼基频曲线",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-11",
+          "dueDate": "2026-09-11",
+          "output": "看过基频曲线的确认 / 一句观察，截图可只存本地",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-5"
+          ]
+        },
+        {
+          "id": "1-4",
+          "track": "jp",
+          "text": "Kaishi 每日新卡降到 10 张",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-06",
+          "dueDate": "2026-09-07",
+          "output": "本人确认 Kaishi 每日新卡上限为 10",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-5",
+          "track": "jp",
+          "text": "按需准备 Praat 和现有 DAW；music-to-midi / MyPitch 可选，安装不得拖延作品",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-11",
+          "dueDate": "2026-09-11",
+          "output": "所需工具能用 / 明确采用现有替代方案，不以安装数量验收",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-6",
+          "track": "equip",
+          "text": "建故障模式库，录入最近亲身处理过的 5 个故障",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-12",
+          "dueDate": "2026-09-13",
+          "output": "data/faults.local.json 中 5 条亲历真实故障（不含示例）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-7",
+          "track": "pub",
+          "text": "保存第一条版本记录 + 发一条公开动态（只发可公开内容）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-13",
+          "dueDate": "2026-09-13",
+          "output": "版本记录和公开承诺链接（没有公开链接不能代称已发布）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-8",
+          "track": "key",
+          "text": "检查点：MIDI 存在 + 故障库 5 条 + 公开承诺已发出",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-13",
+          "dueDate": "2026-09-13",
+          "output": "核对 melody.mid、5 条真实故障、公开承诺",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-2",
+            "1-6",
+            "1-7"
+          ]
+        },
+        {
+          "id": "1-9",
+          "track": "ipa",
+          "text": "阶段 0：搞懂「音素 ≠ 字母」（30 分钟一次做完：数 10 个英文单词里有几个音）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-12",
+          "dueDate": "2026-09-12",
+          "output": "10 个英文词的音素计数记录",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "启动与《Lemon》8 小节旋律",
+      "note": ""
+    },
+    {
+      "n": 2,
+      "d": "09/14–09/20",
+      "p": 1,
+      "days": "8–14",
+      "start": "2026-09-14",
+      "end": "2026-09-20",
+      "tasks": [
+        {
+          "id": "2-0",
+          "track": "sound",
+          "text": "分轨提 bass → 降速 50% → 扒根音",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-14",
+          "dueDate": "2026-09-15",
+          "output": "chords.md 中主歌 bass 根音走线",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-2"
+          ]
+        },
+        {
+          "id": "2-1",
+          "track": "sound",
+          "text": "用旋律 3 音补完和弦性质",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-16",
+          "dueDate": "2026-09-16",
+          "output": "chords.md 中和弦性质与不确定点",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-0"
+          ]
+        },
+        {
+          "id": "2-2",
+          "track": "sound",
+          "text": "去 Hooktheory / U-FRET 对账，标出你的盲区",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-17",
+          "dueDate": "2026-09-17",
+          "output": "chords.md 中对账结果和至少一处盲区",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-1"
+          ]
+        },
+        {
+          "id": "2-3",
+          "track": "sound",
+          "text": "DAW 里做一版 8 小节伴奏",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-18",
+          "dueDate": "2026-09-20",
+          "output": "8 小节伴奏工程 / 音频（本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-2"
+          ]
+        },
+        {
+          "id": "2-4",
+          "track": "equip",
+          "text": "故障库加到 10 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "真实故障累计 10 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-5",
+          "track": "equip",
+          "text": "Service Manual Ch.1（安全/规格）+ 术语表 10 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "术语表 10 词及手册章节记录（敏感内容仅本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-6",
+          "track": "jp",
+          "text": "建立每天 15 分钟日语可理解输入习惯（歌词也算，挂靠耳朵时间）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-14",
+          "dueDate": "2026-09-14",
+          "output": "记录实际采用的歌词听读方式；每日执行另记打卡",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-7",
+          "track": "jp",
+          "text": "确认第 2 首目标曲 =《うっせぇわ》",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-17",
+          "dueDate": "2026-09-17",
+          "output": "本人确认目标曲，不重新开选曲流程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-8",
+          "track": "pub",
+          "text": "commit 和声进行图",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-20",
+          "dueDate": "2026-09-20",
+          "output": "可公开的和声笔记版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-9",
+          "track": "ipa",
+          "text": "阶段 1 开始：用 IPA 写出普通话声母表（只标你嘴里已经会了的音）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "普通话声母 IPA 笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-10",
+          "track": "ipa",
+          "text": "验证啊哈 #1：拿张纸放嘴前说「爸」「怕」，看吹不吹得动",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-20",
+          "dueDate": "2026-09-20",
+          "output": "“爸 / 怕”送气差别的一句观察",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "《Lemon》和声与伴奏",
+      "note": ""
+    },
+    {
+      "n": 3,
+      "d": "09/21–09/27",
+      "p": 1,
+      "days": "15–21",
+      "start": "2026-09-21",
+      "end": "2026-09-27",
+      "tasks": [
+        {
+          "id": "3-0",
+          "track": "sound",
+          "text": "扒全曲结构，画成方块图（含时间戳 + 编曲变化点）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-21",
+          "dueDate": "2026-09-22",
+          "output": "music-log/01-lemon/structure.md（时间戳与编曲变化）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-1",
+          "track": "sound",
+          "text": "加鼓的基本型",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-23",
+          "dueDate": "2026-09-24",
+          "output": "带基本鼓型的工程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-3"
+          ]
+        },
+        {
+          "id": "3-2",
+          "track": "equip",
+          "text": "故障库加到 15 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-26",
+          "dueDate": "2026-09-26",
+          "output": "真实故障累计 15 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-3",
+          "track": "equip",
+          "text": "术语表 25 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-26",
+          "dueDate": "2026-09-26",
+          "output": "术语累计 25 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-4",
+          "track": "equip",
+          "text": "选定一个 recurring alarm 作为 3 个月改善目标",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-25",
+          "dueDate": "2026-09-26",
+          "output": "一个明确的改善目标；公开记录只写代称",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-5",
+          "track": "pub",
+          "text": "commit 结构图",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-27",
+          "dueDate": "2026-09-27",
+          "output": "结构笔记版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-6",
+          "track": "ipa",
+          "text": "阶段 1：能用 IPA 写出自己的名字 + 3 句日常话",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-27",
+          "dueDate": "2026-09-27",
+          "output": "IPA 转写笔记；真名不写公开文件",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "warn": "平台期高发周：允许只做每晚 25 分钟，周末大块可以不做。硬扛会死，降低强度穿过去。",
+      "title": "结构与鼓（平台期可降档）",
+      "note": ""
+    },
+    {
+      "n": 4,
+      "d": "09/28–10/04",
+      "p": 1,
+      "days": "22–28",
+      "start": "2026-09-28",
+      "end": "2026-10-04",
+      "tasks": [
+        {
+          "id": "4-0",
+          "track": "sound",
+          "text": "补齐到 60–90 秒",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-28",
+          "dueDate": "2026-09-29",
+          "output": "60–90 秒、有结构的工程草稿",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "3-0",
+            "3-1"
+          ]
+        },
+        {
+          "id": "4-1",
+          "track": "sound",
+          "text": "人声：SV 或自己唱，一遍过不重录",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-30",
+          "dueDate": "2026-09-30",
+          "output": "工程中的人声轨",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-0"
+          ]
+        },
+        {
+          "id": "4-2",
+          "track": "sound",
+          "text": "混音：只做 4 件事",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-01",
+          "dueDate": "2026-10-01",
+          "output": "只用四个手法的混音版本，工时不超过总工时 20%",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-1"
+          ]
+        },
+        {
+          "id": "4-3",
+          "track": "sound",
+          "text": "导出 + 写 notes.md",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-02",
+          "dueDate": "2026-10-03",
+          "output": "export.mp3 + notes.md ≥100 字",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-2"
+          ]
+        },
+        {
+          "id": "4-4",
+          "track": "equip",
+          "text": "故障库 20 条 / 术语表 40 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-03",
+          "dueDate": "2026-10-03",
+          "output": "真实故障 20 条；术语 40 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "4-5",
+          "track": "pub",
+          "text": "🚀 歌 #1 公开发布",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-04",
+          "dueDate": "2026-10-04",
+          "output": "歌 #1 公开链接；工程、导出音频、≥100 字复盘均存在",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-3"
+          ]
+        },
+        {
+          "id": "4-8",
+          "track": "ipa",
+          "text": "阶段 1 收尾：把《IPA与音韵学手册》§5.1 普通话声母表抄一份贴在显示器旁",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-03",
+          "dueDate": "2026-10-03",
+          "output": "声母表笔记 / 本地贴墙版",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "4-9",
+          "track": "ipa",
+          "text": "建立每日习惯：墨墨复习后多花 3 分钟，挑 3 个单词写 IPA",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-04",
+          "dueDate": "2026-10-04",
+          "output": "本人确认采用挂靠习惯；每日无需独立新任务",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "歌 #1 导出与发布",
+      "note": "",
+      "milestone": "歌 #1 截止 10/04"
+    },
+    {
+      "n": 5,
+      "d": "10/05–10/11",
+      "p": 2,
+      "days": "29–35",
+      "start": "2026-10-05",
+      "end": "2026-10-11",
+      "tasks": [
+        {
+          "id": "5-0",
+          "track": "key",
+          "text": "确认浮动缓冲安排；真实夜班只保留墨墨 10 分钟，不把豁免记作完成",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-05",
+          "dueDate": "2026-10-11",
+          "output": "真实夜班日期或未夜班的确认；仅预留不算完成",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "5-1",
+          "track": "sound",
+          "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-07",
+          "dueDate": "2026-10-09",
+          "output": "可继续使用的主旋律草稿（可豁免）",
+          "optional": true,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-5"
+          ]
+        },
+        {
+          "id": "4-6",
+          "track": "pub",
+          "text": "Day 30 回顾：核对歌 #1 发布、故障库 20 条、术语 40 词及实际打卡",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-06",
+          "output": "Day 30 复检笔记，真实记录达标 / 未达标",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "4-7",
+          "track": "key",
+          "text": "Day 30 决策：歌 #1 未发布则收缩为只完成这一首；已发布则保留三首目标",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-06",
+          "output": "明确保留三首 / 收缩一首的决策，后续任务由 agent 经确认重排",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "浮动缓冲 + Day 30 复检",
+      "note": "",
+      "buffer": true,
+      "warn": "浮动缓冲位，不代表已确认夜班。以实际夜班日期为准；豁免不自动勾选任务。",
+      "milestone": "Day 30 · 10/06"
+    },
+    {
+      "n": 6,
+      "d": "10/12–10/18",
+      "p": 2,
+      "days": "36–42",
+      "start": "2026-10-12",
+      "end": "2026-10-18",
+      "tasks": [
+        {
+          "id": "6-0",
+          "track": "sound",
+          "text": "扒《うっせぇわ》主歌主旋律",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-12",
+          "dueDate": "2026-10-16",
+          "output": "music-log/02-usseewa/melody.mid",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-5"
+          ]
+        },
+        {
+          "id": "6-1",
+          "track": "sound",
+          "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-14",
+          "dueDate": "2026-10-14",
+          "output": "chords.md 中 bass 的 B→F→E 走线",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-2",
+          "track": "sound",
+          "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-15",
+          "dueDate": "2026-10-15",
+          "output": "chords.md 中和声 / bass 的听辨核对",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-1"
+          ]
+        },
+        {
+          "id": "6-3",
+          "track": "equip",
+          "text": "改善项目启动：拉取目标 alarm 的历史记录",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-17",
+          "dueDate": "2026-10-17",
+          "output": "本地原始数据表与来源说明；不上传内部日志",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-4",
+          "track": "pub",
+          "text": "commit",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-18",
+          "dueDate": "2026-10-18",
+          "output": "可公开的音乐骨架笔记版本",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-5",
+          "track": "ipa",
+          "text": "攻克日语坑 ①：う = [ɯ] 不圆唇（配合《うっせぇわ》）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-16",
+          "dueDate": "2026-10-16",
+          "output": "う 的发音观察笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "《うっせぇわ》骨架 + 取数",
+      "note": ""
+    },
+    {
+      "n": 7,
+      "d": "10/19–10/25",
+      "p": 2,
+      "days": "43–49",
+      "start": "2026-10-19",
+      "end": "2026-10-25",
+      "tasks": [
+        {
+          "id": "7-0",
+          "track": "sound",
+          "text": "扒《うっせぇわ》副歌和声（先自行听辨，再对账；参考音乐手册 §2.12）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-19",
+          "dueDate": "2026-10-19",
+          "output": "副歌和声笔记及对账结果",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-0"
+          ]
+        },
+        {
+          "id": "7-1",
+          "track": "sound",
+          "text": "结构图 + 鼓型",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-20",
+          "dueDate": "2026-10-20",
+          "output": "structure.md + 鼓型工程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-2",
+          "track": "sound",
+          "text": "改一处：换和弦 / 改节奏型 / 转调式，都行",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-21",
+          "dueDate": "2026-10-24",
+          "output": "工程中至少一处自己的改动",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "7-0",
+            "7-1"
+          ]
+        },
+        {
+          "id": "7-3",
+          "track": "jp",
+          "text": "抄一遍歌词，逐句查意思，写\"这首歌在讲什么\"",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-22",
+          "dueDate": "2026-10-22",
+          "output": "notes.md 的歌词大意（不公开整篇歌词）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-4",
+          "track": "jp",
+          "text": "Praat 把 Ado 的基频曲线和你跟唱的叠在一起",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-23",
+          "dueDate": "2026-10-23",
+          "output": "一条关于音头 / 长音 / 句尾的观察",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-5",
+          "track": "equip",
+          "text": "完成 alarm 分析，画帕累托图，找出 Top 3 根因",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-24",
+          "dueDate": "2026-10-24",
+          "output": "帕累托图 + Top 3 根因 / 待验证假设",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-3"
+          ]
+        },
+        {
+          "id": "7-6",
+          "track": "pub",
+          "text": "commit 分析图（记得脱敏）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-25",
+          "dueDate": "2026-10-25",
+          "output": "复核脱敏后的分析图版本",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-7",
+          "track": "ipa",
+          "text": "把《うっせぇわ》主歌歌词做 IPA 转写",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-24",
+          "dueDate": "2026-10-24",
+          "output": "本地 IPA 转写笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-8",
+          "track": "ipa",
+          "text": "🔬 Praat 实验 #1：录 あいうえお，量 F1/F2，画出你自己的元音图（30 分钟封顶）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-25",
+          "dueDate": "2026-10-25",
+          "output": "元音图 / 实验笔记；本月 ≤1 次、≤30 分钟",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "改编 + 帕累托分析",
+      "note": ""
+    },
+    {
+      "n": 8,
+      "d": "10/26–11/01",
+      "p": 2,
+      "days": "50–56",
+      "start": "2026-10-26",
+      "end": "2026-11-01",
+      "tasks": [
+        {
+          "id": "8-0",
+          "track": "sound",
+          "text": "人声 + 混音 4 步 + 导出 + notes.md",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-26",
+          "dueDate": "2026-10-31",
+          "output": "歌 #2 工程、export.mp3、notes.md ≥100 字",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "7-2"
+          ]
+        },
+        {
+          "id": "8-1",
+          "track": "equip",
+          "text": "针对 Top 1 根因写一页改善提案",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-31",
+          "dueDate": "2026-10-31",
+          "output": "一页改善提案（敏感内容留本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "7-5"
+          ]
+        },
+        {
+          "id": "8-2",
+          "track": "pub",
+          "text": "🚀 歌 #2 公开发布",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-01",
+          "dueDate": "2026-11-01",
+          "output": "歌 #2 公开链接 + 至少一处自己的改动",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "8-0"
+          ]
+        },
+        {
+          "id": "8-5",
+          "track": "ipa",
+          "text": "对照剩余 5 项日语发音：し[ɕi] · ち[tɕi] · ふ[ɸɯ] · ら[ɾ] · ん的常见变体",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-30",
+          "dueDate": "2026-10-30",
+          "output": "对照发音的简短笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "歌 #2 导出与发布",
+      "note": "",
+      "milestone": "歌 #2 截止 11/01"
+    },
+    {
+      "n": 9,
+      "d": "11/02–11/08",
+      "p": 3,
+      "days": "57–63",
+      "start": "2026-11-02",
+      "end": "2026-11-08",
+      "tasks": [
+        {
+          "id": "9-0",
+          "track": "sound",
+          "text": "打开「好听元素清单」，挑 3 个你最喜欢的手法",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-02",
+          "dueDate": "2026-11-02",
+          "output": "好听元素清单中圈出 3 个手法（长期目标 30 条）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "9-1",
+          "track": "sound",
+          "text": "从两首扒过的歌里拼一个 8 小节动机",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-03",
+          "dueDate": "2026-11-04",
+          "output": "自己的 8 小节 motif.mid",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "9-0"
+          ]
+        },
+        {
+          "id": "9-2",
+          "track": "equip",
+          "text": "把改善提案给主管看；验证须按现场批准流程，不自行改机台参数",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-07",
+          "dueDate": "2026-11-07",
+          "output": "主管反馈 / 已批准验证结果（仅本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "8-1"
+          ]
+        },
+        {
+          "id": "9-3",
+          "track": "equip",
+          "text": "故障库 25 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-07",
+          "dueDate": "2026-11-07",
+          "output": "真实故障累计 25 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "9-4",
+          "track": "pub",
+          "text": "保存 / commit 动机的文字记录（MIDI 默认只在本地，不擅自公开）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-08",
+          "dueDate": "2026-11-08",
+          "output": "动机文字说明的版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "9-5",
+          "track": "key",
+          "text": "IPA 检查点：是否拖累音乐线？是则暂停到 W13 后再评估",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-06",
+          "dueDate": "2026-11-06",
+          "output": "继续 / 暂停 IPA 的明确决定",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "8-3",
+          "track": "pub",
+          "text": "Day 60 回顾：核对歌 #2、报警帕累托图和改善提案",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-05",
+          "dueDate": "2026-11-05",
+          "output": "Day 60 复检笔记",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "8-4",
+          "track": "key",
+          "text": "Day 60 反思：是否开始享受“做”本身，而不只是“准备做”？",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-05",
+          "dueDate": "2026-11-05",
+          "output": "一段真实反思",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "动机 + Day 60 复检",
+      "note": "",
+      "milestone": "Day 60 · 11/05"
+    },
+    {
+      "n": 10,
+      "d": "11/09–11/15",
+      "p": 3,
+      "days": "64–70",
+      "start": "2026-11-09",
+      "end": "2026-11-15",
+      "tasks": [
+        {
+          "id": "10-0",
+          "track": "key",
+          "text": "确认第二个浮动缓冲位；实际夜班日期另记，其他动作可豁免",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-09",
+          "dueDate": "2026-11-15",
+          "output": "夜班日期或缓冲安排的确认",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "10-1",
+          "track": "sound",
+          "text": "若未轮到夜班：把动机发展成 16–32 小节（A 段 + B 段）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-10",
+          "dueDate": "2026-11-13",
+          "output": "16–32 小节 A / B 草稿（可豁免）",
+          "optional": true,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "9-1"
+          ]
+        }
+      ],
+      "title": "浮动缓冲 / 发展动机",
+      "note": "",
+      "buffer": true,
+      "warn": "浮动缓冲位，不代表已确认夜班。以实际夜班日期为准；豁免不自动勾选任务。"
+    },
+    {
+      "n": 11,
+      "d": "11/16–11/22",
+      "p": 3,
+      "days": "71–77",
+      "start": "2026-11-16",
+      "end": "2026-11-22",
+      "tasks": [
+        {
+          "id": "11-0",
+          "track": "sound",
+          "text": "扒《不好惹》主旋律 + 和声 + 结构（纯耳朵，不查答案）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-16",
+          "dueDate": "2026-11-17",
+          "output": "《不好惹》片段的 melody.mid、chords.md、structure.md",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "11-1",
+          "track": "sound",
+          "text": "拼 8 小节动机（偷来的和声 + 自己的旋律）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-18",
+          "dueDate": "2026-11-18",
+          "output": "来自借鉴手法但旋律为自己写的动机",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "11-0"
+          ]
+        },
+        {
+          "id": "11-2",
+          "track": "sound",
+          "text": "写词（中文）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-19",
+          "dueDate": "2026-11-19",
+          "output": "自己的中文词稿",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "11-3",
+          "track": "sound",
+          "text": "人声：SV 或自唱",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-20",
+          "dueDate": "2026-11-21",
+          "output": "半成品工程内的人声轨",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "11-2"
+          ]
+        },
+        {
+          "id": "11-4",
+          "track": "equip",
+          "text": "故障库 30 条 / 术语表 60 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-21",
+          "dueDate": "2026-11-21",
+          "output": "真实故障 30 条；术语 60 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "11-5",
+          "track": "pub",
+          "text": "commit 半成品（允许发半成品，这是反完美的训练）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-22",
+          "dueDate": "2026-11-22",
+          "output": "可公开的半成品说明版本",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "11-6",
+          "track": "ipa",
+          "text": "阶段 3：听一首粤语歌，标出副歌第一句的调号，看「协音」",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-22",
+          "dueDate": "2026-11-22",
+          "output": "一句粤语协音观察",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "《不好惹》骨架与中文词",
+      "note": ""
+    },
+    {
+      "n": 12,
+      "d": "11/23–11/29",
+      "p": 3,
+      "days": "78–84",
+      "start": "2026-11-23",
+      "end": "2026-11-29",
+      "tasks": [
+        {
+          "id": "12-0",
+          "track": "sound",
+          "text": "编曲：加鼓、贝斯、和声层，发展成 16–32 小节",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-23",
+          "dueDate": "2026-11-24",
+          "output": "16–32 小节、有鼓 / 贝斯 / 和声层的工程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "11-1",
+            "11-3"
+          ]
+        },
+        {
+          "id": "12-1",
+          "track": "sound",
+          "text": "封面：ComfyUI（Z-Image / Flux2 Klein）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-25",
+          "dueDate": "2026-11-25",
+          "output": "封面图片",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-2",
+          "track": "sound",
+          "text": "视频：kdenlive",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-26",
+          "dueDate": "2026-11-28",
+          "output": "可发布的视频文件",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "12-1"
+          ]
+        },
+        {
+          "id": "12-3",
+          "track": "sound",
+          "text": "字幕：用你自己的 Qwen3-Subtitle-Studio",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-27",
+          "dueDate": "2026-11-27",
+          "output": "已核对的字幕文件",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-4",
+          "track": "equip",
+          "text": "术语表 80 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-28",
+          "dueDate": "2026-11-28",
+          "output": "术语累计 80 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-5",
+          "track": "equip",
+          "text": "用已有故障库工具验证搜索、数据完整性、备份和脱敏候选稿；不另造网页",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-28",
+          "dueDate": "2026-11-28",
+          "output": "搜索 / 备份 / 脱敏候选稿复核记录，不以建工具替代填内容",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-6",
+          "track": "pub",
+          "text": "commit 封面",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-29",
+          "dueDate": "2026-11-29",
+          "output": "封面及说明的版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "编曲、封面、视频与字幕",
+      "note": ""
+    },
+    {
+      "n": 13,
+      "d": "11/30–12/06",
+      "p": 3,
+      "days": "85–91",
+      "start": "2026-11-30",
+      "end": "2026-12-06",
+      "tasks": [
+        {
+          "id": "13-0",
+          "track": "sound",
+          "text": "最后混音 + 导出 + notes.md",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-30",
+          "dueDate": "2026-12-02",
+          "output": "歌 #3 工程、导出音频、notes.md ≥100 字",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "12-0"
+          ]
+        },
+        {
+          "id": "13-1",
+          "track": "equip",
+          "text": "故障模式库 v0.1 验收；分享前复核脱敏内容与厂规",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-03",
+          "dueDate": "2026-12-05",
+          "output": "≥30 条真实故障、可检索、脱敏候选稿经人工复核",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "13-2",
+          "track": "pub",
+          "text": "🚀 歌 #3 公开发布",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-04",
+          "dueDate": "2026-12-05",
+          "output": "歌 #3 公开链接 + 封面 / 视频 / 字幕",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "13-0",
+            "12-2",
+            "12-3"
+          ]
+        },
+        {
+          "id": "13-3",
+          "track": "pub",
+          "text": "三首歌 + 复盘一起发出去",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-06",
+          "dueDate": "2026-12-06",
+          "output": "作品汇总与复盘链接",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "14-3",
+          "track": "key",
+          "text": "Day 90 验收：三首歌与设备交付；最重要的是至少完整走完一次闭环",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-05",
+          "dueDate": "2026-12-05",
+          "output": "Day 90 验收笔记；未完成项如实记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "Day 90 发布与交付验收",
+      "note": "",
+      "milestone": "Day 90 · 12/05"
+    },
+    {
+      "n": 14,
+      "d": "12/07–12/13",
+      "p": 4,
+      "days": "92–98",
+      "start": "2026-12-07",
+      "end": "2026-12-13",
+      "tasks": [
+        {
+          "id": "14-0",
+          "track": "key",
+          "text": "写 REVIEW.md：14 周做了什么、卡在哪、发现了什么关于自己的事",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-07",
+          "dueDate": "2026-12-13",
+          "output": "REVIEW.md：真实成果、卡点和自我观察",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "14-1",
+          "track": "key",
+          "text": "回答：①第一次完整做完一件事的感觉 ②声音主线要不要继续 ③改善项目有没有被看见",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-09",
+          "dueDate": "2026-12-10",
+          "output": "REVIEW.md 三个问题的回答",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "14-2",
+          "track": "key",
+          "text": "制定 2027 Q1 计划",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-11",
+          "dueDate": "2026-12-13",
+          "output": "2027 Q1 计划，主线与最低剂量明确",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "14-4",
+          "track": "ipa",
+          "text": "收尾时决定 IPA / 音韵学是否延续到 2027 Q1",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-12",
+          "dueDate": "2026-12-12",
+          "output": "是否延续 IPA / 音韵学的决定",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "收尾复盘与 2027 Q1",
+      "note": "",
+      "milestone": "Day 98 · 12/13 收尾"
+    }
+  ],
+  "deliverables": [
+    {
+      "id": "song1",
+      "text": "歌 #1《Lemon》",
+      "sub": "工程 + 导出音频 + 公开链接 + ≥100 字复盘；有发布链接",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-10-04"
+    },
+    {
+      "id": "song2",
+      "text": "歌 #2《うっせぇわ》",
+      "sub": "工程 + 导出音频 + 公开链接 + ≥100 字复盘；有发布链接 + 至少一处自己的改动",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-11-01"
+    },
+    {
+      "id": "song3",
+      "text": "歌 #3《不好惹》",
+      "sub": "工程 + 导出音频 + 公开链接 + ≥100 字复盘；有封面 / 视频 / 字幕，你愿意转发给朋友",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-12-05"
+    },
+    {
+      "id": "lib",
+      "text": "故障模式库 v0.1",
+      "sub": "≥30 条，可检索",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-12-05"
+    },
+    {
+      "id": "chart",
+      "text": "一张能拿去汇报的图",
+      "sub": "报警帕累托 / MTBF 看板",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-11-05"
+    },
+    {
+      "id": "terms",
+      "text": "英语术语表",
+      "sub": "≥80 词",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-12-05"
+    }
+  ],
+  "checkins": [],
+  "stats": {
+    "totalTasks": 92,
+    "doneTasks": 0,
+    "pct": 0,
+    "delivDone": 0,
+    "delivTotal": 6
+  },
+  "_orphans": [],
+  "dailyPlan": [
+    {
+      "day": 0,
+      "date": "2026-09-06",
+      "budgetMinutes": 15,
+      "actions": [
+        {
+          "taskId": "1-0",
+          "text": "可选 5 分钟：Tiny+ 接上 Studio One，弹响一个音；做过就不重做"
+        },
+        {
+          "taskId": "1-4",
+          "text": "可选 2 分钟：Kaishi 新卡上限设为 10 张；之后就收工"
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "date": "2026-09-07",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-0",
+          "text": "若准备日未做，先让 Tiny+ 在 Studio One 响一个音；已做就跳过"
+        },
+        {
+          "taskId": "1-1",
+          "text": "看一眼现有 music-log/，补目标曲 / 交付 / 不做清单三行"
+        },
+        {
+          "taskId": "1-4",
+          "text": "把 Kaishi 每日新卡上限调为 10 张"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2026-09-08",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-2",
+          "text": "只扒《Lemon》前 4 小节主旋律，保存工程"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2026-09-09",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-2",
+          "text": "接着扒第 5–8 小节，先把 8 小节拼起来"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2026-09-10",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-2",
+          "text": "回听并导出 melody.mid；导出成功再勾整项"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2026-09-11",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-5",
+          "text": "只检查 Praat 能否打开；其他工具用不上就不装"
+        },
+        {
+          "taskId": "1-3",
+          "text": "用现有干声看一眼基频曲线，20 分钟封顶"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "2026-09-12",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "1-6",
+          "text": "设备时间：先口述 / 录入 3 条亲身处理的故障，缺的信息留待确认"
+        },
+        {
+          "taskId": "1-9",
+          "text": "顺带数 10 个英文词的音素，IPA 全周不超过 30 分钟"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "2026-09-13",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "1-6",
+          "text": "补到 5 条真实故障；示例不计数"
+        },
+        {
+          "taskId": "1-7",
+          "text": "保存第一条版本记录并发公开承诺"
+        },
+        {
+          "taskId": "1-8",
+          "text": "核对 MIDI、5 条故障和公开承诺；周回顾三行"
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "date": "2026-09-14",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-0",
+          "text": "只开贝斯轨，听《Lemon》前 4 小节根音"
+        },
+        {
+          "taskId": "2-6",
+          "text": "把日语歌词听读并入耳朵 15 分钟"
+        }
+      ]
+    },
+    {
+      "day": 9,
+      "date": "2026-09-15",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-0",
+          "text": "补后 4 小节根音，在 chords.md 记走线"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "date": "2026-09-16",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-1",
+          "text": "用旋律中的音补和弦性质；不确定处标问号"
+        }
+      ]
+    },
+    {
+      "day": 11,
+      "date": "2026-09-17",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-2",
+          "text": "先有自己的结果，再对账并标出一处盲区"
+        },
+        {
+          "taskId": "2-7",
+          "text": "确认第二首仍是《うっせぇわ》，不重新选歌"
+        }
+      ]
+    },
+    {
+      "day": 12,
+      "date": "2026-09-18",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-3",
+          "text": "用已扒的根音搭 8 小节伴奏草稿"
+        }
+      ]
+    },
+    {
+      "day": 13,
+      "date": "2026-09-19",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "2-4",
+          "text": "设备时间：故障累计补到 10 条"
+        },
+        {
+          "taskId": "2-5",
+          "text": "Service Manual 安全 / 规格章，术语记到 10 词"
+        },
+        {
+          "taskId": "2-9",
+          "text": "顺带写一部分普通话声母 IPA，累计不超 30 分钟"
+        }
+      ]
+    },
+    {
+      "day": 14,
+      "date": "2026-09-20",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "2-3",
+          "text": "回听并保存 8 小节伴奏"
+        },
+        {
+          "taskId": "2-8",
+          "text": "保存 / commit chords.md；周回顾三行"
+        },
+        {
+          "taskId": "2-10",
+          "text": "顺带用“爸 / 怕”验证送气差别"
+        }
+      ]
+    },
+    {
+      "day": 15,
+      "date": "2026-09-21",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-0",
+          "text": "先标 intro / verse / chorus 的时间点，只做 15 分钟"
+        }
+      ]
+    },
+    {
+      "day": 16,
+      "date": "2026-09-22",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-0",
+          "text": "补全结构方块图，允许粗糙"
+        }
+      ]
+    },
+    {
+      "day": 17,
+      "date": "2026-09-23",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-1",
+          "text": "只加 8 小节基本鼓型，不换音色"
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "date": "2026-09-24",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-1",
+          "text": "把鼓与旋律放一起回听，只改一个明显问题"
+        }
+      ]
+    },
+    {
+      "day": 19,
+      "date": "2026-09-25",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-4",
+          "text": "列一个最想减少的 recurring alarm，先用脱敏代称"
+        }
+      ]
+    },
+    {
+      "day": 20,
+      "date": "2026-09-26",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "3-2",
+          "text": "设备时间可降档：故障累计到 15 条"
+        },
+        {
+          "taskId": "3-3",
+          "text": "术语累计到 25 词"
+        },
+        {
+          "taskId": "3-4",
+          "text": "定下一个改善目标；低能时整块可顺延"
+        }
+      ]
+    },
+    {
+      "day": 21,
+      "date": "2026-09-27",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "3-5",
+          "text": "保存 / commit structure.md，写周回顾"
+        },
+        {
+          "taskId": "3-6",
+          "text": "音乐未落后才做：用 IPA 写名字与三句日常话（私人信息仅留本地）"
+        }
+      ]
+    },
+    {
+      "day": 22,
+      "date": "2026-09-28",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-0",
+          "text": "把已有素材排成 60–90 秒，先补结构"
+        }
+      ]
+    },
+    {
+      "day": 23,
+      "date": "2026-09-29",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-0",
+          "text": "补齐缺段并保存完整草稿"
+        }
+      ]
+    },
+    {
+      "day": 24,
+      "date": "2026-09-30",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-1",
+          "text": "人声用 SV 或轻声唱；自唱先选舒服的调，不追完美"
+        }
+      ]
+    },
+    {
+      "day": 25,
+      "date": "2026-10-01",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-2",
+          "text": "仅做约定的混音四件事；不加插件"
+        }
+      ]
+    },
+    {
+      "day": 26,
+      "date": "2026-10-02",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-3",
+          "text": "先导出一版，再写至少 100 字 notes.md"
+        }
+      ]
+    },
+    {
+      "day": 27,
+      "date": "2026-10-03",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "4-4",
+          "text": "设备时间：故障累计 20 条、术语 40 词"
+        },
+        {
+          "taskId": "4-3",
+          "text": "隔夜回听；只修最影响听感的一处"
+        },
+        {
+          "taskId": "4-8",
+          "text": "音乐按期才做：整理声母表贴墙"
+        }
+      ]
+    },
+    {
+      "day": 28,
+      "date": "2026-10-04",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "4-5",
+          "text": "歌 #1 发布；记录公开链接及本地工程 / 音频 / 复盘位置"
+        },
+        {
+          "taskId": "4-9",
+          "text": "如不拖音乐，在墨墨后挂靠 3 分钟 IPA；周回顾"
+        }
+      ]
+    },
+    {
+      "day": 29,
+      "date": "2026-10-05",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "5-0",
+          "text": "核对是否真实夜班：是则让 agent 记豁免日期；否则当缓冲"
+        }
+      ]
+    },
+    {
+      "day": 30,
+      "date": "2026-10-06",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-6",
+          "text": "Day 30：核对歌 #1、故障 20 条、术语 40 词和真实打卡"
+        },
+        {
+          "taskId": "4-7",
+          "text": "按歌 #1 是否发布决定继续三首或收缩；不要自动砍 / 自动勾"
+        }
+      ]
+    },
+    {
+      "day": 31,
+      "date": "2026-10-07",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "5-1",
+          "text": "非夜班且歌 #1 已发布：听《うっせぇわ》主歌，标一小句"
+        }
+      ]
+    },
+    {
+      "day": 32,
+      "date": "2026-10-08",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "5-1",
+          "text": "非夜班：预扒 4 小节主旋律，15 分钟就停"
+        }
+      ]
+    },
+    {
+      "day": 33,
+      "date": "2026-10-09",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "5-1",
+          "text": "非夜班：回听并保存草稿；夜班仅墨墨 10 分钟"
+        }
+      ]
+    },
+    {
+      "day": 34,
+      "date": "2026-10-10",
+      "budgetMinutes": 60,
+      "actions": [
+        {
+          "taskId": "5-0",
+          "text": "保留缓冲，已有故障随手记；不要求补周末大块"
+        }
+      ]
+    },
+    {
+      "day": 35,
+      "date": "2026-10-11",
+      "budgetMinutes": 60,
+      "actions": [
+        {
+          "taskId": "5-0",
+          "text": "周回顾三行，确认实际精力与下一周唯一大事"
+        }
+      ]
+    },
+    {
+      "day": 36,
+      "date": "2026-10-12",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-0",
+          "text": "扒《うっせぇわ》主歌前半的单音旋律"
+        }
+      ]
+    },
+    {
+      "day": 37,
+      "date": "2026-10-13",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-0",
+          "text": "补主歌旋律并保存 MIDI"
+        }
+      ]
+    },
+    {
+      "day": 38,
+      "date": "2026-10-14",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-1",
+          "text": "只听 bass，画出听到的 B→F→E 走线"
+        }
+      ]
+    },
+    {
+      "day": 39,
+      "date": "2026-10-15",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-2",
+          "text": "把 bass 走线和和声性质分开记录，再核对自己的判断"
+        }
+      ]
+    },
+    {
+      "day": 40,
+      "date": "2026-10-16",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-0",
+          "text": "回听骨架，保留一版可继续做的工程"
+        },
+        {
+          "taskId": "6-5",
+          "text": "顺带比较日语 う 的嘴型，不额外开学习块"
+        }
+      ]
+    },
+    {
+      "day": 41,
+      "date": "2026-10-17",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "6-3",
+          "text": "设备时间：在允许的本地环境整理目标 alarm 历史记录，不上传原始日志"
+        }
+      ]
+    },
+    {
+      "day": 42,
+      "date": "2026-10-18",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "6-4",
+          "text": "保存 / commit 可公开的骨架笔记，写周回顾"
+        }
+      ]
+    },
+    {
+      "day": 43,
+      "date": "2026-10-19",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-0",
+          "text": "扒副歌和声，先有自己的版本再核对"
+        }
+      ]
+    },
+    {
+      "day": 44,
+      "date": "2026-10-20",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-1",
+          "text": "补结构图与基本鼓型"
+        }
+      ]
+    },
+    {
+      "day": 45,
+      "date": "2026-10-21",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-2",
+          "text": "只选一处改动：和弦、节奏或调式"
+        }
+      ]
+    },
+    {
+      "day": 46,
+      "date": "2026-10-22",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-3",
+          "text": "歌词逐句看意思，在 notes.md 写一句大意"
+        }
+      ]
+    },
+    {
+      "day": 47,
+      "date": "2026-10-23",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-4",
+          "text": "叠原唱与自己轻声跟唱的曲线，只看一项表达差异"
+        }
+      ]
+    },
+    {
+      "day": 48,
+      "date": "2026-10-24",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "7-5",
+          "text": "设备时间：画报警帕累托，列 Top 3 根因或待验证假设"
+        },
+        {
+          "taskId": "7-2",
+          "text": "把选中的一处改动真正放进工程"
+        },
+        {
+          "taskId": "7-7",
+          "text": "音乐未落后才顺带转写主歌 IPA"
+        }
+      ]
+    },
+    {
+      "day": 49,
+      "date": "2026-10-25",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "7-6",
+          "text": "保存脱敏分析图，周回顾"
+        },
+        {
+          "taskId": "7-8",
+          "text": "可选：本月一次 Praat 元音图实验，30 分钟封顶"
+        }
+      ]
+    },
+    {
+      "day": 50,
+      "date": "2026-10-26",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-0",
+          "text": "安排人声，不新增制作环节"
+        }
+      ]
+    },
+    {
+      "day": 51,
+      "date": "2026-10-27",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-0",
+          "text": "混音只做四件事，保留参考曲 A/B"
+        }
+      ]
+    },
+    {
+      "day": 52,
+      "date": "2026-10-28",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-0",
+          "text": "导出草稿，写至少 100 字复盘"
+        }
+      ]
+    },
+    {
+      "day": 53,
+      "date": "2026-10-29",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-0",
+          "text": "隔夜回听，只改一处再导出"
+        }
+      ]
+    },
+    {
+      "day": 54,
+      "date": "2026-10-30",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-5",
+          "text": "音乐没落后才顺带对照 し / ち / ふ / ら / ん"
+        }
+      ]
+    },
+    {
+      "day": 55,
+      "date": "2026-10-31",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "8-1",
+          "text": "设备时间：针对 Top 1 根因写一页改善提案"
+        },
+        {
+          "taskId": "8-0",
+          "text": "核对成品、自己的一处改动和复盘"
+        }
+      ]
+    },
+    {
+      "day": 56,
+      "date": "2026-11-01",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "8-2",
+          "text": "歌 #2 发布并记录链接；周回顾三行"
+        }
+      ]
+    },
+    {
+      "day": 57,
+      "date": "2026-11-02",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "9-0",
+          "text": "从好听元素清单挑 3 个最想用的手法"
+        }
+      ]
+    },
+    {
+      "day": 58,
+      "date": "2026-11-03",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "9-1",
+          "text": "用挑出的手法拼 4 小节自己的动机"
+        }
+      ]
+    },
+    {
+      "day": 59,
+      "date": "2026-11-04",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "9-1",
+          "text": "补成 8 小节并保存 motif.mid"
+        }
+      ]
+    },
+    {
+      "day": 60,
+      "date": "2026-11-05",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-3",
+          "text": "Day 60：核对歌 #2、帕累托图和改善提案"
+        },
+        {
+          "taskId": "8-4",
+          "text": "写一句：是否开始享受“做”本身？"
+        }
+      ]
+    },
+    {
+      "day": 61,
+      "date": "2026-11-06",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "9-5",
+          "text": "检查音乐是否落后，若落后则暂停 IPA，不加新兴趣"
+        }
+      ]
+    },
+    {
+      "day": 62,
+      "date": "2026-11-07",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "9-2",
+          "text": "设备时间：把一页提案给主管看，验证先走批准流程"
+        },
+        {
+          "taskId": "9-3",
+          "text": "故障累计到 25 条"
+        }
+      ]
+    },
+    {
+      "day": 63,
+      "date": "2026-11-08",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "9-4",
+          "text": "保存动机的文字记录，MIDI 留本地；周回顾"
+        }
+      ]
+    },
+    {
+      "day": 64,
+      "date": "2026-11-09",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-0",
+          "text": "确认实际夜班日期；未轮到则保留缓冲"
+        }
+      ]
+    },
+    {
+      "day": 65,
+      "date": "2026-11-10",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-1",
+          "text": "非夜班：把 8 小节动机延长成 A 段"
+        }
+      ]
+    },
+    {
+      "day": 66,
+      "date": "2026-11-11",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-1",
+          "text": "非夜班：给 B 段换一个节奏或音区"
+        }
+      ]
+    },
+    {
+      "day": 67,
+      "date": "2026-11-12",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-1",
+          "text": "非夜班：拼 A / B，目标 16–32 小节，不加长度"
+        }
+      ]
+    },
+    {
+      "day": 68,
+      "date": "2026-11-13",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-1",
+          "text": "非夜班：保存版本即可；夜班仅墨墨 10 分钟"
+        }
+      ]
+    },
+    {
+      "day": 69,
+      "date": "2026-11-14",
+      "budgetMinutes": 60,
+      "actions": [
+        {
+          "taskId": "10-0",
+          "text": "缓冲或休息，不堆欠账"
+        }
+      ]
+    },
+    {
+      "day": 70,
+      "date": "2026-11-15",
+      "budgetMinutes": 60,
+      "actions": [
+        {
+          "taskId": "10-0",
+          "text": "周回顾：恢复后的第一天仍只做 25 分钟"
+        }
+      ]
+    },
+    {
+      "day": 71,
+      "date": "2026-11-16",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-0",
+          "text": "《不好惹》纯耳朵扒一个片段的主旋律，不查答案"
+        }
+      ]
+    },
+    {
+      "day": 72,
+      "date": "2026-11-17",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-0",
+          "text": "补同一片段和声骨架与曲式，不求全曲复刻"
+        }
+      ]
+    },
+    {
+      "day": 73,
+      "date": "2026-11-18",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-1",
+          "text": "拿一个手法补自己的 8 小节动机"
+        }
+      ]
+    },
+    {
+      "day": 74,
+      "date": "2026-11-19",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-2",
+          "text": "写一段中文词，先能唱，不追完美"
+        }
+      ]
+    },
+    {
+      "day": 75,
+      "date": "2026-11-20",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-3",
+          "text": "用 SV 或轻声录一版人声"
+        }
+      ]
+    },
+    {
+      "day": 76,
+      "date": "2026-11-21",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "11-4",
+          "text": "设备时间：故障累计 30 条、术语 60 词"
+        },
+        {
+          "taskId": "11-3",
+          "text": "把词与人声放进工程，留下半成品"
+        }
+      ]
+    },
+    {
+      "day": 77,
+      "date": "2026-11-22",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "11-5",
+          "text": "保存 / commit 可公开的半成品说明；周回顾"
+        },
+        {
+          "taskId": "11-6",
+          "text": "音乐未落后才看一句粤语歌词的协音"
+        }
+      ]
+    },
+    {
+      "day": 78,
+      "date": "2026-11-23",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-0",
+          "text": "编曲先加贝斯与基本鼓，保持 16–32 小节"
+        }
+      ]
+    },
+    {
+      "day": 79,
+      "date": "2026-11-24",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-0",
+          "text": "补一层和声并保存工程，不再扩曲式"
+        }
+      ]
+    },
+    {
+      "day": 80,
+      "date": "2026-11-25",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-1",
+          "text": "复用已跑通的 ComfyUI 模板做封面，不搭新工作流"
+        }
+      ]
+    },
+    {
+      "day": 81,
+      "date": "2026-11-26",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-2",
+          "text": "在 kdenlive 做静止封面 + 音频的最简视频"
+        }
+      ]
+    },
+    {
+      "day": 82,
+      "date": "2026-11-27",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-3",
+          "text": "用自己的 Qwen3-Subtitle-Studio 生成并核对字幕"
+        }
+      ]
+    },
+    {
+      "day": 83,
+      "date": "2026-11-28",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "12-4",
+          "text": "设备时间：术语累计到 80 词"
+        },
+        {
+          "taskId": "12-5",
+          "text": "验证已有故障库搜索、备份和脱敏候选稿，不另造工具"
+        },
+        {
+          "taskId": "12-2",
+          "text": "拼齐封面、视频、字幕"
+        }
+      ]
+    },
+    {
+      "day": 84,
+      "date": "2026-11-29",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "12-6",
+          "text": "保存 / commit 封面及制作说明，周回顾"
+        }
+      ]
+    },
+    {
+      "day": 85,
+      "date": "2026-11-30",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-0",
+          "text": "最后一轮混音，只做四件事"
+        }
+      ]
+    },
+    {
+      "day": 86,
+      "date": "2026-12-01",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-0",
+          "text": "导出音频并写至少 100 字 notes.md"
+        }
+      ]
+    },
+    {
+      "day": 87,
+      "date": "2026-12-02",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-0",
+          "text": "隔夜回听，只修最必要的一处"
+        }
+      ]
+    },
+    {
+      "day": 88,
+      "date": "2026-12-03",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-1",
+          "text": "核对故障 v0.1 真实条目与可检索性，准备脱敏候选稿"
+        }
+      ]
+    },
+    {
+      "day": 89,
+      "date": "2026-12-04",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-2",
+          "text": "核对发布素材和权限；把链接位置预留好"
+        }
+      ]
+    },
+    {
+      "day": 90,
+      "date": "2026-12-05",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "13-2",
+          "text": "Day 90：发布歌 #3，记录链接"
+        },
+        {
+          "taskId": "13-1",
+          "text": "验收故障库、图和术语表；未达标如实写原因"
+        },
+        {
+          "taskId": "14-3",
+          "text": "Day 90 验收：至少一次闭环是否走通，不以到期代替完成"
+        }
+      ]
+    },
+    {
+      "day": 91,
+      "date": "2026-12-06",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "13-3",
+          "text": "三首作品与复盘汇总；保留待办，不伪造全勾"
+        }
+      ]
+    },
+    {
+      "day": 92,
+      "date": "2026-12-07",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-0",
+          "text": "列出这 14 周确实存在的文件和发布链接"
+        }
+      ]
+    },
+    {
+      "day": 93,
+      "date": "2026-12-08",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-0",
+          "text": "在 REVIEW.md 写卡点与学到的事"
+        }
+      ]
+    },
+    {
+      "day": 94,
+      "date": "2026-12-09",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-1",
+          "text": "回答第一次做完作品的感受，以及声音线是否继续"
+        }
+      ]
+    },
+    {
+      "day": 95,
+      "date": "2026-12-10",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-1",
+          "text": "回答设备改善有没有被看见，记录真实反馈"
+        }
+      ]
+    },
+    {
+      "day": 96,
+      "date": "2026-12-11",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-2",
+          "text": "只定 2027 Q1 一个主目标与最低剂量"
+        }
+      ]
+    },
+    {
+      "day": 97,
+      "date": "2026-12-12",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "14-4",
+          "text": "决定是否保留 IPA / 音韵学；先看它有没有拖主线"
+        }
+      ]
+    },
+    {
+      "day": 98,
+      "date": "2026-12-13",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "14-0",
+          "text": "Day 98：归档 REVIEW.md，核对备份"
+        },
+        {
+          "taskId": "14-2",
+          "text": "确认 2027 Q1 计划；未完成项明确保留 / 收缩 / 取消"
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "day": 30,
+      "date": "2026-10-06",
+      "text": "歌 #1 已发布；真实故障 ≥20 条、术语 ≥40 词；如未发布则经本人确认收缩目标"
+    },
+    {
+      "day": 60,
+      "date": "2026-11-05",
+      "text": "歌 #2 已发布；帕累托图与一页改善提案存在"
+    },
+    {
+      "day": 90,
+      "date": "2026-12-05",
+      "text": "歌 #3 与六项交付验收；至少一次完整闭环；如实记录差距"
+    },
+    {
+      "day": 98,
+      "date": "2026-12-13",
+      "text": "14 周收尾：REVIEW.md + 2027 Q1；未完成项明确后续处置"
+    }
+  ],
+  "habits": {
+    "normal": "最低剂量 25 分钟：墨墨 10 分钟 + 耳朵 15 分钟（可用日语歌词听读）；和具体动作重叠时不重复计时。",
+    "night": "只保留墨墨复习 10 分钟；工作中确有故障才顺手记，其余豁免。",
+    "ipa": "可挂靠但不新增时间块；音乐落后就停；每周总量约 30 分钟以内。",
+    "weekend": "周六设备 2.5h + 音乐 2h；周日音乐 2h + 回顾 20 分钟；低能时都可降到 25 分钟。"
+  },
+  "dailyLogs": {},
+  "overrides": [],
+  "history": [
+    {
+      "at": "2026-09-06",
+      "action": "schedule-and-storage",
+      "summary": "校准 Day 0 / Day 30 / 60 / 90 / 98；接通文件存储和只读视图；学习任务未自动勾选"
+    },
+    {
+      "at": "2026-09-06T21:30:44+08:00",
+      "action": "documentation-audit",
+      "ids": [
+        "4-8",
+        "7-0",
+        "8-5"
+      ],
+      "summary": "只校正参考标题、和声表述与发音项编号；不改排期、验收、ID 或学习状态"
+    }
+  ]
+}
+</script><!-- PROJECT-DATA:END -->
+<script>
+/* FILE-STORE:BEGIN */
+// Shared source, embedded into each standalone HTML by sync-plan.py.
+// File JSON is authoritative. Cache is an explicit, recoverable draft only.
+const deepCopy = value => JSON.parse(JSON.stringify(value));
+const escapeHTML = value => String(value == null ? '' : value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function projectToday() {
+  const parts = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map(p => [p.type,p.value]));
+  return values.year+'-'+values.month+'-'+values.day;
+}
+function projectStamp() { return new Date().toISOString(); }
+function dayNumber(ds, origin) { return Math.round((Date.parse(ds+'T00:00:00Z')-Date.parse(origin+'T00:00:00Z'))/86400000); }
+function addDays(ds, n) { return new Date(Date.parse(ds+'T00:00:00Z')+n*86400000).toISOString().slice(0,10); }
+function validDate(ds) { return typeof ds==='string' && /^\d{4}-\d{2}-\d{2}$/.test(ds) && !ds.startsWith('0000-') && Number.isFinite(Date.parse(ds+'T00:00:00Z')) && addDays(ds,0)===ds; }
+function must(test, message) { if(!test) throw new Error(message); }
+function recordEvent(data, action, details={}) {
+  if(!Array.isArray(data.history)) data.history=[];
+  data.history.push({at:projectStamp(),action,...details});
+}
+function planStats(p) {
+  const list=p.weeks.flatMap(w=>w.tasks), done=list.filter(t=>t.done).length;
+  return {totalTasks:list.length,doneTasks:done,pct:list.length?Math.round(done/list.length*100):0,
+          delivDone:p.deliverables.filter(d=>d.done).length,delivTotal:p.deliverables.length};
+}
+const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const hasOwn = (obj,key) => Object.prototype.hasOwnProperty.call(obj,key);
+const integerNumber = (value,minimum=0) => Number.isSafeInteger(value) && value>=minimum;
+const MUSIC_RELEASE_IDS = new Set(['4-5','8-2','13-2']);
+function validateState(item,asOf,label='记录') {
+  must(isRecord(item),label+' 必须为对象');
+  must(typeof (hasOwn(item,'done')?item.done:false)==='boolean',label+'.done 必须为布尔值');
+  must(typeof (hasOwn(item,'note')?item.note:'')==='string',label+'.note 必须为文本');
+  const evidence=hasOwn(item,'evidence')?item.evidence:[];
+  must(Array.isArray(evidence)&&evidence.every(x=>typeof x==='string'),label+'.evidence 必须为文本数组');
+  must(item.completedOn==null||typeof item.completedOn==='string',label+'.completedOn 必须为日期或 null');
+  if(item.completedOn) must(validDate(item.completedOn)&&item.completedOn<=asOf&&item.done===true,label+' 的完成日期无效、在未来或尚未完成');
+}
+function validateDailyState(checkins,logs,meta,asOf,allowDuplicates=false) {
+  must(Array.isArray(checkins),'checkins 必须为日期数组');
+  const validActual=ds=>validDate(ds)&&meta.day0<=ds&&ds<=meta.end&&ds<=asOf;
+  must(checkins.every(validActual),'打卡日期必须在本计划内且不能在未来');
+  must(allowDuplicates||new Set(checkins).size===checkins.length,'打卡日期重复');
+  must(isRecord(logs),'dailyLogs 必须为日期索引对象');
+  Object.entries(logs).forEach(([ds,log])=>{
+    must(validActual(ds),'每日记录日期必须在本计划内且不能在未来');
+    must(isRecord(log)&&typeof (hasOwn(log,'note')?log.note:'')==='string','每日记录 / 备注格式无效');
+    if(hasOwn(log,'minutes'))must(integerNumber(log.minutes),'每日分钟必须为非负整数；未知时不填');
+  });
+}
+function validatePlan(p,asOf=projectToday()) {
+  must(validDate(asOf),'校验基准日期无效');
+  must(isRecord(p)&&p.schema==='self-evolution/plan90/v2','不是 v2 进度文件；旧备份请用导入 / agent 合并。');
+  const m=p.meta;
+  must(isRecord(m)&&validDate(m.day0)&&validDate(m.day1)&&validDate(m.end),'计划日期无效');
+  must(dayNumber(m.day1,m.day0)===1,'Day 1 必须是 Day 0 的次日');
+  must(integerNumber(m.totalWeeks,1)&&integerNumber(m.totalDays,1),'周数 / 总天数必须为正整数');
+  must(Array.isArray(p.weeks)&&p.weeks.length===m.totalWeeks&&m.totalDays===m.totalWeeks*7,'周数 / 总天数不一致');
+  must(dayNumber(m.end,m.day0)===m.totalDays,'结束日期与总天数不一致');
+  must(integerNumber(m.revision)&&typeof m.updated==='string','revision / updated 无效');
+  must(validDate(m.day90)&&dayNumber(m.day90,m.day0)===90,'Day 90 日期不一致');
+  if(hasOwn(m,'day98'))must(m.day98===m.end,'day98 与 end 不一致');
+  must(isRecord(p.tracks)&&Object.values(p.tracks).every(v=>typeof v==='string'&&v.length>0),'轨道标签必须为非空文本');
+  const seen=new Set(),index=new Map();
+  function task(t){
+    must(isRecord(t)&&typeof t.id==='string'&&/^[A-Za-z0-9_-]+$/.test(t.id)&&!seen.has(t.id),'重复或无效任务 ID');
+    seen.add(t.id);must(hasOwn(t,'done')&&typeof t.text==='string','任务缺少状态 / 文字');validateState(t,asOf,t.id);
+  }
+  p.weeks.forEach((w,i)=>{
+    must(isRecord(w)&&integerNumber(w.n,1)&&w.n===i+1&&validDate(w.start)&&validDate(w.end)&&
+      dayNumber(w.start,m.day0)===i*7+1&&dayNumber(w.end,m.day0)===(i+1)*7,'每周日期不连续');
+    must(Array.isArray(w.tasks)&&typeof (hasOwn(w,'note')?w.note:'')==='string'&&typeof w.title==='string'&&typeof w.days==='string','周任务 / 标题 / 日号 / 备注无效');
+    w.tasks.forEach(t=>{
+      task(t);index.set(t.id,t);
+      must(typeof t.track==='string'&&hasOwn(p.tracks,t.track),'任务轨道无效');
+      must(validDate(t.scheduledDate)&&validDate(t.dueDate)&&m.day0<=t.scheduledDate&&t.scheduledDate<=t.dueDate&&t.dueDate<=m.end,'任务排期越界或倒置');
+      must(typeof (hasOwn(t,'optional')?t.optional:false)==='boolean','optional 必须为布尔值');
+    });
+  });
+  must(Array.isArray(p.deliverables),'缺少交付物数组');
+  p.deliverables.forEach(t=>{task(t);must(validDate(t.dueDate)&&m.day0<=t.dueDate&&t.dueDate<=m.end,'交付物截止日不在计划内');});
+  index.forEach(t=>{const parents=hasOwn(t,'dependsOn')?t.dependsOn:[];
+    must(Array.isArray(parents)&&parents.every(id=>typeof id==='string'&&index.has(id)&&id!==t.id),'前置任务 ID 无效');});
+  must(Array.isArray(p.dailyPlan)&&p.dailyPlan.length===m.totalDays+1,'每日安排缺日');
+  p.dailyPlan.forEach((d,i)=>{
+    must(isRecord(d)&&integerNumber(d.day)&&d.day===i&&validDate(d.date)&&dayNumber(d.date,m.day0)===i,'每日日期不连续');
+    must(integerNumber(d.budgetMinutes)&&Array.isArray(d.actions),'每日预算 / 动作无效');
+    d.actions.forEach(a=>must(isRecord(a)&&typeof a.taskId==='string'&&index.has(a.taskId)&&typeof a.text==='string','每日动作引用无效'));
+  });
+  validateDailyState(p.checkins,hasOwn(p,'dailyLogs')?p.dailyLogs:{},m,asOf);
+  const overrides=hasOwn(p,'overrides')?p.overrides:[];
+  must(Array.isArray(overrides),'overrides 必须为数组');
+  overrides.forEach(o=>must(isRecord(o)&&validDate(o.start)&&validDate(o.end)&&m.day0<=o.start&&o.start<=o.end&&o.end<=m.end&&
+    ['night','low'].includes(o.mode)&&typeof (hasOwn(o,'note')?o.note:'')==='string','豁免日期或模式无效'));
+  must(Array.isArray(p.checkpoints),'缺少复检点数组');
+  p.checkpoints.forEach(c=>must(isRecord(c)&&integerNumber(c.day)&&c.day<=m.totalDays&&validDate(c.date)&&dayNumber(c.date,m.day0)===c.day&&typeof c.text==='string','复检日期无效'));
+  ['history','_orphans'].forEach(k=>must(!hasOwn(p,k)||Array.isArray(p[k]),k+' 必须为数组'));
+  const stats=planStats(p);must(isRecord(p.stats)&&Object.keys(p.stats).length===Object.keys(stats).length&&
+    Object.keys(stats).every(k=>integerNumber(p.stats[k])&&p.stats[k]===stats[k]),'统计与任务状态不符');
+}
+const faultTextFields=['date','eqType','eqModel','eqId','alarmCode','causeCategory','symptom','condition','troubleshootPath','rootCause','rootCauseTag','action','prevention','links','notes'];
+function validateFaults(d) {
+  must(isRecord(d)&&d.schema==='self-evolution/faults/v1'&&Array.isArray(d.items),'不是故障库 JSON');
+  must(isRecord(d.meta)&&integerNumber(d.meta.revision),'缺少有效 revision');
+  if(hasOwn(d.meta,'nextId'))must(integerNumber(d.meta.nextId,1),'nextId 必须为正整数');
+  const seen=new Set();
+  d.items.forEach(i=>{
+    must(isRecord(i)&&typeof i.id==='string'&&/^[A-Za-z0-9_-]+$/.test(i.id)&&!seen.has(i.id),'故障 ID 重复或无效');seen.add(i.id);
+    faultTextFields.forEach(f=>must(i[f]===undefined||typeof i[f]==='string','故障字段必须为文字：'+f));
+    if(i.date) must(validDate(i.date)||(/^\d{4}-\d{2}$/.test(i.date)&&validDate(i.date+'-01')),'故障日期无效');
+    ['isRecurring','isSolved','isSample'].forEach(k=>must(i[k]==null||typeof i[k]==='boolean','布尔状态无效：'+k));
+    must(i.downtimeMin==null||(typeof i.downtimeMin==='number'&&Number.isFinite(i.downtimeMin)&&i.downtimeMin>=0),'停机分钟无效');
+  });
+  ['eqTypes','categories','sensitive'].forEach(k=>must(isRecord(d.config)&&Array.isArray(d.config[k])&&d.config[k].every(x=>typeof x==='string'),'配置列表无效：'+k));
+}
+function mergePlanNotes(a,b) {
+  a=a||'';b=b||'';
+  return !b||('\n'+a+'\n').includes('\n'+b+'\n')?a:a+(a?'\n':'')+b;
+}
+function sameJSON(a,b) {
+  if(a===b)return true;
+  if(Array.isArray(a)&&Array.isArray(b))return a.length===b.length&&a.every((v,i)=>sameJSON(v,b[i]));
+  if(isRecord(a)&&isRecord(b))return Object.keys(a).length===Object.keys(b).length&&Object.keys(a).every(k=>hasOwn(b,k)&&sameJSON(a[k],b[k]));
+  return false;
+}
+function convertLegacy(d,current,asOf=projectToday()) {
+  // A v2 browser import is an explicitly opened snapshot, not a master merge.
+  if(isRecord(d)&&d.schema==='self-evolution/plan90/v2'){validatePlan(d,asOf);return deepCopy(d);}
+  validatePlan(current,asOf);
+  must(isRecord(d)&&(d.schema===undefined||d.schema===null||d.schema==='self-evolution/plan90/v1'),'不认识的进度备份');
+  let imported=[],deliveries=[],weekNotes=new Map();
+  if(d.schema==='self-evolution/plan90/v1'){
+    must(Array.isArray(d.weeks),'旧备份缺少 weeks 数组');const seenWeeks=new Set();
+    d.weeks.forEach(w=>{
+      must(isRecord(w)&&integerNumber(w.n,1)&&Array.isArray(w.tasks),'导入周格式无效');
+      const n=String(w.n);must(!seenWeeks.has(n),'导入周次重复');seenWeeks.add(n);
+      must(typeof (hasOwn(w,'note')?w.note:'')==='string','导入周备注必须为文本');
+      imported.push(...w.tasks);if(w.note)weekNotes.set(n,w.note);
+    });
+    deliveries=hasOwn(d,'deliverables')?d.deliverables:[];must(Array.isArray(deliveries),'导入交付物必须为数组');
+  }else{
+    const done=d.done,notes=hasOwn(d,'notes')?d.notes:{},deliv=hasOwn(d,'deliv')?d.deliv:{};
+    must(isRecord(done)&&isRecord(notes)&&isRecord(deliv),'不是受支持的旧浏览器状态');
+    must(Object.values(notes).every(v=>typeof v==='string'),'旧备注必须是文本索引');
+    weekNotes=new Map(Object.entries(notes).filter(([k])=>/^[1-9][0-9]*$/.test(k)));
+    const noteIds=Object.keys(notes).filter(k=>!weekNotes.has(k)&&!hasOwn(deliv,k));
+    const ids=[...new Set(Object.keys(done).concat(noteIds))];
+    imported=ids.map(id=>({id,done:hasOwn(done,id)?done[id]:false,note:hasOwn(notes,id)?notes[id]:''}));
+    deliveries=Object.entries(deliv).map(([id,done])=>({id,done,note:hasOwn(notes,id)?notes[id]:''}));
+  }
+  const seen=new Set();
+  imported.concat(deliveries).forEach(t=>{
+    must(isRecord(t)&&typeof t.id==='string'&&/^[A-Za-z0-9_-]+$/.test(t.id)&&!seen.has(t.id),'导入中存在重复 / 无效 ID');
+    seen.add(t.id);validateState(t,asOf,'导入记录 '+t.id);
+  });
+  const checkins=hasOwn(d,'checkins')?d.checkins:[],logs=hasOwn(d,'dailyLogs')?d.dailyLogs:{},orphans=hasOwn(d,'_orphans')?d._orphans:[];
+  validateDailyState(checkins,logs,current.meta,asOf,true);
+  must(Array.isArray(orphans),'_orphans 必须为数组');orphans.forEach(t=>validateState(t,asOf,'导入归档记录'));
+  const p=deepCopy(current),idx=new Map(p.weeks.flatMap(w=>w.tasks).concat(p.deliverables).map(t=>[t.id,t]));
+  if(!hasOwn(p,'_orphans'))p._orphans=[];
+  const keep=t=>{if(!p._orphans.some(old=>sameJSON(old,t)))p._orphans.push(deepCopy(t));};
+  imported.concat(deliveries).forEach(t=>{
+    const to=idx.get(t.id);if(!to){keep(t);return;}
+    to.done=to.done||(t.done===true);to.note=mergePlanNotes(to.note,t.note);
+    to.evidence=[...new Set((to.evidence||[]).concat(t.evidence||[]))];
+    if(to.done&&!to.completedOn&&t.completedOn)to.completedOn=t.completedOn;
+  });
+  const weeks=new Map(p.weeks.map(w=>[String(w.n),w]));
+  weekNotes.forEach((note,n)=>{if(weeks.has(n)){const w=weeks.get(n);w.note=mergePlanNotes(w.note,note);}
+    else if(note)keep({id:'week-'+n,kind:'week-note',note});});
+  p.checkins=[...new Set(p.checkins.concat(checkins))].sort();
+  if(!hasOwn(p,'dailyLogs'))p.dailyLogs={};
+  Object.entries(logs).forEach(([ds,log])=>{
+    const to=hasOwn(p.dailyLogs,ds)?p.dailyLogs[ds]:(p.dailyLogs[ds]={});
+    to.note=mergePlanNotes(to.note,log.note);Object.entries(log).forEach(([k,v])=>{if(!hasOwn(to,k))Object.defineProperty(to,k,{value:deepCopy(v),enumerable:true,writable:true,configurable:true});});
+  });
+  orphans.forEach(keep);p.stats=planStats(p);validatePlan(p,asOf);
+  recordEvent(p,'legacy-import-draft',{summary:'旧备份经整包校验后合并为草稿；按 ID 保留状态与备注，不改当前排期'});
+  return p;
+}
+
+function sampleItem(i) { return !!i.isSample||String(i.id).startsWith('sample')||String(i.symptom||'').includes('【示例'); }
+function downloadText(name,text,mime='application/json') {
+  const url=URL.createObjectURL(new Blob([text],{type:mime})), a=document.createElement('a');
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},1000);
+}
+class ProjectFileStore {
+  constructor({initial,fileHint,validator,onChange,normalize=d=>d,convert=d=>d,legacyKey=''}) {
+    validator(initial);
+    this.data=deepCopy(initial);this.fileHint=fileHint;this.validator=validator;this.onChange=onChange;
+    this.normalize=normalize;this.convert=convert;this.legacyKey=legacyKey;
+    this.mode='snapshot';this.handle=null;this.baseRaw=null;this.queue=Promise.resolve();
+    this.cacheKey='selfevo_draft_'+initial.schema;this.cacheOK=true;this.cached=null;this.legacy=null;
+    try{this.cached=JSON.parse(localStorage.getItem(this.cacheKey)||'null');this.legacy=JSON.parse(localStorage.getItem(legacyKey)||'null');}
+    catch(e){this.cacheOK=false;}
+  }
+  status(error='') {
+    const el=document.getElementById('sourceStatus');
+    if(!el)return;
+    const rev='revision '+this.data.meta.revision+' · '+this.data.meta.updated;
+    let text=this.mode==='file'?'已写入 / 连接文件：'+this.handle.name+' · '+rev:
+      this.mode==='draft'?'浏览器草稿（未写入项目）：'+rev+'。请导出后交给 agent 合并。':
+      '文件快照（只读） · '+rev+'。直接告诉 agent 查询 / 勾选即可；agent 同步后重开此文件。';
+    if(error)text=error+' 当前修改未写入文件。可先重新载入，再重试。';
+    if(this.mode==='draft'&&!this.cacheOK)text+=' 此环境也不能保存缓存，关闭会丢失草稿，请先导出。';
+    el.textContent=text;el.className='banner '+(error?'err':this.mode==='draft'?'':'info');
+    const b=document.getElementById('connBtn');if(b)b.textContent=this.mode==='file'?'重新选择文件':'连接项目 JSON（可选）';
+    const restore=document.getElementById('restoreBtn');if(restore)restore.hidden=!(this.cached||this.legacy);
+  }
+  refresh() { this.onChange(this.data);this.status(); }
+  async connect() {
+    if(!window.showOpenFilePicker){this.status('此浏览器不能直接写文件。可由 agent 操作，或临时编辑后导出 JSON。');return false;}
+    if(this.mode==='draft'&&!confirm('连接会读取所选文件并替换当前草稿。未导出的草稿可能丢失；继续？'))return false;
+    try{
+      await this.queue.catch(()=>{});
+      const [h]=await window.showOpenFilePicker({types:[{description:'项目 JSON',accept:{'application/json':['.json']}}],multiple:false});
+      const file=await h.getFile(), raw=await file.text(), next=JSON.parse(raw);this.validator(next);
+      if(h.name!==this.fileHint.split('/').pop()&&!confirm('你选择的是 '+h.name+'，不是建议的 '+this.fileHint+'。之后只会写入所选文件。继续？'))return false;
+      let permission=await h.queryPermission({mode:'readwrite'});
+      if(permission!=='granted')permission=await h.requestPermission({mode:'readwrite'});
+      if(permission!=='granted')throw new Error('未授予文件写入权限');
+      this.handle=h;this.baseRaw=raw;this.data=deepCopy(next);this.mode='file';this.refresh();return true;
+    }catch(e){if(e.name!=='AbortError')this.status('连接失败：'+e.message);return false;}
+  }
+  async reload() {
+    await this.queue.catch(()=>{});
+    if(this.mode==='file'){
+      try{const raw=await (await this.handle.getFile()).text(), d=JSON.parse(raw);this.validator(d);
+        this.data=d;this.baseRaw=raw;this.refresh();return true;
+      }catch(e){this.status('读取失败：'+e.message);return false;}
+    }
+    if(this.mode==='draft'&&!confirm('重新打开快照会放下当前草稿；请先导出。继续？'))return false;
+    location.reload();return true;
+  }
+  enableDraft() {
+    if(!confirm('临时编辑不会写入项目文件；浏览器缓存不是正式记录。完成后须导出 JSON 交给 agent。继续？'))return false;
+    this.mode='draft';this.handle=null;this.baseRaw=null;this.refresh();return true;
+  }
+  restoreDraft() {
+    if(!confirm('恢复的可能是旧草稿；仅供核对，不会覆盖项目 JSON。需要并入项目时交给 agent。继续？'))return false;
+    try{const next=this.convert(deepCopy(this.cached||this.legacy),this.data);this.validator(next);
+      this.data=next;this.mode='draft';this.handle=null;this.baseRaw=null;this.refresh();return true;
+    }catch(e){this.status('草稿无效：'+e.message);return false;}
+  }
+  async importFile(file) {
+    if(!file)return false;
+    try{
+      const next=this.convert(JSON.parse(await file.text()),this.data);this.validator(next);
+      if(!confirm('导入只打开为临时草稿，不写回任何项目文件。项目内合并可直接交给 agent。继续？'))return false;
+      await this.queue.catch(()=>{});
+      this.data=deepCopy(next);this.mode='draft';this.handle=null;this.baseRaw=null;this.refresh();return true;
+    }catch(e){this.status('导入失败：'+e.message);return false;}
+  }
+  update(mutator) {
+    const work=this.queue.catch(()=>{}).then(async()=>{
+      if(this.mode==='snapshot')throw new Error('当前为只读快照；请通过对话让 agent 修改，或先连接 JSON / 开启临时编辑');
+      const next=deepCopy(this.data);
+      await mutator(next);
+      next.meta.revision=this.data.meta.revision+1;next.meta.updated=projectStamp();
+      this.normalize(next);this.validator(next);
+      const raw=JSON.stringify(next,null,2)+'\n';
+      if(this.mode==='file'){
+        const latest=await (await this.handle.getFile()).text();
+        if(latest!==this.baseRaw)throw new Error('检测到 agent / 其他窗口更新，已拒绝覆盖');
+        let writer;
+        try{writer=await this.handle.createWritable();await writer.write(raw);await writer.close();}
+        catch(e){if(writer&&writer.abort)try{await writer.abort();}catch(_){};throw e;}
+        this.baseRaw=raw;
+      }else{
+        try{localStorage.setItem(this.cacheKey,raw);this.cached=deepCopy(next);this.cacheOK=true;}
+        catch(e){this.cacheOK=false;}
+      }
+      this.data=next;this.refresh();return true;
+    });
+    this.queue=work;
+    return work.catch(e=>{this.onChange(this.data);this.status(e.message);return false;});
+  }
+  exportJSON() { downloadText(this.fileHint.split('/').pop().replace('.json','_'+projectToday()+'.local.json'),JSON.stringify(this.data,null,2)+'\n'); }
+}
+function projectDayInfo(p,ds) {
+  const day=dayNumber(ds,p.meta.day0), plan=p.dailyPlan.find(d=>d.date===ds), index=Object.fromEntries(p.weeks.flatMap(w=>w.tasks).map(t=>[t.id,t]));
+  const matches=(p.overrides||[]).filter(o=>o.start<=ds&&ds<=o.end);
+  const mode=matches.some(o=>o.mode==='night')?'night':matches.length?'low':'normal';
+  const overdue=Object.values(index).filter(t=>!t.done&&!t.optional&&t.dueDate<ds);
+  let actions=plan?plan.actions.filter(a=>!index[a.taskId].done).map(a=>({...a,optional:!!index[a.taskId].optional})):[];
+  const current=actions.find(a=>!a.optional)||actions[0];
+  if(current){const pending=(index[current.taskId].dependsOn||[]).map(id=>index[id]).filter(t=>t&&!t.done);
+    if(pending.length){const t=pending[0];actions.unshift({taskId:t.id,text:'先推进前置任务：'+t.text+'（只做一小步，不要求一次补完）',optional:false});}}
+  if(!actions.length&&day>=1&&day<=p.meta.totalDays){
+    const next=Object.values(index).filter(t=>!t.done&&!t.optional&&t.scheduledDate<=ds).sort((a,b)=>a.dueDate.localeCompare(b.dueDate)||a.id.localeCompare(b.id))[0];
+    if(next)actions=[{taskId:next.id,text:'推进未完的一小步：'+next.text,optional:false}];
+  }
+  const ipaPaused=overdue.some(t=>t.track==='sound'||MUSIC_RELEASE_IDS.has(t.id))||p.deliverables.some(d=>d.id.startsWith('song')&&!d.done&&d.dueDate<ds);
+  if(ipaPaused)actions=actions.filter(a=>index[a.taskId].track!=='ipa');
+  if(mode==='night')actions=[];
+  else if(mode==='low')actions=actions.filter(a=>!a.optional).slice(0,1);
+  else actions=actions.slice(0,3);
+  return {day,mode,actions,overdueCount:overdue.length,ipaPaused,budgetMinutes:mode==='night'?10:mode==='low'?25:plan?plan.budgetMinutes:0};
+}
+/* FILE-STORE:END */
+const $=id=>document.getElementById(id), esc=escapeHTML;
+let plan=JSON.parse($('project-data').textContent), filter='all', opened=new Set(), selectedDate=projectToday();
+const PHASES={1:'Phase 1 · 扒带 → 第 1 首 remake',2:'Phase 2 · 半原创 + 职业数据项目',3:'Phase 3 · 原创 + 成品化',4:'Phase 4 · 收尾与下一季'};
+const fs=new ProjectFileStore({initial:plan,fileHint:'progress/plan90.json',validator:validatePlan,
+  normalize:p=>p.stats=planStats(p),convert:convertLegacy,legacyKey:'plan90_v1',onChange:p=>{plan=p;render();}});
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('on');setTimeout(()=>$('toast').classList.remove('on'),2500);}
+function currentWeek(){const n=dayNumber(projectToday(),plan.meta.day0);return n>=1&&n<=plan.meta.totalDays?Math.floor((n-1)/7)+1:null;}
+function renderDaily(){
+  const info=projectDayInfo(plan,selectedDate), day=info.day;
+  $('dailyTitle').textContent=selectedDate+' · '+(day<0?'准备日前':day===0?'Day 0 · 可选准备':day>plan.meta.totalDays?'排期结束后 · Day '+day:'Day '+day+' · W'+(Math.floor((day-1)/7)+1));
+  $('dailyMin').textContent=day<0?'还没进入准备日，不产生待补任务。':day>plan.meta.totalDays?'请看实际交付与未完成项，不自动开启新周期。':day===0?'可选，最多 15 分钟；工具整理不算已经学习。':info.mode==='night'?plan.habits.night:plan.habits.normal;
+  if(info.ipaPaused&&day>=0&&day<=plan.meta.totalDays&&info.mode!=='night')$('dailyMin').textContent+=' IPA 已暂停：音乐制作、歌曲发布或交付验收有到期未确认项。';
+  let h=info.actions.map((a,i)=>`<li><b>${i===0?'优先':'顺带'} · ${esc(a.taskId)}</b> ${esc(a.text)}${a.optional?' <span class="muted">（可选）</span>':''}</li>`).join('');
+  if(!h&&day>=0&&day<=plan.meta.totalDays)h='<li>没有需要追加的动作；保持最低剂量或休息。</li>';
+  $('dailyActions').innerHTML=h;
+  $('dailyFoot').textContent=day>=0&&day<=plan.meta.totalDays?'可用时间上限 '+info.budgetMinutes+' 分钟，不必做满。每日动作只是整项的一小步，做完一小步先记备注，不自动勾整项。':'';
+  $('dailyCheckpoints').textContent=plan.checkpoints.filter(c=>c.date===selectedDate).map(c=>'🔍 '+c.text).join(' · ');
+}
+function detail(t){
+  return `<div class="task-detail">${esc(t.scheduledDate||'')} ${t.scheduledDate?'→ ':''}<b>${esc(t.dueDate)}</b>${t.optional?' · 可暂停 / 条件执行':''}<br>验收：${esc(t.output||t.sub||'')}${t.completedOn?'<br>确认完成：'+esc(t.completedOn):''}${t.note?'<br>备注：'+esc(t.note):''}${t.evidence&&t.evidence.length?'<br>证据：'+t.evidence.map(esc).join(' · '):''}</div>`;
+}
+function render(){
+  const stats=planStats(plan), cw=currentWeek(), n=dayNumber(projectToday(),plan.meta.day0);
+  $('bigfi').style.width=stats.pct+'%';$('bigl').textContent=stats.doneTasks+' / '+stats.totalTasks+' 项完成';$('bigr').textContent=stats.pct+'%';
+  $('dayBadge').textContent=n<0?'准备日之前':n===0?'Day 0 · 09/06 准备日':n>plan.meta.totalDays?'Day '+n+' · 14 周排期已结束':'Day '+n+' / '+plan.meta.totalDays+' · W'+cw;
+  $('deliv').innerHTML=plan.deliverables.map(t=>`<div class="dbox ${t.done?'on':''}"><button class="check-button" aria-label="${esc(t.text)}" aria-pressed="${t.done}" onclick="toggleTask('${t.id}')">${t.done?'✓':'○'}</button><div class="tx">${esc(t.text)}${detail(t)}</div></div>`).join('');
+  let streak=0, ds=projectToday();const set=new Set(plan.checkins);if(!set.has(ds))ds=addDays(ds,-1);
+  while(set.has(ds)){streak++;ds=addDays(ds,-1);}
+  $('streakN').textContent=streak;
+  $('dots').innerHTML=Array.from({length:21},(_,i)=>{const d=addDays(projectToday(),i-20);return `<div class="dot ${set.has(d)?'on':''} ${i===20?'today':''}" title="${d}">${d.slice(8)}</div>`;}).join('');
+  let h='',phase=null;
+  plan.weeks.forEach(w=>{
+    const completed=w.tasks.filter(t=>t.done).length, total=w.tasks.length;
+    const visible=w.tasks.filter(t=>filter==='todo'?!t.done:filter==='done'?t.done:true);
+    if(filter==='now'&&(cw===null?(n<1?w.n!==1:true):w.n!==cw))return;
+    if((filter==='todo'||filter==='done')&&!visible.length)return;
+    if(w.p!==phase){h+=`<div class="phase-h">${esc(PHASES[w.p]||'')}</div>`;phase=w.p;}
+    h+=`<div class="week ${completed===total&&total?'done':''} ${w.buffer?'exempt':''} ${w.n===cw?'now':''} ${opened.has(w.n)?'open':''}">
+      <button class="whead week-head-button" onclick="toggleWeek(${w.n})" aria-expanded="${opened.has(w.n)}"><span class="wnum">W${w.n}</span><span class="wtitle"><b>${esc(w.title)}</b><span class="d">${esc(w.start)}—${esc(w.end)} · Day ${esc(w.days)}</span>${w.buffer?'<span class="badge ex">浮动缓冲</span>':''} ${w.milestone?'<span class="badge mil">'+esc(w.milestone)+'</span>':''}</span><span class="wpct">${completed}/${total}</span></button>
+      <div class="wbody">${w.warn?'<div class="wcheck">'+esc(w.warn)+'</div>':''}
+      ${visible.map(t=>`<div class="tk ${t.done?'on':''}" id="task-${t.id}"><button class="check-button" aria-label="${esc(t.id+' '+t.text)}" aria-pressed="${t.done}" onclick="toggleTask('${t.id}')">${t.done?'✓':'○'}</button><div style="flex:1;min-width:0"><div class="tx"><code>${esc(t.id)}</code> ${esc(t.text)}</div>${detail(t)}<button class="btn-sm" onclick="editNote('${t.id}')">备注 / 证据</button></div><span class="tr ${esc(t.track)}">${esc(plan.tracks[t.track])}</span></div>`).join('')}
+      <div class="note"><label for="note-${w.n}">W${w.n} 周备注 / 卡点（项目只读时请让 agent 记录）</label><textarea id="note-${w.n}" ${fs.mode==='snapshot'?'readonly':''} onchange="saveWeekNote(${w.n},this.value)" placeholder="实际产出 / 下一步 / 卡点">${esc(w.note||'')}</textarea></div></div></div>`;
+  });
+  $('weeks').innerHTML=h;renderDaily();
+}
+function toggleWeek(n){opened.has(n)?opened.delete(n):opened.add(n);render();}
+function expandAll(v){opened=v?new Set(plan.weeks.map(w=>w.n)):new Set();render();}
+function setF(f){filter=f;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.dataset.f===f));render();}
+async function toggleTask(id){
+  const ok=await fs.update(p=>{
+    const t=p.weeks.flatMap(w=>w.tasks).concat(p.deliverables).find(t=>t.id===id);must(t,'ID 不存在');
+    const before=deepCopy(t), next=!t.done;
+    if(next&&(id.startsWith('song')||['4-5','8-2','13-2','1-7'].includes(id))){
+      if(!(t.evidence||[]).some(e=>/^https?:\/\//.test(e))){const url=prompt('这是发布项。请输入真实公开链接；尚未发布请取消。');must(url&&/^https?:\/\//.test(url),'未提供公开链接，不勾选发布');t.evidence.push(url);}
+      must(confirm('请确认该项验收已满足。歌曲需工程、导出音频、公开链接、至少 100 字复盘；不是只完成了一个拆分动作。'),'取消验收');
+    }
+    t.done=next;t.completedOn=next?projectToday():null;recordEvent(p,next?'done':'undo',{ids:[id],before});
+  });
+  if(ok)toast(fs.mode==='file'?'已写入文件；Markdown / HTML 快照由 agent 下次同步':'仅改了草稿，请导出交给 agent');
+}
+async function editNote(id){
+  if(fs.mode==='snapshot'){fs.status('只读快照；请在对话中描述完成内容或卡点，agent 会写回');return;}
+  const t=plan.weeks.flatMap(w=>w.tasks).concat(plan.deliverables).find(t=>t.id===id);
+  const note=prompt('补充这一项的备注（追加，不会把做了一小步当整项完成）', '');if(note===null||!note.trim())return;
+  const evidence=prompt('产出文件路径 / 链接（可留空；公开进度不要含机台信息）','');
+  await fs.update(p=>{const x=p.weeks.flatMap(w=>w.tasks).concat(p.deliverables).find(x=>x.id===id);
+    x.note=[x.note,note].filter(Boolean).join('\n');if(evidence&&evidence.trim())x.evidence=[...new Set(x.evidence.concat(evidence.trim()))];recordEvent(p,'note',{ids:[id]});});
+}
+async function saveWeekNote(n,value){await fs.update(p=>{const w=p.weeks.find(w=>w.n===n);const before=w.note;w.note=value;recordEvent(p,'week-note',{summary:'W'+n,before});});}
+async function checkin(){
+  const ds=projectToday();if(plan.checkins.includes(ds)){toast('该日已打卡，不重复累计');return;}
+  const ok=await fs.update(p=>{must(ds>=p.meta.day0&&ds<=p.meta.end,'日期不在本计划范围内');p.checkins.push(ds);p.checkins.sort();recordEvent(p,'checkin',{on:ds,summary:ds});});
+  if(ok)toast(fs.mode==='file'?'打卡已写入文件':'打卡仅在草稿中');
+}
+async function resetAll(){
+  if(!confirm('仅在你明确要重新开始时使用。将撤销任务 / 交付物 / 打卡并清空备注；先下载一份备份？'))return;
+  if(fs.mode==='snapshot'){fs.status('只读快照，未重置任何内容');return;}
+  fs.exportJSON();
+  await fs.update(p=>{const before={weeks:deepCopy(p.weeks),deliverables:deepCopy(p.deliverables),checkins:p.checkins,dailyLogs:p.dailyLogs};
+    p.weeks.flatMap(w=>w.tasks).concat(p.deliverables).forEach(t=>{t.done=false;t.completedOn=null;t.note='';t.evidence=[];});
+    p.weeks.forEach(w=>w.note='');p.checkins=[];p.dailyLogs={};recordEvent(p,'reset',{summary:'显式重置；旧状态保存在本条历史',before});});
+}
+function toggleTheme(){const next=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=next;$('themeBtn').textContent=next==='light'?'☀️':'🌙';try{localStorage.setItem('plan90_theme',next);}catch(e){}}
+try{const t=localStorage.getItem('plan90_theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+$('dailyDate').value=selectedDate;$('dailyDate').addEventListener('change',e=>{if(validDate(e.target.value)){selectedDate=e.target.value;renderDaily();}});
+$('impFile').addEventListener('change',async e=>{await fs.importFile(e.target.files[0]);e.target.value='';});
+opened.add(currentWeek()||1);fs.refresh();
+
+</script>
+</body>
+</html>

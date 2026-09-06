@@ -1,0 +1,30 @@
+name: docs-check
+
+# File-first project checks. Tests operate on isolated temporary copies.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: JSON 与只读视图一致性（不写入）
+        run: python3 scripts/sync-plan.py --check
+      - name: 文档 / 隐私 / 单一来源检查
+        run: python3 scripts/check-docs.py --verbose
+      - name: HTML / 内嵌 JSON / JS 语法 / 零外部资源
+        run: python3 scripts/check-tools.py
+      - name: 文件操作与迁移回归（临时目录，不碰真实进度）
+        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+      - name: 浏览器文件桥回归（权限 / 写失败 / 并发冲突）
+        run: node scripts/test-file-store.cjs

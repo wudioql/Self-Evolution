@@ -1,0 +1,2850 @@
+{
+  "schema": "self-evolution/plan90/v2",
+  "meta": {
+    "title": "90 天进度",
+    "day0": "2026-09-06",
+    "day1": "2026-09-07",
+    "day98": "2026-12-13",
+    "totalDays": 98,
+    "totalWeeks": 14,
+    "planSource": "progress/plan90.json",
+    "stateOwner": "progress/plan90.json",
+    "updated": "2026-09-06T21:30:44+08:00",
+    "day90": "2026-12-05",
+    "end": "2026-12-13",
+    "timezone": "Asia/Shanghai",
+    "revision": 2,
+    "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
+  },
+  "tracks": {
+    "sound": "声音",
+    "equip": "设备",
+    "jp": "日语",
+    "ipa": "音韵",
+    "pub": "发布",
+    "key": "检查点"
+  },
+  "weeks": [
+    {
+      "n": 1,
+      "d": "09/07–09/13",
+      "p": 1,
+      "days": "1–7",
+      "start": "2026-09-07",
+      "end": "2026-09-13",
+      "tasks": [
+        {
+          "id": "1-0",
+          "track": "sound",
+          "text": "Tiny+ 拆箱上电，Studio One 里弹响一个音",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-06",
+          "dueDate": "2026-09-07",
+          "output": "Studio One 接到 MIDI 输入并确实发声；本人确认即可",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-1",
+          "track": "sound",
+          "text": "确认现有 music-log/ 三首歌目录，补 README 三行（目标曲 / 交付 / 不做清单）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-07",
+          "dueDate": "2026-09-07",
+          "output": "music-log/README.md 三行说明；目录复用，不必另开仓库",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-2",
+          "track": "sound",
+          "text": "扒《Lemon》前 8 小节主旋律 → 导出 melody.mid",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-08",
+          "dueDate": "2026-09-10",
+          "output": "music-log/01-lemon/melody.mid（前 8 小节）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-0",
+            "1-1"
+          ]
+        },
+        {
+          "id": "1-3",
+          "track": "sound",
+          "text": "用 Praat 打开人声干声，看一眼基频曲线",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-11",
+          "dueDate": "2026-09-11",
+          "output": "看过基频曲线的确认 / 一句观察，截图可只存本地",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-5"
+          ]
+        },
+        {
+          "id": "1-4",
+          "track": "jp",
+          "text": "Kaishi 每日新卡降到 10 张",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-06",
+          "dueDate": "2026-09-07",
+          "output": "本人确认 Kaishi 每日新卡上限为 10",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-5",
+          "track": "jp",
+          "text": "按需准备 Praat 和现有 DAW；music-to-midi / MyPitch 可选，安装不得拖延作品",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-11",
+          "dueDate": "2026-09-11",
+          "output": "所需工具能用 / 明确采用现有替代方案，不以安装数量验收",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-6",
+          "track": "equip",
+          "text": "建故障模式库，录入最近亲身处理过的 5 个故障",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-12",
+          "dueDate": "2026-09-13",
+          "output": "data/faults.local.json 中 5 条亲历真实故障（不含示例）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-7",
+          "track": "pub",
+          "text": "保存第一条版本记录 + 发一条公开动态（只发可公开内容）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-13",
+          "dueDate": "2026-09-13",
+          "output": "版本记录和公开承诺链接（没有公开链接不能代称已发布）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-8",
+          "track": "key",
+          "text": "检查点：MIDI 存在 + 故障库 5 条 + 公开承诺已发出",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-13",
+          "dueDate": "2026-09-13",
+          "output": "核对 melody.mid、5 条真实故障、公开承诺",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-2",
+            "1-6",
+            "1-7"
+          ]
+        },
+        {
+          "id": "1-9",
+          "track": "ipa",
+          "text": "阶段 0：搞懂「音素 ≠ 字母」（30 分钟一次做完：数 10 个英文单词里有几个音）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-12",
+          "dueDate": "2026-09-12",
+          "output": "10 个英文词的音素计数记录",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "启动与《Lemon》8 小节旋律",
+      "note": ""
+    },
+    {
+      "n": 2,
+      "d": "09/14–09/20",
+      "p": 1,
+      "days": "8–14",
+      "start": "2026-09-14",
+      "end": "2026-09-20",
+      "tasks": [
+        {
+          "id": "2-0",
+          "track": "sound",
+          "text": "分轨提 bass → 降速 50% → 扒根音",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-14",
+          "dueDate": "2026-09-15",
+          "output": "chords.md 中主歌 bass 根音走线",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-2"
+          ]
+        },
+        {
+          "id": "2-1",
+          "track": "sound",
+          "text": "用旋律 3 音补完和弦性质",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-16",
+          "dueDate": "2026-09-16",
+          "output": "chords.md 中和弦性质与不确定点",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-0"
+          ]
+        },
+        {
+          "id": "2-2",
+          "track": "sound",
+          "text": "去 Hooktheory / U-FRET 对账，标出你的盲区",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-17",
+          "dueDate": "2026-09-17",
+          "output": "chords.md 中对账结果和至少一处盲区",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-1"
+          ]
+        },
+        {
+          "id": "2-3",
+          "track": "sound",
+          "text": "DAW 里做一版 8 小节伴奏",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-18",
+          "dueDate": "2026-09-20",
+          "output": "8 小节伴奏工程 / 音频（本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-2"
+          ]
+        },
+        {
+          "id": "2-4",
+          "track": "equip",
+          "text": "故障库加到 10 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "真实故障累计 10 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-5",
+          "track": "equip",
+          "text": "Service Manual Ch.1（安全/规格）+ 术语表 10 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "术语表 10 词及手册章节记录（敏感内容仅本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-6",
+          "track": "jp",
+          "text": "建立每天 15 分钟日语可理解输入习惯（歌词也算，挂靠耳朵时间）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-14",
+          "dueDate": "2026-09-14",
+          "output": "记录实际采用的歌词听读方式；每日执行另记打卡",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-7",
+          "track": "jp",
+          "text": "确认第 2 首目标曲 =《うっせぇわ》",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-17",
+          "dueDate": "2026-09-17",
+          "output": "本人确认目标曲，不重新开选曲流程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-8",
+          "track": "pub",
+          "text": "commit 和声进行图",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-20",
+          "dueDate": "2026-09-20",
+          "output": "可公开的和声笔记版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-9",
+          "track": "ipa",
+          "text": "阶段 1 开始：用 IPA 写出普通话声母表（只标你嘴里已经会了的音）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "普通话声母 IPA 笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "2-10",
+          "track": "ipa",
+          "text": "验证啊哈 #1：拿张纸放嘴前说「爸」「怕」，看吹不吹得动",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-20",
+          "dueDate": "2026-09-20",
+          "output": "“爸 / 怕”送气差别的一句观察",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "《Lemon》和声与伴奏",
+      "note": ""
+    },
+    {
+      "n": 3,
+      "d": "09/21–09/27",
+      "p": 1,
+      "days": "15–21",
+      "start": "2026-09-21",
+      "end": "2026-09-27",
+      "tasks": [
+        {
+          "id": "3-0",
+          "track": "sound",
+          "text": "扒全曲结构，画成方块图（含时间戳 + 编曲变化点）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-21",
+          "dueDate": "2026-09-22",
+          "output": "music-log/01-lemon/structure.md（时间戳与编曲变化）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-1",
+          "track": "sound",
+          "text": "加鼓的基本型",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-23",
+          "dueDate": "2026-09-24",
+          "output": "带基本鼓型的工程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-3"
+          ]
+        },
+        {
+          "id": "3-2",
+          "track": "equip",
+          "text": "故障库加到 15 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-26",
+          "dueDate": "2026-09-26",
+          "output": "真实故障累计 15 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-3",
+          "track": "equip",
+          "text": "术语表 25 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-26",
+          "dueDate": "2026-09-26",
+          "output": "术语累计 25 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-4",
+          "track": "equip",
+          "text": "选定一个 recurring alarm 作为 3 个月改善目标",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-25",
+          "dueDate": "2026-09-26",
+          "output": "一个明确的改善目标；公开记录只写代称",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-5",
+          "track": "pub",
+          "text": "commit 结构图",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-27",
+          "dueDate": "2026-09-27",
+          "output": "结构笔记版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-6",
+          "track": "ipa",
+          "text": "阶段 1：能用 IPA 写出自己的名字 + 3 句日常话",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-27",
+          "dueDate": "2026-09-27",
+          "output": "IPA 转写笔记；真名不写公开文件",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "warn": "平台期高发周：允许只做每晚 25 分钟，周末大块可以不做。硬扛会死，降低强度穿过去。",
+      "title": "结构与鼓（平台期可降档）",
+      "note": ""
+    },
+    {
+      "n": 4,
+      "d": "09/28–10/04",
+      "p": 1,
+      "days": "22–28",
+      "start": "2026-09-28",
+      "end": "2026-10-04",
+      "tasks": [
+        {
+          "id": "4-0",
+          "track": "sound",
+          "text": "补齐到 60–90 秒",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-28",
+          "dueDate": "2026-09-29",
+          "output": "60–90 秒、有结构的工程草稿",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "3-0",
+            "3-1"
+          ]
+        },
+        {
+          "id": "4-1",
+          "track": "sound",
+          "text": "人声：SV 或自己唱，一遍过不重录",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-30",
+          "dueDate": "2026-09-30",
+          "output": "工程中的人声轨",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-0"
+          ]
+        },
+        {
+          "id": "4-2",
+          "track": "sound",
+          "text": "混音：只做 4 件事",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-01",
+          "dueDate": "2026-10-01",
+          "output": "只用四个手法的混音版本，工时不超过总工时 20%",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-1"
+          ]
+        },
+        {
+          "id": "4-3",
+          "track": "sound",
+          "text": "导出 + 写 notes.md",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-02",
+          "dueDate": "2026-10-03",
+          "output": "export.mp3 + notes.md ≥100 字",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-2"
+          ]
+        },
+        {
+          "id": "4-4",
+          "track": "equip",
+          "text": "故障库 20 条 / 术语表 40 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-03",
+          "dueDate": "2026-10-03",
+          "output": "真实故障 20 条；术语 40 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "4-5",
+          "track": "pub",
+          "text": "🚀 歌 #1 公开发布",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-04",
+          "dueDate": "2026-10-04",
+          "output": "歌 #1 公开链接；工程、导出音频、≥100 字复盘均存在",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-3"
+          ]
+        },
+        {
+          "id": "4-8",
+          "track": "ipa",
+          "text": "阶段 1 收尾：把《IPA与音韵学手册》§5.1 普通话声母表抄一份贴在显示器旁",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-03",
+          "dueDate": "2026-10-03",
+          "output": "声母表笔记 / 本地贴墙版",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "4-9",
+          "track": "ipa",
+          "text": "建立每日习惯：墨墨复习后多花 3 分钟，挑 3 个单词写 IPA",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-04",
+          "dueDate": "2026-10-04",
+          "output": "本人确认采用挂靠习惯；每日无需独立新任务",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "歌 #1 导出与发布",
+      "note": "",
+      "milestone": "歌 #1 截止 10/04"
+    },
+    {
+      "n": 5,
+      "d": "10/05–10/11",
+      "p": 2,
+      "days": "29–35",
+      "start": "2026-10-05",
+      "end": "2026-10-11",
+      "tasks": [
+        {
+          "id": "5-0",
+          "track": "key",
+          "text": "确认浮动缓冲安排；真实夜班只保留墨墨 10 分钟，不把豁免记作完成",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-05",
+          "dueDate": "2026-10-11",
+          "output": "真实夜班日期或未夜班的确认；仅预留不算完成",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "5-1",
+          "track": "sound",
+          "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-07",
+          "dueDate": "2026-10-09",
+          "output": "可继续使用的主旋律草稿（可豁免）",
+          "optional": true,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-5"
+          ]
+        },
+        {
+          "id": "4-6",
+          "track": "pub",
+          "text": "Day 30 回顾：核对歌 #1 发布、故障库 20 条、术语 40 词及实际打卡",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-06",
+          "output": "Day 30 复检笔记，真实记录达标 / 未达标",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "4-7",
+          "track": "key",
+          "text": "Day 30 决策：歌 #1 未发布则收缩为只完成这一首；已发布则保留三首目标",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-06",
+          "output": "明确保留三首 / 收缩一首的决策，后续任务由 agent 经确认重排",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "浮动缓冲 + Day 30 复检",
+      "note": "",
+      "buffer": true,
+      "warn": "浮动缓冲位，不代表已确认夜班。以实际夜班日期为准；豁免不自动勾选任务。",
+      "milestone": "Day 30 · 10/06"
+    },
+    {
+      "n": 6,
+      "d": "10/12–10/18",
+      "p": 2,
+      "days": "36–42",
+      "start": "2026-10-12",
+      "end": "2026-10-18",
+      "tasks": [
+        {
+          "id": "6-0",
+          "track": "sound",
+          "text": "扒《うっせぇわ》主歌主旋律",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-12",
+          "dueDate": "2026-10-16",
+          "output": "music-log/02-usseewa/melody.mid",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-5"
+          ]
+        },
+        {
+          "id": "6-1",
+          "track": "sound",
+          "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-14",
+          "dueDate": "2026-10-14",
+          "output": "chords.md 中 bass 的 B→F→E 走线",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-2",
+          "track": "sound",
+          "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-15",
+          "dueDate": "2026-10-15",
+          "output": "chords.md 中和声 / bass 的听辨核对",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-1"
+          ]
+        },
+        {
+          "id": "6-3",
+          "track": "equip",
+          "text": "改善项目启动：拉取目标 alarm 的历史记录",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-17",
+          "dueDate": "2026-10-17",
+          "output": "本地原始数据表与来源说明；不上传内部日志",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-4",
+          "track": "pub",
+          "text": "commit",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-18",
+          "dueDate": "2026-10-18",
+          "output": "可公开的音乐骨架笔记版本",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-5",
+          "track": "ipa",
+          "text": "攻克日语坑 ①：う = [ɯ] 不圆唇（配合《うっせぇわ》）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-16",
+          "dueDate": "2026-10-16",
+          "output": "う 的发音观察笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "《うっせぇわ》骨架 + 取数",
+      "note": ""
+    },
+    {
+      "n": 7,
+      "d": "10/19–10/25",
+      "p": 2,
+      "days": "43–49",
+      "start": "2026-10-19",
+      "end": "2026-10-25",
+      "tasks": [
+        {
+          "id": "7-0",
+          "track": "sound",
+          "text": "扒《うっせぇわ》副歌和声（先自行听辨，再对账；参考音乐手册 §2.12）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-19",
+          "dueDate": "2026-10-19",
+          "output": "副歌和声笔记及对账结果",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-0"
+          ]
+        },
+        {
+          "id": "7-1",
+          "track": "sound",
+          "text": "结构图 + 鼓型",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-20",
+          "dueDate": "2026-10-20",
+          "output": "structure.md + 鼓型工程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-2",
+          "track": "sound",
+          "text": "改一处：换和弦 / 改节奏型 / 转调式，都行",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-21",
+          "dueDate": "2026-10-24",
+          "output": "工程中至少一处自己的改动",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "7-0",
+            "7-1"
+          ]
+        },
+        {
+          "id": "7-3",
+          "track": "jp",
+          "text": "抄一遍歌词，逐句查意思，写\"这首歌在讲什么\"",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-22",
+          "dueDate": "2026-10-22",
+          "output": "notes.md 的歌词大意（不公开整篇歌词）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-4",
+          "track": "jp",
+          "text": "Praat 把 Ado 的基频曲线和你跟唱的叠在一起",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-23",
+          "dueDate": "2026-10-23",
+          "output": "一条关于音头 / 长音 / 句尾的观察",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-5",
+          "track": "equip",
+          "text": "完成 alarm 分析，画帕累托图，找出 Top 3 根因",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-24",
+          "dueDate": "2026-10-24",
+          "output": "帕累托图 + Top 3 根因 / 待验证假设",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-3"
+          ]
+        },
+        {
+          "id": "7-6",
+          "track": "pub",
+          "text": "commit 分析图（记得脱敏）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-25",
+          "dueDate": "2026-10-25",
+          "output": "复核脱敏后的分析图版本",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-7",
+          "track": "ipa",
+          "text": "把《うっせぇわ》主歌歌词做 IPA 转写",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-24",
+          "dueDate": "2026-10-24",
+          "output": "本地 IPA 转写笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "7-8",
+          "track": "ipa",
+          "text": "🔬 Praat 实验 #1：录 あいうえお，量 F1/F2，画出你自己的元音图（30 分钟封顶）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-25",
+          "dueDate": "2026-10-25",
+          "output": "元音图 / 实验笔记；本月 ≤1 次、≤30 分钟",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "改编 + 帕累托分析",
+      "note": ""
+    },
+    {
+      "n": 8,
+      "d": "10/26–11/01",
+      "p": 2,
+      "days": "50–56",
+      "start": "2026-10-26",
+      "end": "2026-11-01",
+      "tasks": [
+        {
+          "id": "8-0",
+          "track": "sound",
+          "text": "人声 + 混音 4 步 + 导出 + notes.md",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-26",
+          "dueDate": "2026-10-31",
+          "output": "歌 #2 工程、export.mp3、notes.md ≥100 字",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "7-2"
+          ]
+        },
+        {
+          "id": "8-1",
+          "track": "equip",
+          "text": "针对 Top 1 根因写一页改善提案",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-31",
+          "dueDate": "2026-10-31",
+          "output": "一页改善提案（敏感内容留本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "7-5"
+          ]
+        },
+        {
+          "id": "8-2",
+          "track": "pub",
+          "text": "🚀 歌 #2 公开发布",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-01",
+          "dueDate": "2026-11-01",
+          "output": "歌 #2 公开链接 + 至少一处自己的改动",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "8-0"
+          ]
+        },
+        {
+          "id": "8-5",
+          "track": "ipa",
+          "text": "对照剩余 5 项日语发音：し[ɕi] · ち[tɕi] · ふ[ɸɯ] · ら[ɾ] · ん的常见变体",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-30",
+          "dueDate": "2026-10-30",
+          "output": "对照发音的简短笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "歌 #2 导出与发布",
+      "note": "",
+      "milestone": "歌 #2 截止 11/01"
+    },
+    {
+      "n": 9,
+      "d": "11/02–11/08",
+      "p": 3,
+      "days": "57–63",
+      "start": "2026-11-02",
+      "end": "2026-11-08",
+      "tasks": [
+        {
+          "id": "9-0",
+          "track": "sound",
+          "text": "打开「好听元素清单」，挑 3 个你最喜欢的手法",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-02",
+          "dueDate": "2026-11-02",
+          "output": "好听元素清单中圈出 3 个手法（长期目标 30 条）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "9-1",
+          "track": "sound",
+          "text": "从两首扒过的歌里拼一个 8 小节动机",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-03",
+          "dueDate": "2026-11-04",
+          "output": "自己的 8 小节 motif.mid",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "9-0"
+          ]
+        },
+        {
+          "id": "9-2",
+          "track": "equip",
+          "text": "把改善提案给主管看；验证须按现场批准流程，不自行改机台参数",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-07",
+          "dueDate": "2026-11-07",
+          "output": "主管反馈 / 已批准验证结果（仅本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "8-1"
+          ]
+        },
+        {
+          "id": "9-3",
+          "track": "equip",
+          "text": "故障库 25 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-07",
+          "dueDate": "2026-11-07",
+          "output": "真实故障累计 25 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "9-4",
+          "track": "pub",
+          "text": "保存 / commit 动机的文字记录（MIDI 默认只在本地，不擅自公开）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-08",
+          "dueDate": "2026-11-08",
+          "output": "动机文字说明的版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "9-5",
+          "track": "key",
+          "text": "IPA 检查点：是否拖累音乐线？是则暂停到 W13 后再评估",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-06",
+          "dueDate": "2026-11-06",
+          "output": "继续 / 暂停 IPA 的明确决定",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "8-3",
+          "track": "pub",
+          "text": "Day 60 回顾：核对歌 #2、报警帕累托图和改善提案",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-05",
+          "dueDate": "2026-11-05",
+          "output": "Day 60 复检笔记",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "8-4",
+          "track": "key",
+          "text": "Day 60 反思：是否开始享受“做”本身，而不只是“准备做”？",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-05",
+          "dueDate": "2026-11-05",
+          "output": "一段真实反思",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "动机 + Day 60 复检",
+      "note": "",
+      "milestone": "Day 60 · 11/05"
+    },
+    {
+      "n": 10,
+      "d": "11/09–11/15",
+      "p": 3,
+      "days": "64–70",
+      "start": "2026-11-09",
+      "end": "2026-11-15",
+      "tasks": [
+        {
+          "id": "10-0",
+          "track": "key",
+          "text": "确认第二个浮动缓冲位；实际夜班日期另记，其他动作可豁免",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-09",
+          "dueDate": "2026-11-15",
+          "output": "夜班日期或缓冲安排的确认",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "10-1",
+          "track": "sound",
+          "text": "若未轮到夜班：把动机发展成 16–32 小节（A 段 + B 段）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-10",
+          "dueDate": "2026-11-13",
+          "output": "16–32 小节 A / B 草稿（可豁免）",
+          "optional": true,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "9-1"
+          ]
+        }
+      ],
+      "title": "浮动缓冲 / 发展动机",
+      "note": "",
+      "buffer": true,
+      "warn": "浮动缓冲位，不代表已确认夜班。以实际夜班日期为准；豁免不自动勾选任务。"
+    },
+    {
+      "n": 11,
+      "d": "11/16–11/22",
+      "p": 3,
+      "days": "71–77",
+      "start": "2026-11-16",
+      "end": "2026-11-22",
+      "tasks": [
+        {
+          "id": "11-0",
+          "track": "sound",
+          "text": "扒《不好惹》主旋律 + 和声 + 结构（纯耳朵，不查答案）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-16",
+          "dueDate": "2026-11-17",
+          "output": "《不好惹》片段的 melody.mid、chords.md、structure.md",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "11-1",
+          "track": "sound",
+          "text": "拼 8 小节动机（偷来的和声 + 自己的旋律）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-18",
+          "dueDate": "2026-11-18",
+          "output": "来自借鉴手法但旋律为自己写的动机",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "11-0"
+          ]
+        },
+        {
+          "id": "11-2",
+          "track": "sound",
+          "text": "写词（中文）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-19",
+          "dueDate": "2026-11-19",
+          "output": "自己的中文词稿",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "11-3",
+          "track": "sound",
+          "text": "人声：SV 或自唱",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-20",
+          "dueDate": "2026-11-21",
+          "output": "半成品工程内的人声轨",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "11-2"
+          ]
+        },
+        {
+          "id": "11-4",
+          "track": "equip",
+          "text": "故障库 30 条 / 术语表 60 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-21",
+          "dueDate": "2026-11-21",
+          "output": "真实故障 30 条；术语 60 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "11-5",
+          "track": "pub",
+          "text": "commit 半成品（允许发半成品，这是反完美的训练）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-22",
+          "dueDate": "2026-11-22",
+          "output": "可公开的半成品说明版本",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "11-6",
+          "track": "ipa",
+          "text": "阶段 3：听一首粤语歌，标出副歌第一句的调号，看「协音」",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-22",
+          "dueDate": "2026-11-22",
+          "output": "一句粤语协音观察",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "《不好惹》骨架与中文词",
+      "note": ""
+    },
+    {
+      "n": 12,
+      "d": "11/23–11/29",
+      "p": 3,
+      "days": "78–84",
+      "start": "2026-11-23",
+      "end": "2026-11-29",
+      "tasks": [
+        {
+          "id": "12-0",
+          "track": "sound",
+          "text": "编曲：加鼓、贝斯、和声层，发展成 16–32 小节",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-23",
+          "dueDate": "2026-11-24",
+          "output": "16–32 小节、有鼓 / 贝斯 / 和声层的工程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "11-1",
+            "11-3"
+          ]
+        },
+        {
+          "id": "12-1",
+          "track": "sound",
+          "text": "封面：ComfyUI（Z-Image / Flux2 Klein）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-25",
+          "dueDate": "2026-11-25",
+          "output": "封面图片",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-2",
+          "track": "sound",
+          "text": "视频：kdenlive",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-26",
+          "dueDate": "2026-11-28",
+          "output": "可发布的视频文件",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "12-1"
+          ]
+        },
+        {
+          "id": "12-3",
+          "track": "sound",
+          "text": "字幕：用你自己的 Qwen3-Subtitle-Studio",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-27",
+          "dueDate": "2026-11-27",
+          "output": "已核对的字幕文件",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-4",
+          "track": "equip",
+          "text": "术语表 80 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-28",
+          "dueDate": "2026-11-28",
+          "output": "术语累计 80 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-5",
+          "track": "equip",
+          "text": "用已有故障库工具验证搜索、数据完整性、备份和脱敏候选稿；不另造网页",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-28",
+          "dueDate": "2026-11-28",
+          "output": "搜索 / 备份 / 脱敏候选稿复核记录，不以建工具替代填内容",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-6",
+          "track": "pub",
+          "text": "commit 封面",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-29",
+          "dueDate": "2026-11-29",
+          "output": "封面及说明的版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "编曲、封面、视频与字幕",
+      "note": ""
+    },
+    {
+      "n": 13,
+      "d": "11/30–12/06",
+      "p": 3,
+      "days": "85–91",
+      "start": "2026-11-30",
+      "end": "2026-12-06",
+      "tasks": [
+        {
+          "id": "13-0",
+          "track": "sound",
+          "text": "最后混音 + 导出 + notes.md",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-30",
+          "dueDate": "2026-12-02",
+          "output": "歌 #3 工程、导出音频、notes.md ≥100 字",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "12-0"
+          ]
+        },
+        {
+          "id": "13-1",
+          "track": "equip",
+          "text": "故障模式库 v0.1 验收；分享前复核脱敏内容与厂规",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-03",
+          "dueDate": "2026-12-05",
+          "output": "≥30 条真实故障、可检索、脱敏候选稿经人工复核",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "13-2",
+          "track": "pub",
+          "text": "🚀 歌 #3 公开发布",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-04",
+          "dueDate": "2026-12-05",
+          "output": "歌 #3 公开链接 + 封面 / 视频 / 字幕",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "13-0",
+            "12-2",
+            "12-3"
+          ]
+        },
+        {
+          "id": "13-3",
+          "track": "pub",
+          "text": "三首歌 + 复盘一起发出去",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-06",
+          "dueDate": "2026-12-06",
+          "output": "作品汇总与复盘链接",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "14-3",
+          "track": "key",
+          "text": "Day 90 验收：三首歌与设备交付；最重要的是至少完整走完一次闭环",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-05",
+          "dueDate": "2026-12-05",
+          "output": "Day 90 验收笔记；未完成项如实记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "Day 90 发布与交付验收",
+      "note": "",
+      "milestone": "Day 90 · 12/05"
+    },
+    {
+      "n": 14,
+      "d": "12/07–12/13",
+      "p": 4,
+      "days": "92–98",
+      "start": "2026-12-07",
+      "end": "2026-12-13",
+      "tasks": [
+        {
+          "id": "14-0",
+          "track": "key",
+          "text": "写 REVIEW.md：14 周做了什么、卡在哪、发现了什么关于自己的事",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-07",
+          "dueDate": "2026-12-13",
+          "output": "REVIEW.md：真实成果、卡点和自我观察",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "14-1",
+          "track": "key",
+          "text": "回答：①第一次完整做完一件事的感觉 ②声音主线要不要继续 ③改善项目有没有被看见",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-09",
+          "dueDate": "2026-12-10",
+          "output": "REVIEW.md 三个问题的回答",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "14-2",
+          "track": "key",
+          "text": "制定 2027 Q1 计划",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-11",
+          "dueDate": "2026-12-13",
+          "output": "2027 Q1 计划，主线与最低剂量明确",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "14-4",
+          "track": "ipa",
+          "text": "收尾时决定 IPA / 音韵学是否延续到 2027 Q1",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-12-12",
+          "dueDate": "2026-12-12",
+          "output": "是否延续 IPA / 音韵学的决定",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ],
+      "title": "收尾复盘与 2027 Q1",
+      "note": "",
+      "milestone": "Day 98 · 12/13 收尾"
+    }
+  ],
+  "deliverables": [
+    {
+      "id": "song1",
+      "text": "歌 #1《Lemon》",
+      "sub": "工程 + 导出音频 + 公开链接 + ≥100 字复盘；有发布链接",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-10-04"
+    },
+    {
+      "id": "song2",
+      "text": "歌 #2《うっせぇわ》",
+      "sub": "工程 + 导出音频 + 公开链接 + ≥100 字复盘；有发布链接 + 至少一处自己的改动",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-11-01"
+    },
+    {
+      "id": "song3",
+      "text": "歌 #3《不好惹》",
+      "sub": "工程 + 导出音频 + 公开链接 + ≥100 字复盘；有封面 / 视频 / 字幕，你愿意转发给朋友",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-12-05"
+    },
+    {
+      "id": "lib",
+      "text": "故障模式库 v0.1",
+      "sub": "≥30 条，可检索",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-12-05"
+    },
+    {
+      "id": "chart",
+      "text": "一张能拿去汇报的图",
+      "sub": "报警帕累托 / MTBF 看板",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-11-05"
+    },
+    {
+      "id": "terms",
+      "text": "英语术语表",
+      "sub": "≥80 词",
+      "done": false,
+      "note": "",
+      "evidence": [],
+      "completedOn": null,
+      "dueDate": "2026-12-05"
+    }
+  ],
+  "checkins": [],
+  "stats": {
+    "totalTasks": 92,
+    "doneTasks": 0,
+    "pct": 0,
+    "delivDone": 0,
+    "delivTotal": 6
+  },
+  "_orphans": [],
+  "dailyPlan": [
+    {
+      "day": 0,
+      "date": "2026-09-06",
+      "budgetMinutes": 15,
+      "actions": [
+        {
+          "taskId": "1-0",
+          "text": "可选 5 分钟：Tiny+ 接上 Studio One，弹响一个音；做过就不重做"
+        },
+        {
+          "taskId": "1-4",
+          "text": "可选 2 分钟：Kaishi 新卡上限设为 10 张；之后就收工"
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "date": "2026-09-07",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-0",
+          "text": "若准备日未做，先让 Tiny+ 在 Studio One 响一个音；已做就跳过"
+        },
+        {
+          "taskId": "1-1",
+          "text": "看一眼现有 music-log/，补目标曲 / 交付 / 不做清单三行"
+        },
+        {
+          "taskId": "1-4",
+          "text": "把 Kaishi 每日新卡上限调为 10 张"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2026-09-08",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-2",
+          "text": "只扒《Lemon》前 4 小节主旋律，保存工程"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2026-09-09",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-2",
+          "text": "接着扒第 5–8 小节，先把 8 小节拼起来"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2026-09-10",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-2",
+          "text": "回听并导出 melody.mid；导出成功再勾整项"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2026-09-11",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "1-5",
+          "text": "只检查 Praat 能否打开；其他工具用不上就不装"
+        },
+        {
+          "taskId": "1-3",
+          "text": "用现有干声看一眼基频曲线，20 分钟封顶"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "2026-09-12",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "1-6",
+          "text": "设备时间：先口述 / 录入 3 条亲身处理的故障，缺的信息留待确认"
+        },
+        {
+          "taskId": "1-9",
+          "text": "顺带数 10 个英文词的音素，IPA 全周不超过 30 分钟"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "2026-09-13",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "1-6",
+          "text": "补到 5 条真实故障；示例不计数"
+        },
+        {
+          "taskId": "1-7",
+          "text": "保存第一条版本记录并发公开承诺"
+        },
+        {
+          "taskId": "1-8",
+          "text": "核对 MIDI、5 条故障和公开承诺；周回顾三行"
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "date": "2026-09-14",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-0",
+          "text": "只开贝斯轨，听《Lemon》前 4 小节根音"
+        },
+        {
+          "taskId": "2-6",
+          "text": "把日语歌词听读并入耳朵 15 分钟"
+        }
+      ]
+    },
+    {
+      "day": 9,
+      "date": "2026-09-15",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-0",
+          "text": "补后 4 小节根音，在 chords.md 记走线"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "date": "2026-09-16",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-1",
+          "text": "用旋律中的音补和弦性质；不确定处标问号"
+        }
+      ]
+    },
+    {
+      "day": 11,
+      "date": "2026-09-17",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-2",
+          "text": "先有自己的结果，再对账并标出一处盲区"
+        },
+        {
+          "taskId": "2-7",
+          "text": "确认第二首仍是《うっせぇわ》，不重新选歌"
+        }
+      ]
+    },
+    {
+      "day": 12,
+      "date": "2026-09-18",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "2-3",
+          "text": "用已扒的根音搭 8 小节伴奏草稿"
+        }
+      ]
+    },
+    {
+      "day": 13,
+      "date": "2026-09-19",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "2-4",
+          "text": "设备时间：故障累计补到 10 条"
+        },
+        {
+          "taskId": "2-5",
+          "text": "Service Manual 安全 / 规格章，术语记到 10 词"
+        },
+        {
+          "taskId": "2-9",
+          "text": "顺带写一部分普通话声母 IPA，累计不超 30 分钟"
+        }
+      ]
+    },
+    {
+      "day": 14,
+      "date": "2026-09-20",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "2-3",
+          "text": "回听并保存 8 小节伴奏"
+        },
+        {
+          "taskId": "2-8",
+          "text": "保存 / commit chords.md；周回顾三行"
+        },
+        {
+          "taskId": "2-10",
+          "text": "顺带用“爸 / 怕”验证送气差别"
+        }
+      ]
+    },
+    {
+      "day": 15,
+      "date": "2026-09-21",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-0",
+          "text": "先标 intro / verse / chorus 的时间点，只做 15 分钟"
+        }
+      ]
+    },
+    {
+      "day": 16,
+      "date": "2026-09-22",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-0",
+          "text": "补全结构方块图，允许粗糙"
+        }
+      ]
+    },
+    {
+      "day": 17,
+      "date": "2026-09-23",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-1",
+          "text": "只加 8 小节基本鼓型，不换音色"
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "date": "2026-09-24",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-1",
+          "text": "把鼓与旋律放一起回听，只改一个明显问题"
+        }
+      ]
+    },
+    {
+      "day": 19,
+      "date": "2026-09-25",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "3-4",
+          "text": "列一个最想减少的 recurring alarm，先用脱敏代称"
+        }
+      ]
+    },
+    {
+      "day": 20,
+      "date": "2026-09-26",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "3-2",
+          "text": "设备时间可降档：故障累计到 15 条"
+        },
+        {
+          "taskId": "3-3",
+          "text": "术语累计到 25 词"
+        },
+        {
+          "taskId": "3-4",
+          "text": "定下一个改善目标；低能时整块可顺延"
+        }
+      ]
+    },
+    {
+      "day": 21,
+      "date": "2026-09-27",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "3-5",
+          "text": "保存 / commit structure.md，写周回顾"
+        },
+        {
+          "taskId": "3-6",
+          "text": "音乐未落后才做：用 IPA 写名字与三句日常话（私人信息仅留本地）"
+        }
+      ]
+    },
+    {
+      "day": 22,
+      "date": "2026-09-28",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-0",
+          "text": "把已有素材排成 60–90 秒，先补结构"
+        }
+      ]
+    },
+    {
+      "day": 23,
+      "date": "2026-09-29",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-0",
+          "text": "补齐缺段并保存完整草稿"
+        }
+      ]
+    },
+    {
+      "day": 24,
+      "date": "2026-09-30",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-1",
+          "text": "人声用 SV 或轻声唱；自唱先选舒服的调，不追完美"
+        }
+      ]
+    },
+    {
+      "day": 25,
+      "date": "2026-10-01",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-2",
+          "text": "仅做约定的混音四件事；不加插件"
+        }
+      ]
+    },
+    {
+      "day": 26,
+      "date": "2026-10-02",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-3",
+          "text": "先导出一版，再写至少 100 字 notes.md"
+        }
+      ]
+    },
+    {
+      "day": 27,
+      "date": "2026-10-03",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "4-4",
+          "text": "设备时间：故障累计 20 条、术语 40 词"
+        },
+        {
+          "taskId": "4-3",
+          "text": "隔夜回听；只修最影响听感的一处"
+        },
+        {
+          "taskId": "4-8",
+          "text": "音乐按期才做：整理声母表贴墙"
+        }
+      ]
+    },
+    {
+      "day": 28,
+      "date": "2026-10-04",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "4-5",
+          "text": "歌 #1 发布；记录公开链接及本地工程 / 音频 / 复盘位置"
+        },
+        {
+          "taskId": "4-9",
+          "text": "如不拖音乐，在墨墨后挂靠 3 分钟 IPA；周回顾"
+        }
+      ]
+    },
+    {
+      "day": 29,
+      "date": "2026-10-05",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "5-0",
+          "text": "核对是否真实夜班：是则让 agent 记豁免日期；否则当缓冲"
+        }
+      ]
+    },
+    {
+      "day": 30,
+      "date": "2026-10-06",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "4-6",
+          "text": "Day 30：核对歌 #1、故障 20 条、术语 40 词和真实打卡"
+        },
+        {
+          "taskId": "4-7",
+          "text": "按歌 #1 是否发布决定继续三首或收缩；不要自动砍 / 自动勾"
+        }
+      ]
+    },
+    {
+      "day": 31,
+      "date": "2026-10-07",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "5-1",
+          "text": "非夜班且歌 #1 已发布：听《うっせぇわ》主歌，标一小句"
+        }
+      ]
+    },
+    {
+      "day": 32,
+      "date": "2026-10-08",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "5-1",
+          "text": "非夜班：预扒 4 小节主旋律，15 分钟就停"
+        }
+      ]
+    },
+    {
+      "day": 33,
+      "date": "2026-10-09",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "5-1",
+          "text": "非夜班：回听并保存草稿；夜班仅墨墨 10 分钟"
+        }
+      ]
+    },
+    {
+      "day": 34,
+      "date": "2026-10-10",
+      "budgetMinutes": 60,
+      "actions": [
+        {
+          "taskId": "5-0",
+          "text": "保留缓冲，已有故障随手记；不要求补周末大块"
+        }
+      ]
+    },
+    {
+      "day": 35,
+      "date": "2026-10-11",
+      "budgetMinutes": 60,
+      "actions": [
+        {
+          "taskId": "5-0",
+          "text": "周回顾三行，确认实际精力与下一周唯一大事"
+        }
+      ]
+    },
+    {
+      "day": 36,
+      "date": "2026-10-12",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-0",
+          "text": "扒《うっせぇわ》主歌前半的单音旋律"
+        }
+      ]
+    },
+    {
+      "day": 37,
+      "date": "2026-10-13",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-0",
+          "text": "补主歌旋律并保存 MIDI"
+        }
+      ]
+    },
+    {
+      "day": 38,
+      "date": "2026-10-14",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-1",
+          "text": "只听 bass，画出听到的 B→F→E 走线"
+        }
+      ]
+    },
+    {
+      "day": 39,
+      "date": "2026-10-15",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-2",
+          "text": "把 bass 走线和和声性质分开记录，再核对自己的判断"
+        }
+      ]
+    },
+    {
+      "day": 40,
+      "date": "2026-10-16",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "6-0",
+          "text": "回听骨架，保留一版可继续做的工程"
+        },
+        {
+          "taskId": "6-5",
+          "text": "顺带比较日语 う 的嘴型，不额外开学习块"
+        }
+      ]
+    },
+    {
+      "day": 41,
+      "date": "2026-10-17",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "6-3",
+          "text": "设备时间：在允许的本地环境整理目标 alarm 历史记录，不上传原始日志"
+        }
+      ]
+    },
+    {
+      "day": 42,
+      "date": "2026-10-18",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "6-4",
+          "text": "保存 / commit 可公开的骨架笔记，写周回顾"
+        }
+      ]
+    },
+    {
+      "day": 43,
+      "date": "2026-10-19",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-0",
+          "text": "扒副歌和声，先有自己的版本再核对"
+        }
+      ]
+    },
+    {
+      "day": 44,
+      "date": "2026-10-20",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-1",
+          "text": "补结构图与基本鼓型"
+        }
+      ]
+    },
+    {
+      "day": 45,
+      "date": "2026-10-21",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-2",
+          "text": "只选一处改动：和弦、节奏或调式"
+        }
+      ]
+    },
+    {
+      "day": 46,
+      "date": "2026-10-22",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-3",
+          "text": "歌词逐句看意思，在 notes.md 写一句大意"
+        }
+      ]
+    },
+    {
+      "day": 47,
+      "date": "2026-10-23",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "7-4",
+          "text": "叠原唱与自己轻声跟唱的曲线，只看一项表达差异"
+        }
+      ]
+    },
+    {
+      "day": 48,
+      "date": "2026-10-24",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "7-5",
+          "text": "设备时间：画报警帕累托，列 Top 3 根因或待验证假设"
+        },
+        {
+          "taskId": "7-2",
+          "text": "把选中的一处改动真正放进工程"
+        },
+        {
+          "taskId": "7-7",
+          "text": "音乐未落后才顺带转写主歌 IPA"
+        }
+      ]
+    },
+    {
+      "day": 49,
+      "date": "2026-10-25",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "7-6",
+          "text": "保存脱敏分析图，周回顾"
+        },
+        {
+          "taskId": "7-8",
+          "text": "可选：本月一次 Praat 元音图实验，30 分钟封顶"
+        }
+      ]
+    },
+    {
+      "day": 50,
+      "date": "2026-10-26",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-0",
+          "text": "安排人声，不新增制作环节"
+        }
+      ]
+    },
+    {
+      "day": 51,
+      "date": "2026-10-27",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-0",
+          "text": "混音只做四件事，保留参考曲 A/B"
+        }
+      ]
+    },
+    {
+      "day": 52,
+      "date": "2026-10-28",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-0",
+          "text": "导出草稿，写至少 100 字复盘"
+        }
+      ]
+    },
+    {
+      "day": 53,
+      "date": "2026-10-29",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-0",
+          "text": "隔夜回听，只改一处再导出"
+        }
+      ]
+    },
+    {
+      "day": 54,
+      "date": "2026-10-30",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-5",
+          "text": "音乐没落后才顺带对照 し / ち / ふ / ら / ん"
+        }
+      ]
+    },
+    {
+      "day": 55,
+      "date": "2026-10-31",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "8-1",
+          "text": "设备时间：针对 Top 1 根因写一页改善提案"
+        },
+        {
+          "taskId": "8-0",
+          "text": "核对成品、自己的一处改动和复盘"
+        }
+      ]
+    },
+    {
+      "day": 56,
+      "date": "2026-11-01",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "8-2",
+          "text": "歌 #2 发布并记录链接；周回顾三行"
+        }
+      ]
+    },
+    {
+      "day": 57,
+      "date": "2026-11-02",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "9-0",
+          "text": "从好听元素清单挑 3 个最想用的手法"
+        }
+      ]
+    },
+    {
+      "day": 58,
+      "date": "2026-11-03",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "9-1",
+          "text": "用挑出的手法拼 4 小节自己的动机"
+        }
+      ]
+    },
+    {
+      "day": 59,
+      "date": "2026-11-04",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "9-1",
+          "text": "补成 8 小节并保存 motif.mid"
+        }
+      ]
+    },
+    {
+      "day": 60,
+      "date": "2026-11-05",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "8-3",
+          "text": "Day 60：核对歌 #2、帕累托图和改善提案"
+        },
+        {
+          "taskId": "8-4",
+          "text": "写一句：是否开始享受“做”本身？"
+        }
+      ]
+    },
+    {
+      "day": 61,
+      "date": "2026-11-06",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "9-5",
+          "text": "检查音乐是否落后，若落后则暂停 IPA，不加新兴趣"
+        }
+      ]
+    },
+    {
+      "day": 62,
+      "date": "2026-11-07",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "9-2",
+          "text": "设备时间：把一页提案给主管看，验证先走批准流程"
+        },
+        {
+          "taskId": "9-3",
+          "text": "故障累计到 25 条"
+        }
+      ]
+    },
+    {
+      "day": 63,
+      "date": "2026-11-08",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "9-4",
+          "text": "保存动机的文字记录，MIDI 留本地；周回顾"
+        }
+      ]
+    },
+    {
+      "day": 64,
+      "date": "2026-11-09",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-0",
+          "text": "确认实际夜班日期；未轮到则保留缓冲"
+        }
+      ]
+    },
+    {
+      "day": 65,
+      "date": "2026-11-10",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-1",
+          "text": "非夜班：把 8 小节动机延长成 A 段"
+        }
+      ]
+    },
+    {
+      "day": 66,
+      "date": "2026-11-11",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-1",
+          "text": "非夜班：给 B 段换一个节奏或音区"
+        }
+      ]
+    },
+    {
+      "day": 67,
+      "date": "2026-11-12",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-1",
+          "text": "非夜班：拼 A / B，目标 16–32 小节，不加长度"
+        }
+      ]
+    },
+    {
+      "day": 68,
+      "date": "2026-11-13",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "10-1",
+          "text": "非夜班：保存版本即可；夜班仅墨墨 10 分钟"
+        }
+      ]
+    },
+    {
+      "day": 69,
+      "date": "2026-11-14",
+      "budgetMinutes": 60,
+      "actions": [
+        {
+          "taskId": "10-0",
+          "text": "缓冲或休息，不堆欠账"
+        }
+      ]
+    },
+    {
+      "day": 70,
+      "date": "2026-11-15",
+      "budgetMinutes": 60,
+      "actions": [
+        {
+          "taskId": "10-0",
+          "text": "周回顾：恢复后的第一天仍只做 25 分钟"
+        }
+      ]
+    },
+    {
+      "day": 71,
+      "date": "2026-11-16",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-0",
+          "text": "《不好惹》纯耳朵扒一个片段的主旋律，不查答案"
+        }
+      ]
+    },
+    {
+      "day": 72,
+      "date": "2026-11-17",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-0",
+          "text": "补同一片段和声骨架与曲式，不求全曲复刻"
+        }
+      ]
+    },
+    {
+      "day": 73,
+      "date": "2026-11-18",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-1",
+          "text": "拿一个手法补自己的 8 小节动机"
+        }
+      ]
+    },
+    {
+      "day": 74,
+      "date": "2026-11-19",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-2",
+          "text": "写一段中文词，先能唱，不追完美"
+        }
+      ]
+    },
+    {
+      "day": 75,
+      "date": "2026-11-20",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "11-3",
+          "text": "用 SV 或轻声录一版人声"
+        }
+      ]
+    },
+    {
+      "day": 76,
+      "date": "2026-11-21",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "11-4",
+          "text": "设备时间：故障累计 30 条、术语 60 词"
+        },
+        {
+          "taskId": "11-3",
+          "text": "把词与人声放进工程，留下半成品"
+        }
+      ]
+    },
+    {
+      "day": 77,
+      "date": "2026-11-22",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "11-5",
+          "text": "保存 / commit 可公开的半成品说明；周回顾"
+        },
+        {
+          "taskId": "11-6",
+          "text": "音乐未落后才看一句粤语歌词的协音"
+        }
+      ]
+    },
+    {
+      "day": 78,
+      "date": "2026-11-23",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-0",
+          "text": "编曲先加贝斯与基本鼓，保持 16–32 小节"
+        }
+      ]
+    },
+    {
+      "day": 79,
+      "date": "2026-11-24",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-0",
+          "text": "补一层和声并保存工程，不再扩曲式"
+        }
+      ]
+    },
+    {
+      "day": 80,
+      "date": "2026-11-25",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-1",
+          "text": "复用已跑通的 ComfyUI 模板做封面，不搭新工作流"
+        }
+      ]
+    },
+    {
+      "day": 81,
+      "date": "2026-11-26",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-2",
+          "text": "在 kdenlive 做静止封面 + 音频的最简视频"
+        }
+      ]
+    },
+    {
+      "day": 82,
+      "date": "2026-11-27",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "12-3",
+          "text": "用自己的 Qwen3-Subtitle-Studio 生成并核对字幕"
+        }
+      ]
+    },
+    {
+      "day": 83,
+      "date": "2026-11-28",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "12-4",
+          "text": "设备时间：术语累计到 80 词"
+        },
+        {
+          "taskId": "12-5",
+          "text": "验证已有故障库搜索、备份和脱敏候选稿，不另造工具"
+        },
+        {
+          "taskId": "12-2",
+          "text": "拼齐封面、视频、字幕"
+        }
+      ]
+    },
+    {
+      "day": 84,
+      "date": "2026-11-29",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "12-6",
+          "text": "保存 / commit 封面及制作说明，周回顾"
+        }
+      ]
+    },
+    {
+      "day": 85,
+      "date": "2026-11-30",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-0",
+          "text": "最后一轮混音，只做四件事"
+        }
+      ]
+    },
+    {
+      "day": 86,
+      "date": "2026-12-01",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-0",
+          "text": "导出音频并写至少 100 字 notes.md"
+        }
+      ]
+    },
+    {
+      "day": 87,
+      "date": "2026-12-02",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-0",
+          "text": "隔夜回听，只修最必要的一处"
+        }
+      ]
+    },
+    {
+      "day": 88,
+      "date": "2026-12-03",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-1",
+          "text": "核对故障 v0.1 真实条目与可检索性，准备脱敏候选稿"
+        }
+      ]
+    },
+    {
+      "day": 89,
+      "date": "2026-12-04",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "13-2",
+          "text": "核对发布素材和权限；把链接位置预留好"
+        }
+      ]
+    },
+    {
+      "day": 90,
+      "date": "2026-12-05",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "13-2",
+          "text": "Day 90：发布歌 #3，记录链接"
+        },
+        {
+          "taskId": "13-1",
+          "text": "验收故障库、图和术语表；未达标如实写原因"
+        },
+        {
+          "taskId": "14-3",
+          "text": "Day 90 验收：至少一次闭环是否走通，不以到期代替完成"
+        }
+      ]
+    },
+    {
+      "day": 91,
+      "date": "2026-12-06",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "13-3",
+          "text": "三首作品与复盘汇总；保留待办，不伪造全勾"
+        }
+      ]
+    },
+    {
+      "day": 92,
+      "date": "2026-12-07",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-0",
+          "text": "列出这 14 周确实存在的文件和发布链接"
+        }
+      ]
+    },
+    {
+      "day": 93,
+      "date": "2026-12-08",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-0",
+          "text": "在 REVIEW.md 写卡点与学到的事"
+        }
+      ]
+    },
+    {
+      "day": 94,
+      "date": "2026-12-09",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-1",
+          "text": "回答第一次做完作品的感受，以及声音线是否继续"
+        }
+      ]
+    },
+    {
+      "day": 95,
+      "date": "2026-12-10",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-1",
+          "text": "回答设备改善有没有被看见，记录真实反馈"
+        }
+      ]
+    },
+    {
+      "day": 96,
+      "date": "2026-12-11",
+      "budgetMinutes": 25,
+      "actions": [
+        {
+          "taskId": "14-2",
+          "text": "只定 2027 Q1 一个主目标与最低剂量"
+        }
+      ]
+    },
+    {
+      "day": 97,
+      "date": "2026-12-12",
+      "budgetMinutes": 280,
+      "actions": [
+        {
+          "taskId": "14-4",
+          "text": "决定是否保留 IPA / 音韵学；先看它有没有拖主线"
+        }
+      ]
+    },
+    {
+      "day": 98,
+      "date": "2026-12-13",
+      "budgetMinutes": 155,
+      "actions": [
+        {
+          "taskId": "14-0",
+          "text": "Day 98：归档 REVIEW.md，核对备份"
+        },
+        {
+          "taskId": "14-2",
+          "text": "确认 2027 Q1 计划；未完成项明确保留 / 收缩 / 取消"
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "day": 30,
+      "date": "2026-10-06",
+      "text": "歌 #1 已发布；真实故障 ≥20 条、术语 ≥40 词；如未发布则经本人确认收缩目标"
+    },
+    {
+      "day": 60,
+      "date": "2026-11-05",
+      "text": "歌 #2 已发布；帕累托图与一页改善提案存在"
+    },
+    {
+      "day": 90,
+      "date": "2026-12-05",
+      "text": "歌 #3 与六项交付验收；至少一次完整闭环；如实记录差距"
+    },
+    {
+      "day": 98,
+      "date": "2026-12-13",
+      "text": "14 周收尾：REVIEW.md + 2027 Q1；未完成项明确后续处置"
+    }
+  ],
+  "habits": {
+    "normal": "最低剂量 25 分钟：墨墨 10 分钟 + 耳朵 15 分钟（可用日语歌词听读）；和具体动作重叠时不重复计时。",
+    "night": "只保留墨墨复习 10 分钟；工作中确有故障才顺手记，其余豁免。",
+    "ipa": "可挂靠但不新增时间块；音乐落后就停；每周总量约 30 分钟以内。",
+    "weekend": "周六设备 2.5h + 音乐 2h；周日音乐 2h + 回顾 20 分钟；低能时都可降到 25 分钟。"
+  },
+  "dailyLogs": {},
+  "overrides": [],
+  "history": [
+    {
+      "at": "2026-09-06",
+      "action": "schedule-and-storage",
+      "summary": "校准 Day 0 / Day 30 / 60 / 90 / 98；接通文件存储和只读视图；学习任务未自动勾选"
+    },
+    {
+      "at": "2026-09-06T21:30:44+08:00",
+      "action": "documentation-audit",
+      "ids": [
+        "4-8",
+        "7-0",
+        "8-5"
+      ],
+      "summary": "只校正参考标题、和声表述与发音项编号；不改排期、验收、ID 或学习状态"
+    }
+  ]
+}

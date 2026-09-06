@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>设备故障模式库 · Equipment Failure Mode Library</title>
+<style>
+  :root{
+    --bg:#12161c; --bg2:#181d25; --bg3:#1f252f; --bd:#2b3341; --bd2:#3a4454;
+    --fg:#e6ebf2; --fg2:#a3aec0; --fg3:#6b7686;
+    --ac:#4da3ff; --ac2:#3d8ce0;
+    --ok:#3ecf8e; --warn:#f0b23c; --err:#f2685f; --purple:#a97bf0;
+    --radius:10px;
+  }
+  html[data-theme="light"]{
+    --bg:#f5f7fa; --bg2:#ffffff; --bg3:#eef2f7; --bd:#dde3ec; --bd2:#c6cfdb;
+    --fg:#1a2029; --fg2:#5a6675; --fg3:#8b96a5;
+    --ac:#1f7ae0; --ac2:#1867c0;
+    --ok:#129b62; --warn:#b57a10; --err:#d1483e; --purple:#7d4fd1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:6px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--fg3)}
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:1360px;margin:0 auto;padding:0 18px 80px}
+
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--bg2); border-bottom:1px solid var(--bd);
+    padding:10px 18px; margin-bottom:16px;
+  }
+  .hdr-in{max-width:1360px;margin:0 auto}
+  .hdr-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{font-size:16px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
+  .logo span{color:var(--ac)}
+  .spacer{flex:1}
+  .hdr-btns{display:flex;gap:6px;flex-wrap:wrap}
+
+  .search-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .search{flex:1;min-width:240px;position:relative}
+  .search input{
+    width:100%;padding:9px 34px 9px 32px;background:var(--bg3);
+    border:1px solid var(--bd);border-radius:8px;color:var(--fg);font-size:14px;outline:none;
+  }
+  .search input:focus{border-color:var(--ac)}
+  .search .ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--fg3);font-size:13px}
+  .search .clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--fg3);cursor:pointer;font-size:16px;line-height:1;padding:2px 4px}
+  .search .clr:hover{color:var(--fg)}
+
+  .filters{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center}
+  .chip{
+    padding:4px 11px;background:var(--bg3);border:1px solid var(--bd);border-radius:20px;
+    font-size:12px;color:var(--fg2);cursor:pointer;user-select:none;white-space:nowrap;
+  }
+  .chip:hover{border-color:var(--bd2);color:var(--fg)}
+  .chip.on{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+  .flabel{font-size:12px;color:var(--fg3);margin-right:2px}
+
+  /* ---------- buttons ---------- */
+  button,.btn{
+    padding:7px 13px;background:var(--bg3);border:1px solid var(--bd);border-radius:7px;
+    color:var(--fg);font-size:13px;cursor:pointer;font-family:inherit;transition:.12s;white-space:nowrap;
+  }
+  button:hover,.btn:hover{background:var(--bd);border-color:var(--bd2)}
+  .btn-pri{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+  .btn-pri:hover{background:var(--ac2);border-color:var(--ac2)}
+  .btn-danger{color:var(--err)}
+  .btn-danger:hover{background:var(--err);color:#fff;border-color:var(--err)}
+  .btn-sm{padding:4px 9px;font-size:12px;border-radius:6px}
+  .btn-ghost{background:transparent}
+
+  /* ---------- stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+  .stat{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:12px 14px}
+  .stat .k{font-size:11px;color:var(--fg3);letter-spacing:.5px;text-transform:uppercase}
+  .stat .v{font-size:24px;font-weight:700;margin-top:2px;line-height:1.2}
+  .stat .s{font-size:11px;color:var(--fg3);margin-top:1px}
+  .stat.a .v{color:var(--ac)} .stat.r .v{color:var(--err)}
+  .stat.o .v{color:var(--ok)} .stat.w .v{color:var(--warn)}
+
+  .panels{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+  @media(max-width:860px){.panels{grid-template-columns:1fr}}
+  .panel{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);padding:13px 15px}
+  .panel h3{font-size:12px;color:var(--fg3);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px}
+  .bar-row .nm{width:80px;flex-shrink:0;color:var(--fg2);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bar-row .tr{flex:1;background:var(--bg3);border-radius:4px;height:16px;overflow:hidden}
+  .bar-row .fi{height:100%;background:var(--ac);border-radius:4px;transition:width .3s}
+  .bar-row .fi.rec{background:var(--err)}
+  .bar-row .ct{width:38px;flex-shrink:0;color:var(--fg2);text-align:right;font-variant-numeric:tabular-nums}
+  .empty-hint{color:var(--fg3);font-size:12px;padding:6px 0}
+
+  /* ---------- list ---------- */
+  .list-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .count{font-size:13px;color:var(--fg2)}
+  .count b{color:var(--fg)}
+
+  .card{
+    background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius);
+    margin-bottom:9px;overflow:hidden;transition:.12s;
+  }
+  .card:hover{border-color:var(--bd2)}
+  .card.open{border-color:var(--ac)}
+  .chead{padding:11px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:10px}
+  .cdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px}
+  .cmain{flex:1;min-width:0}
+  .ctitle{font-weight:600;font-size:14px;line-height:1.45}
+  .cmeta{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px;align-items:center}
+  .tag{
+    padding:1.5px 7px;background:var(--bg3);border:1px solid var(--bd);border-radius:4px;
+    font-size:11px;color:var(--fg2);white-space:nowrap;
+  }
+  .tag.eq{color:var(--ac);border-color:var(--ac);background:transparent}
+  .tag.cat{color:var(--purple);border-color:var(--purple);background:transparent}
+  .tag.rec{color:var(--err);border-color:var(--err);background:transparent;font-weight:600}
+  .tag.ok{color:var(--ok);border-color:var(--ok);background:transparent}
+  .tag.date{color:var(--fg3)}
+  .cside{display:flex;gap:4px;flex-shrink:0;align-items:center}
+  .cbody{
+    display:none;padding:0 14px 14px;border-top:1px solid var(--bd);
+    margin-top:0;padding-top:13px;
+  }
+  .card.open .cbody{display:block}
+  .fld{margin-bottom:11px}
+  .fld .lb{font-size:11px;color:var(--fg3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+  .fld .vl{font-size:13.5px;color:var(--fg);white-space:pre-wrap;word-break:break-word}
+  .fld .vl.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+  .fld .vl:empty::after{content:"—";color:var(--fg3)}
+  .fld-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}
+  .cfoot{display:flex;gap:6px;margin-top:12px;padding-top:11px;border-top:1px dashed var(--bd)}
+
+  .sens{background:rgba(242,104,95,.1);border-left:3px solid var(--err);padding:6px 10px;border-radius:0 5px 5px 0}
+
+  /* ---------- modal ---------- */
+  .mask{
+    position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;
+    display:none;align-items:flex-start;justify-content:center;padding:24px 12px;overflow-y:auto;
+  }
+  .mask.on{display:flex}
+  .modal{
+    background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
+    width:100%;max-width:860px;box-shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  .mhead{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+  .mhead h2{font-size:16px;font-weight:700}
+  .mbody{padding:16px 18px;max-height:calc(100vh - 220px);overflow-y:auto}
+  .mfoot{padding:12px 18px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+  .x{margin-left:auto;background:transparent;border:none;font-size:22px;color:var(--fg3);cursor:pointer;padding:0 4px;line-height:1}
+  .x:hover{color:var(--fg);background:transparent}
+
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.form-grid{grid-template-columns:1fr}}
+  .fg{display:flex;flex-direction:column;gap:4px}
+  .fg.full{grid-column:1/-1}
+  .fg label{font-size:12px;color:var(--fg2);font-weight:500;display:flex;align-items:center;gap:5px}
+  .fg label .warn-dot{color:var(--err);font-size:10px}
+  .fg input,.fg select,.fg textarea{
+    padding:8px 10px;background:var(--bg3);border:1px solid var(--bd);border-radius:7px;
+    color:var(--fg);font-size:13.5px;font-family:inherit;outline:none;width:100%;
+  }
+  .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ac)}
+  .fg textarea{resize:vertical;min-height:64px;line-height:1.55}
+  .fg .hint{font-size:11px;color:var(--fg3)}
+  .sec-title{grid-column:1/-1;font-size:12px;color:var(--ac);font-weight:700;letter-spacing:.6px;
+    text-transform:uppercase;margin-top:6px;padding-bottom:5px;border-bottom:1px solid var(--bd)}
+
+  /* ---------- misc ---------- */
+  .banner{
+    background:rgba(240,178,60,.12);border:1px solid var(--warn);color:var(--warn);
+    padding:9px 13px;border-radius:8px;margin-bottom:14px;font-size:13px;
+  }
+  .banner.err{background:rgba(242,104,95,.12);border-color:var(--err);color:var(--err)}
+  .banner.info{background:rgba(77,163,255,.1);border-color:var(--ac);color:var(--ac)}
+  .banner b{font-weight:700}
+  .banner button{margin-left:8px;padding:2px 8px;font-size:12px}
+
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+    background:var(--ok);color:#fff;padding:10px 20px;border-radius:8px;font-size:13.5px;font-weight:600;
+    z-index:500;opacity:0;transition:.25s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.35);
+  }
+  .toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+
+  .empty{text-align:center;padding:60px 20px;color:var(--fg3)}
+  .empty .big{font-size:40px;margin-bottom:10px;opacity:.5}
+  .empty p{font-size:14px;margin-bottom:4px}
+
+  kbd{background:var(--bg3);border:1px solid var(--bd2);border-bottom-width:2px;border-radius:4px;
+    padding:1px 5px;font-size:11px;font-family:ui-monospace,monospace;color:var(--fg2)}
+
+  @media print{
+    header,.hdr-btns,.cside,.cfoot,.toast,.banner,.stats{display:none!important}
+    body{background:#fff;color:#000}
+    .card{break-inside:avoid;border-color:#999}
+    .cbody{display:block!important}
+    .panel{break-inside:avoid}
+  }
+button[hidden]{display:none}
+</style>
+</head>
+<body data-private="false">
+
+<header>
+  <div class="hdr-in">
+    <div class="hdr-top">
+      <div class="logo">设备故障<span>模式库</span></div>
+      <div class="spacer"></div>
+      <div class="hdr-btns">
+        <button class="btn-pri" onclick="openEditor()">＋ 新增记录</button>
+        <button id="connBtn" onclick="fs.connect()">连接项目 JSON（可选）</button>
+        <button onclick="fs.reload()">重新载入</button>
+        <button onclick="exportJSON()">备份（原始）</button>
+        <button onclick="document.getElementById('impFile').click()">导入为草稿</button>
+        <button onclick="exportSanitized()">🔒 脱敏导出</button>
+        <button onclick="exportCSV()">CSV</button>
+        <button onclick="exportMD()">Markdown</button>
+        <button class="btn-ghost" onclick="openSettings()">⚙</button>
+        <button class="btn-ghost" onclick="toggleTheme()" id="themeBtn">🌙</button>
+      </div>
+    </div>
+    <div class="search-row">
+      <div class="search">
+        <span class="ico">🔍</span>
+        <input id="q" placeholder="搜索：现象 / 报警码 / 根因 / 处理方式 / 排查路径…（Ctrl+K）" oninput="render()">
+        <span class="clr" onclick="clearSearch()" id="clrBtn" style="display:none">×</span>
+      </div>
+    </div>
+    <div class="filters" id="filters"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="sourceStatus" class="banner info"></div>
+  <div id="demoWarn"></div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="panels">
+    <div class="panel">
+      <h3>真实故障类别分布（不等于根因已证实）</h3>
+      <div id="chartCat"></div>
+    </div>
+    <div class="panel">
+      <h3>机台类型分布 · 仅统计真实记录</h3>
+      <div id="chartEq"></div>
+    </div>
+  </div>
+
+  <div class="list-head">
+    <div class="count" id="count"></div>
+    <div class="spacer"></div>
+    <button class="btn-sm" onclick="toggleAll(true)">全部展开</button>
+    <button class="btn-sm" onclick="toggleAll(false)">全部收起</button>
+    <select id="sortSel" onchange="render()" style="padding:4px 8px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;color:var(--fg);font-size:12px">
+      <option value="date_desc">最近发生</option>
+      <option value="date_asc">最早发生</option>
+      <option value="downtime_desc">停机时长↓</option>
+      <option value="rec_first">复发优先</option>
+      <option value="created_desc">最近录入</option>
+    </select>
+  </div>
+
+  <div id="list"></div>
+</div>
+
+<!-- ============ Editor Modal ============ -->
+<div class="mask" id="editMask" onclick="if(event.target===this)closeEditor()">
+  <div class="modal">
+    <div class="mhead">
+      <h2 id="editTitle">新增故障记录</h2>
+      <button class="x" onclick="closeEditor()">×</button>
+    </div>
+    <div class="mbody">
+      <div class="form-grid">
+        <div class="sec-title">① 基本信息</div>
+        <div class="fg">
+          <label>发生日期</label>
+          <input type="date" id="f_date"><div class="hint" id="dateHint">未知日期留空；不会默认伪造成录入日。</div>
+        </div>
+        <div class="fg">
+          <label>机台类型</label>
+          <select id="f_eqType"></select>
+        </div>
+        <div class="fg">
+          <label>机台型号 <span class="warn-dot">●</span> 敏感</label>
+          <input id="f_eqModel" placeholder="如：TEL Alpha-8SE / AMAT Centura（脱敏导出时会删除）">
+          <div class="hint">留空更利于分享</div>
+        </div>
+        <div class="fg">
+          <label>机台编号 <span class="warn-dot">●</span> 敏感</label>
+          <input id="f_eqId" placeholder="如：DF01-03（脱敏导出时会删除）">
+        </div>
+        <div class="fg">
+          <label>报警代码 <span class="warn-dot">●</span> 敏感</label>
+          <input id="f_alarmCode" placeholder="如：E-1023 / ALM_TC_DEV（脱敏导出时会删除）">
+        </div>
+        <div class="fg">
+          <label>故障类别</label>
+          <select id="f_causeCategory"></select>
+        </div>
+
+        <div class="sec-title">② 现象与条件</div>
+        <div class="fg full">
+          <label>现象描述 <span class="warn-dot">●</span> 敏感</label>
+          <textarea id="f_symptom" placeholder="机台报什么？屏幕上显示什么？现场听到/看到/闻到什么？"></textarea>
+        </div>
+        <div class="fg full">
+          <label>发生条件 <span class="warn-dot">●</span> 敏感</label>
+          <textarea id="f_condition" placeholder="哪个 recipe / 哪个步骤 / 什么频率 / PM 后多久 / 是否只在特定时段（脱敏导出时会删除）"></textarea>
+        </div>
+
+        <div class="sec-title">③ 排查与根因</div>
+        <div class="fg full">
+          <label>排查路径 <span style="color:var(--ok)">★ 最有价值的字段</span></label>
+          <textarea id="f_troubleshootPath" placeholder="1 → 2 → 3，我实际怎么查的。&#10;【重要】请把走错的路也记下来 —— 排除法本身就是知识。"></textarea>
+        </div>
+        <div class="fg full">
+          <label>根因</label>
+          <textarea id="f_rootCause" placeholder="真正的物理/机理层面的原因。不是『零件坏了』，而是『为什么它会坏』"></textarea>
+        </div>
+        <div class="fg">
+          <label>根因分类标签</label>
+          <input id="f_rootCauseTag" placeholder="如：热偶老化 / 密封失效 / matcher 漂移" list="tagList">
+          <datalist id="tagList"></datalist>
+        </div>
+        <div class="fg">
+          <label>是否复发</label>
+          <select id="f_isRecurring">
+            <option value="">待确认</option>
+            <option value="0">否（首次）</option>
+            <option value="1">是（重复出现）</option>
+          </select>
+        </div>
+
+        <div class="sec-title">④ 处理与预防</div>
+        <div class="fg full">
+          <label>处理措施</label>
+          <textarea id="f_action" placeholder="换了什么 / 调了什么 / 复位了什么"></textarea>
+        </div>
+        <div class="fg full">
+          <label>预防 / 改善建议 <span style="color:var(--ok)">★</span></label>
+          <textarea id="f_prevention" placeholder="改 PM 周期？加检查项？换备件品牌？改 recipe？—— 这一栏是改善提案的来源"></textarea>
+        </div>
+        <div class="fg">
+          <label>停机时长（分钟）</label>
+          <input type="number" id="f_downtimeMin" min="0" placeholder="0">
+        </div>
+        <div class="fg">
+          <label>是否已彻底解决</label>
+          <select id="f_isSolved">
+            <option value="">待确认</option>
+            <option value="1">是</option>
+            <option value="0">否（临时处理 / 待观察）</option>
+          </select>
+        </div>
+        <div class="fg full">
+          <label>相关文件 / 照片路径 <span class="warn-dot">●</span> 敏感</label>
+          <input id="f_links" placeholder="本地路径或内部文档编号（脱敏导出时会删除）">
+        </div>
+        <div class="fg full">
+          <label>备注</label>
+          <textarea id="f_notes" placeholder="其他想记的"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn-danger" onclick="deleteCurrent()" id="delBtn" style="display:none;margin-right:auto">删除这条</button>
+      <button onclick="closeEditor()">取消</button>
+      <button class="btn-pri" onclick="saveItem()">保存（Ctrl+S）</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Settings Modal ============ -->
+<div class="mask" id="setMask" onclick="if(event.target===this)closeSettings()">
+  <div class="modal" style="max-width:600px">
+    <div class="mhead">
+      <h2>设置</h2>
+      <button class="x" onclick="closeSettings()">×</button>
+    </div>
+    <div class="mbody">
+      <div class="fg" style="margin-bottom:16px">
+        <label>机台类型列表（每行一个）</label>
+        <textarea id="s_eqTypes" style="min-height:110px"></textarea>
+        <div class="hint">按你实际负责的机台改。改完点"保存设置"。</div>
+      </div>
+      <div class="fg" style="margin-bottom:16px">
+        <label>故障类别列表（每行一个）</label>
+        <textarea id="s_categories" style="min-height:170px"></textarea>
+      </div>
+      <div class="fg" style="margin-bottom:16px">
+        <label>脱敏词表（每行一个，导出时自动替换为 ***）</label>
+        <textarea id="s_sensitive" style="min-height:90px" placeholder="填入你的机型名、recipe 名、内部编号等"></textarea>
+        <div class="hint">固定敏感字段的值与词表都会从正文替换；ID / 时间戳 / 配置 / 历史不导出。自由文本仍须人工复核。</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--bd)">
+        <button onclick="loadSamples()">载入 3 条示例（不计成果）</button>
+        <button class="btn-danger" onclick="clearAll()">清空全部数据</button>
+        <button onclick="fs.enableDraft()">临时编辑（不写文件）</button>
+        <button id="restoreBtn" onclick="fs.restoreDraft()" hidden>恢复浏览器旧草稿</button>
+        <button onclick="window.print()">打印 / 存为 PDF</button>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button onclick="closeSettings()">取消</button>
+      <button class="btn-pri" onclick="saveSettings()">保存设置</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="impFile" accept=".json" style="display:none" >
+<div class="toast" id="toast"></div>
+
+<script type="application/json" id="project-data">
+{
+  "schema": "self-evolution/faults/v1",
+  "meta": {
+    "title": "设备故障模式库",
+    "timezone": "Asia/Shanghai",
+    "revision": 0,
+    "updated": "2026-09-06",
+    "nextId": 1,
+    "stateOwner": "data/faults.local.json"
+  },
+  "items": [],
+  "config": {
+    "eqTypes": [
+      "立式炉管",
+      "卧式炉管",
+      "高温退火",
+      "RTA",
+      "激光退火",
+      "PECVD",
+      "SACVD",
+      "溅镀",
+      "蒸镀",
+      "离子注入",
+      "其他"
+    ],
+    "categories": [
+      "真空系统",
+      "气体与化学输送",
+      "温控与热工",
+      "RF与等离子体",
+      "传片与自动化",
+      "电气与控制",
+      "激光系统",
+      "量测与检测",
+      "耗材与备件",
+      "工艺相关",
+      "软件与通信",
+      "厂务动力",
+      "其他"
+    ],
+    "sensitive": []
+  },
+  "history": []
+}
+</script><!-- PROJECT-DATA:END -->
+<script>
+/* FILE-STORE:BEGIN */
+// Shared source, embedded into each standalone HTML by sync-plan.py.
+// File JSON is authoritative. Cache is an explicit, recoverable draft only.
+const deepCopy = value => JSON.parse(JSON.stringify(value));
+const escapeHTML = value => String(value == null ? '' : value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function projectToday() {
+  const parts = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map(p => [p.type,p.value]));
+  return values.year+'-'+values.month+'-'+values.day;
+}
+function projectStamp() { return new Date().toISOString(); }
+function dayNumber(ds, origin) { return Math.round((Date.parse(ds+'T00:00:00Z')-Date.parse(origin+'T00:00:00Z'))/86400000); }
+function addDays(ds, n) { return new Date(Date.parse(ds+'T00:00:00Z')+n*86400000).toISOString().slice(0,10); }
+function validDate(ds) { return typeof ds==='string' && /^\d{4}-\d{2}-\d{2}$/.test(ds) && !ds.startsWith('0000-') && Number.isFinite(Date.parse(ds+'T00:00:00Z')) && addDays(ds,0)===ds; }
+function must(test, message) { if(!test) throw new Error(message); }
+function recordEvent(data, action, details={}) {
+  if(!Array.isArray(data.history)) data.history=[];
+  data.history.push({at:projectStamp(),action,...details});
+}
+function planStats(p) {
+  const list=p.weeks.flatMap(w=>w.tasks), done=list.filter(t=>t.done).length;
+  return {totalTasks:list.length,doneTasks:done,pct:list.length?Math.round(done/list.length*100):0,
+          delivDone:p.deliverables.filter(d=>d.done).length,delivTotal:p.deliverables.length};
+}
+const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const hasOwn = (obj,key) => Object.prototype.hasOwnProperty.call(obj,key);
+const integerNumber = (value,minimum=0) => Number.isSafeInteger(value) && value>=minimum;
+const MUSIC_RELEASE_IDS = new Set(['4-5','8-2','13-2']);
+function validateState(item,asOf,label='记录') {
+  must(isRecord(item),label+' 必须为对象');
+  must(typeof (hasOwn(item,'done')?item.done:false)==='boolean',label+'.done 必须为布尔值');
+  must(typeof (hasOwn(item,'note')?item.note:'')==='string',label+'.note 必须为文本');
+  const evidence=hasOwn(item,'evidence')?item.evidence:[];
+  must(Array.isArray(evidence)&&evidence.every(x=>typeof x==='string'),label+'.evidence 必须为文本数组');
+  must(item.completedOn==null||typeof item.completedOn==='string',label+'.completedOn 必须为日期或 null');
+  if(item.completedOn) must(validDate(item.completedOn)&&item.completedOn<=asOf&&item.done===true,label+' 的完成日期无效、在未来或尚未完成');
+}
+function validateDailyState(checkins,logs,meta,asOf,allowDuplicates=false) {
+  must(Array.isArray(checkins),'checkins 必须为日期数组');
+  const validActual=ds=>validDate(ds)&&meta.day0<=ds&&ds<=meta.end&&ds<=asOf;
+  must(checkins.every(validActual),'打卡日期必须在本计划内且不能在未来');
+  must(allowDuplicates||new Set(checkins).size===checkins.length,'打卡日期重复');
+  must(isRecord(logs),'dailyLogs 必须为日期索引对象');
+  Object.entries(logs).forEach(([ds,log])=>{
+    must(validActual(ds),'每日记录日期必须在本计划内且不能在未来');
+    must(isRecord(log)&&typeof (hasOwn(log,'note')?log.note:'')==='string','每日记录 / 备注格式无效');
+    if(hasOwn(log,'minutes'))must(integerNumber(log.minutes),'每日分钟必须为非负整数；未知时不填');
+  });
+}
+function validatePlan(p,asOf=projectToday()) {
+  must(validDate(asOf),'校验基准日期无效');
+  must(isRecord(p)&&p.schema==='self-evolution/plan90/v2','不是 v2 进度文件；旧备份请用导入 / agent 合并。');
+  const m=p.meta;
+  must(isRecord(m)&&validDate(m.day0)&&validDate(m.day1)&&validDate(m.end),'计划日期无效');
+  must(dayNumber(m.day1,m.day0)===1,'Day 1 必须是 Day 0 的次日');
+  must(integerNumber(m.totalWeeks,1)&&integerNumber(m.totalDays,1),'周数 / 总天数必须为正整数');
+  must(Array.isArray(p.weeks)&&p.weeks.length===m.totalWeeks&&m.totalDays===m.totalWeeks*7,'周数 / 总天数不一致');
+  must(dayNumber(m.end,m.day0)===m.totalDays,'结束日期与总天数不一致');
+  must(integerNumber(m.revision)&&typeof m.updated==='string','revision / updated 无效');
+  must(validDate(m.day90)&&dayNumber(m.day90,m.day0)===90,'Day 90 日期不一致');
+  if(hasOwn(m,'day98'))must(m.day98===m.end,'day98 与 end 不一致');
+  must(isRecord(p.tracks)&&Object.values(p.tracks).every(v=>typeof v==='string'&&v.length>0),'轨道标签必须为非空文本');
+  const seen=new Set(),index=new Map();
+  function task(t){
+    must(isRecord(t)&&typeof t.id==='string'&&/^[A-Za-z0-9_-]+$/.test(t.id)&&!seen.has(t.id),'重复或无效任务 ID');
+    seen.add(t.id);must(hasOwn(t,'done')&&typeof t.text==='string','任务缺少状态 / 文字');validateState(t,asOf,t.id);
+  }
+  p.weeks.forEach((w,i)=>{
+    must(isRecord(w)&&integerNumber(w.n,1)&&w.n===i+1&&validDate(w.start)&&validDate(w.end)&&
+      dayNumber(w.start,m.day0)===i*7+1&&dayNumber(w.end,m.day0)===(i+1)*7,'每周日期不连续');
+    must(Array.isArray(w.tasks)&&typeof (hasOwn(w,'note')?w.note:'')==='string'&&typeof w.title==='string'&&typeof w.days==='string','周任务 / 标题 / 日号 / 备注无效');
+    w.tasks.forEach(t=>{
+      task(t);index.set(t.id,t);
+      must(typeof t.track==='string'&&hasOwn(p.tracks,t.track),'任务轨道无效');
+      must(validDate(t.scheduledDate)&&validDate(t.dueDate)&&m.day0<=t.scheduledDate&&t.scheduledDate<=t.dueDate&&t.dueDate<=m.end,'任务排期越界或倒置');
+      must(typeof (hasOwn(t,'optional')?t.optional:false)==='boolean','optional 必须为布尔值');
+    });
+  });
+  must(Array.isArray(p.deliverables),'缺少交付物数组');
+  p.deliverables.forEach(t=>{task(t);must(validDate(t.dueDate)&&m.day0<=t.dueDate&&t.dueDate<=m.end,'交付物截止日不在计划内');});
+  index.forEach(t=>{const parents=hasOwn(t,'dependsOn')?t.dependsOn:[];
+    must(Array.isArray(parents)&&parents.every(id=>typeof id==='string'&&index.has(id)&&id!==t.id),'前置任务 ID 无效');});
+  must(Array.isArray(p.dailyPlan)&&p.dailyPlan.length===m.totalDays+1,'每日安排缺日');
+  p.dailyPlan.forEach((d,i)=>{
+    must(isRecord(d)&&integerNumber(d.day)&&d.day===i&&validDate(d.date)&&dayNumber(d.date,m.day0)===i,'每日日期不连续');
+    must(integerNumber(d.budgetMinutes)&&Array.isArray(d.actions),'每日预算 / 动作无效');
+    d.actions.forEach(a=>must(isRecord(a)&&typeof a.taskId==='string'&&index.has(a.taskId)&&typeof a.text==='string','每日动作引用无效'));
+  });
+  validateDailyState(p.checkins,hasOwn(p,'dailyLogs')?p.dailyLogs:{},m,asOf);
+  const overrides=hasOwn(p,'overrides')?p.overrides:[];
+  must(Array.isArray(overrides),'overrides 必须为数组');
+  overrides.forEach(o=>must(isRecord(o)&&validDate(o.start)&&validDate(o.end)&&m.day0<=o.start&&o.start<=o.end&&o.end<=m.end&&
+    ['night','low'].includes(o.mode)&&typeof (hasOwn(o,'note')?o.note:'')==='string','豁免日期或模式无效'));
+  must(Array.isArray(p.checkpoints),'缺少复检点数组');
+  p.checkpoints.forEach(c=>must(isRecord(c)&&integerNumber(c.day)&&c.day<=m.totalDays&&validDate(c.date)&&dayNumber(c.date,m.day0)===c.day&&typeof c.text==='string','复检日期无效'));
+  ['history','_orphans'].forEach(k=>must(!hasOwn(p,k)||Array.isArray(p[k]),k+' 必须为数组'));
+  const stats=planStats(p);must(isRecord(p.stats)&&Object.keys(p.stats).length===Object.keys(stats).length&&
+    Object.keys(stats).every(k=>integerNumber(p.stats[k])&&p.stats[k]===stats[k]),'统计与任务状态不符');
+}
+const faultTextFields=['date','eqType','eqModel','eqId','alarmCode','causeCategory','symptom','condition','troubleshootPath','rootCause','rootCauseTag','action','prevention','links','notes'];
+function validateFaults(d) {
+  must(isRecord(d)&&d.schema==='self-evolution/faults/v1'&&Array.isArray(d.items),'不是故障库 JSON');
+  must(isRecord(d.meta)&&integerNumber(d.meta.revision),'缺少有效 revision');
+  if(hasOwn(d.meta,'nextId'))must(integerNumber(d.meta.nextId,1),'nextId 必须为正整数');
+  const seen=new Set();
+  d.items.forEach(i=>{
+    must(isRecord(i)&&typeof i.id==='string'&&/^[A-Za-z0-9_-]+$/.test(i.id)&&!seen.has(i.id),'故障 ID 重复或无效');seen.add(i.id);
+    faultTextFields.forEach(f=>must(i[f]===undefined||typeof i[f]==='string','故障字段必须为文字：'+f));
+    if(i.date) must(validDate(i.date)||(/^\d{4}-\d{2}$/.test(i.date)&&validDate(i.date+'-01')),'故障日期无效');
+    ['isRecurring','isSolved','isSample'].forEach(k=>must(i[k]==null||typeof i[k]==='boolean','布尔状态无效：'+k));
+    must(i.downtimeMin==null||(typeof i.downtimeMin==='number'&&Number.isFinite(i.downtimeMin)&&i.downtimeMin>=0),'停机分钟无效');
+  });
+  ['eqTypes','categories','sensitive'].forEach(k=>must(isRecord(d.config)&&Array.isArray(d.config[k])&&d.config[k].every(x=>typeof x==='string'),'配置列表无效：'+k));
+}
+function mergePlanNotes(a,b) {
+  a=a||'';b=b||'';
+  return !b||('\n'+a+'\n').includes('\n'+b+'\n')?a:a+(a?'\n':'')+b;
+}
+function sameJSON(a,b) {
+  if(a===b)return true;
+  if(Array.isArray(a)&&Array.isArray(b))return a.length===b.length&&a.every((v,i)=>sameJSON(v,b[i]));
+  if(isRecord(a)&&isRecord(b))return Object.keys(a).length===Object.keys(b).length&&Object.keys(a).every(k=>hasOwn(b,k)&&sameJSON(a[k],b[k]));
+  return false;
+}
+function convertLegacy(d,current,asOf=projectToday()) {
+  // A v2 browser import is an explicitly opened snapshot, not a master merge.
+  if(isRecord(d)&&d.schema==='self-evolution/plan90/v2'){validatePlan(d,asOf);return deepCopy(d);}
+  validatePlan(current,asOf);
+  must(isRecord(d)&&(d.schema===undefined||d.schema===null||d.schema==='self-evolution/plan90/v1'),'不认识的进度备份');
+  let imported=[],deliveries=[],weekNotes=new Map();
+  if(d.schema==='self-evolution/plan90/v1'){
+    must(Array.isArray(d.weeks),'旧备份缺少 weeks 数组');const seenWeeks=new Set();
+    d.weeks.forEach(w=>{
+      must(isRecord(w)&&integerNumber(w.n,1)&&Array.isArray(w.tasks),'导入周格式无效');
+      const n=String(w.n);must(!seenWeeks.has(n),'导入周次重复');seenWeeks.add(n);
+      must(typeof (hasOwn(w,'note')?w.note:'')==='string','导入周备注必须为文本');
+      imported.push(...w.tasks);if(w.note)weekNotes.set(n,w.note);
+    });
+    deliveries=hasOwn(d,'deliverables')?d.deliverables:[];must(Array.isArray(deliveries),'导入交付物必须为数组');
+  }else{
+    const done=d.done,notes=hasOwn(d,'notes')?d.notes:{},deliv=hasOwn(d,'deliv')?d.deliv:{};
+    must(isRecord(done)&&isRecord(notes)&&isRecord(deliv),'不是受支持的旧浏览器状态');
+    must(Object.values(notes).every(v=>typeof v==='string'),'旧备注必须是文本索引');
+    weekNotes=new Map(Object.entries(notes).filter(([k])=>/^[1-9][0-9]*$/.test(k)));
+    const noteIds=Object.keys(notes).filter(k=>!weekNotes.has(k)&&!hasOwn(deliv,k));
+    const ids=[...new Set(Object.keys(done).concat(noteIds))];
+    imported=ids.map(id=>({id,done:hasOwn(done,id)?done[id]:false,note:hasOwn(notes,id)?notes[id]:''}));
+    deliveries=Object.entries(deliv).map(([id,done])=>({id,done,note:hasOwn(notes,id)?notes[id]:''}));
+  }
+  const seen=new Set();
+  imported.concat(deliveries).forEach(t=>{
+    must(isRecord(t)&&typeof t.id==='string'&&/^[A-Za-z0-9_-]+$/.test(t.id)&&!seen.has(t.id),'导入中存在重复 / 无效 ID');
+    seen.add(t.id);validateState(t,asOf,'导入记录 '+t.id);
+  });
+  const checkins=hasOwn(d,'checkins')?d.checkins:[],logs=hasOwn(d,'dailyLogs')?d.dailyLogs:{},orphans=hasOwn(d,'_orphans')?d._orphans:[];
+  validateDailyState(checkins,logs,current.meta,asOf,true);
+  must(Array.isArray(orphans),'_orphans 必须为数组');orphans.forEach(t=>validateState(t,asOf,'导入归档记录'));
+  const p=deepCopy(current),idx=new Map(p.weeks.flatMap(w=>w.tasks).concat(p.deliverables).map(t=>[t.id,t]));
+  if(!hasOwn(p,'_orphans'))p._orphans=[];
+  const keep=t=>{if(!p._orphans.some(old=>sameJSON(old,t)))p._orphans.push(deepCopy(t));};
+  imported.concat(deliveries).forEach(t=>{
+    const to=idx.get(t.id);if(!to){keep(t);return;}
+    to.done=to.done||(t.done===true);to.note=mergePlanNotes(to.note,t.note);
+    to.evidence=[...new Set((to.evidence||[]).concat(t.evidence||[]))];
+    if(to.done&&!to.completedOn&&t.completedOn)to.completedOn=t.completedOn;
+  });
+  const weeks=new Map(p.weeks.map(w=>[String(w.n),w]));
+  weekNotes.forEach((note,n)=>{if(weeks.has(n)){const w=weeks.get(n);w.note=mergePlanNotes(w.note,note);}
+    else if(note)keep({id:'week-'+n,kind:'week-note',note});});
+  p.checkins=[...new Set(p.checkins.concat(checkins))].sort();
+  if(!hasOwn(p,'dailyLogs'))p.dailyLogs={};
+  Object.entries(logs).forEach(([ds,log])=>{
+    const to=hasOwn(p.dailyLogs,ds)?p.dailyLogs[ds]:(p.dailyLogs[ds]={});
+    to.note=mergePlanNotes(to.note,log.note);Object.entries(log).forEach(([k,v])=>{if(!hasOwn(to,k))Object.defineProperty(to,k,{value:deepCopy(v),enumerable:true,writable:true,configurable:true});});
+  });
+  orphans.forEach(keep);p.stats=planStats(p);validatePlan(p,asOf);
+  recordEvent(p,'legacy-import-draft',{summary:'旧备份经整包校验后合并为草稿；按 ID 保留状态与备注，不改当前排期'});
+  return p;
+}
+
+function sampleItem(i) { return !!i.isSample||String(i.id).startsWith('sample')||String(i.symptom||'').includes('【示例'); }
+function downloadText(name,text,mime='application/json') {
+  const url=URL.createObjectURL(new Blob([text],{type:mime})), a=document.createElement('a');
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},1000);
+}
+class ProjectFileStore {
+  constructor({initial,fileHint,validator,onChange,normalize=d=>d,convert=d=>d,legacyKey=''}) {
+    validator(initial);
+    this.data=deepCopy(initial);this.fileHint=fileHint;this.validator=validator;this.onChange=onChange;
+    this.normalize=normalize;this.convert=convert;this.legacyKey=legacyKey;
+    this.mode='snapshot';this.handle=null;this.baseRaw=null;this.queue=Promise.resolve();
+    this.cacheKey='selfevo_draft_'+initial.schema;this.cacheOK=true;this.cached=null;this.legacy=null;
+    try{this.cached=JSON.parse(localStorage.getItem(this.cacheKey)||'null');this.legacy=JSON.parse(localStorage.getItem(legacyKey)||'null');}
+    catch(e){this.cacheOK=false;}
+  }
+  status(error='') {
+    const el=document.getElementById('sourceStatus');
+    if(!el)return;
+    const rev='revision '+this.data.meta.revision+' · '+this.data.meta.updated;
+    let text=this.mode==='file'?'已写入 / 连接文件：'+this.handle.name+' · '+rev:
+      this.mode==='draft'?'浏览器草稿（未写入项目）：'+rev+'。请导出后交给 agent 合并。':
+      '文件快照（只读） · '+rev+'。直接告诉 agent 查询 / 勾选即可；agent 同步后重开此文件。';
+    if(error)text=error+' 当前修改未写入文件。可先重新载入，再重试。';
+    if(this.mode==='draft'&&!this.cacheOK)text+=' 此环境也不能保存缓存，关闭会丢失草稿，请先导出。';
+    el.textContent=text;el.className='banner '+(error?'err':this.mode==='draft'?'':'info');
+    const b=document.getElementById('connBtn');if(b)b.textContent=this.mode==='file'?'重新选择文件':'连接项目 JSON（可选）';
+    const restore=document.getElementById('restoreBtn');if(restore)restore.hidden=!(this.cached||this.legacy);
+  }
+  refresh() { this.onChange(this.data);this.status(); }
+  async connect() {
+    if(!window.showOpenFilePicker){this.status('此浏览器不能直接写文件。可由 agent 操作，或临时编辑后导出 JSON。');return false;}
+    if(this.mode==='draft'&&!confirm('连接会读取所选文件并替换当前草稿。未导出的草稿可能丢失；继续？'))return false;
+    try{
+      await this.queue.catch(()=>{});
+      const [h]=await window.showOpenFilePicker({types:[{description:'项目 JSON',accept:{'application/json':['.json']}}],multiple:false});
+      const file=await h.getFile(), raw=await file.text(), next=JSON.parse(raw);this.validator(next);
+      if(h.name!==this.fileHint.split('/').pop()&&!confirm('你选择的是 '+h.name+'，不是建议的 '+this.fileHint+'。之后只会写入所选文件。继续？'))return false;
+      let permission=await h.queryPermission({mode:'readwrite'});
+      if(permission!=='granted')permission=await h.requestPermission({mode:'readwrite'});
+      if(permission!=='granted')throw new Error('未授予文件写入权限');
+      this.handle=h;this.baseRaw=raw;this.data=deepCopy(next);this.mode='file';this.refresh();return true;
+    }catch(e){if(e.name!=='AbortError')this.status('连接失败：'+e.message);return false;}
+  }
+  async reload() {
+    await this.queue.catch(()=>{});
+    if(this.mode==='file'){
+      try{const raw=await (await this.handle.getFile()).text(), d=JSON.parse(raw);this.validator(d);
+        this.data=d;this.baseRaw=raw;this.refresh();return true;
+      }catch(e){this.status('读取失败：'+e.message);return false;}
+    }
+    if(this.mode==='draft'&&!confirm('重新打开快照会放下当前草稿；请先导出。继续？'))return false;
+    location.reload();return true;
+  }
+  enableDraft() {
+    if(!confirm('临时编辑不会写入项目文件；浏览器缓存不是正式记录。完成后须导出 JSON 交给 agent。继续？'))return false;
+    this.mode='draft';this.handle=null;this.baseRaw=null;this.refresh();return true;
+  }
+  restoreDraft() {
+    if(!confirm('恢复的可能是旧草稿；仅供核对，不会覆盖项目 JSON。需要并入项目时交给 agent。继续？'))return false;
+    try{const next=this.convert(deepCopy(this.cached||this.legacy),this.data);this.validator(next);
+      this.data=next;this.mode='draft';this.handle=null;this.baseRaw=null;this.refresh();return true;
+    }catch(e){this.status('草稿无效：'+e.message);return false;}
+  }
+  async importFile(file) {
+    if(!file)return false;
+    try{
+      const next=this.convert(JSON.parse(await file.text()),this.data);this.validator(next);
+      if(!confirm('导入只打开为临时草稿，不写回任何项目文件。项目内合并可直接交给 agent。继续？'))return false;
+      await this.queue.catch(()=>{});
+      this.data=deepCopy(next);this.mode='draft';this.handle=null;this.baseRaw=null;this.refresh();return true;
+    }catch(e){this.status('导入失败：'+e.message);return false;}
+  }
+  update(mutator) {
+    const work=this.queue.catch(()=>{}).then(async()=>{
+      if(this.mode==='snapshot')throw new Error('当前为只读快照；请通过对话让 agent 修改，或先连接 JSON / 开启临时编辑');
+      const next=deepCopy(this.data);
+      await mutator(next);
+      next.meta.revision=this.data.meta.revision+1;next.meta.updated=projectStamp();
+      this.normalize(next);this.validator(next);
+      const raw=JSON.stringify(next,null,2)+'\n';
+      if(this.mode==='file'){
+        const latest=await (await this.handle.getFile()).text();
+        if(latest!==this.baseRaw)throw new Error('检测到 agent / 其他窗口更新，已拒绝覆盖');
+        let writer;
+        try{writer=await this.handle.createWritable();await writer.write(raw);await writer.close();}
+        catch(e){if(writer&&writer.abort)try{await writer.abort();}catch(_){};throw e;}
+        this.baseRaw=raw;
+      }else{
+        try{localStorage.setItem(this.cacheKey,raw);this.cached=deepCopy(next);this.cacheOK=true;}
+        catch(e){this.cacheOK=false;}
+      }
+      this.data=next;this.refresh();return true;
+    });
+    this.queue=work;
+    return work.catch(e=>{this.onChange(this.data);this.status(e.message);return false;});
+  }
+  exportJSON() { downloadText(this.fileHint.split('/').pop().replace('.json','_'+projectToday()+'.local.json'),JSON.stringify(this.data,null,2)+'\n'); }
+}
+function projectDayInfo(p,ds) {
+  const day=dayNumber(ds,p.meta.day0), plan=p.dailyPlan.find(d=>d.date===ds), index=Object.fromEntries(p.weeks.flatMap(w=>w.tasks).map(t=>[t.id,t]));
+  const matches=(p.overrides||[]).filter(o=>o.start<=ds&&ds<=o.end);
+  const mode=matches.some(o=>o.mode==='night')?'night':matches.length?'low':'normal';
+  const overdue=Object.values(index).filter(t=>!t.done&&!t.optional&&t.dueDate<ds);
+  let actions=plan?plan.actions.filter(a=>!index[a.taskId].done).map(a=>({...a,optional:!!index[a.taskId].optional})):[];
+  const current=actions.find(a=>!a.optional)||actions[0];
+  if(current){const pending=(index[current.taskId].dependsOn||[]).map(id=>index[id]).filter(t=>t&&!t.done);
+    if(pending.length){const t=pending[0];actions.unshift({taskId:t.id,text:'先推进前置任务：'+t.text+'（只做一小步，不要求一次补完）',optional:false});}}
+  if(!actions.length&&day>=1&&day<=p.meta.totalDays){
+    const next=Object.values(index).filter(t=>!t.done&&!t.optional&&t.scheduledDate<=ds).sort((a,b)=>a.dueDate.localeCompare(b.dueDate)||a.id.localeCompare(b.id))[0];
+    if(next)actions=[{taskId:next.id,text:'推进未完的一小步：'+next.text,optional:false}];
+  }
+  const ipaPaused=overdue.some(t=>t.track==='sound'||MUSIC_RELEASE_IDS.has(t.id))||p.deliverables.some(d=>d.id.startsWith('song')&&!d.done&&d.dueDate<ds);
+  if(ipaPaused)actions=actions.filter(a=>index[a.taskId].track!=='ipa');
+  if(mode==='night')actions=[];
+  else if(mode==='low')actions=actions.filter(a=>!a.optional).slice(0,1);
+  else actions=actions.slice(0,3);
+  return {day,mode,actions,overdueCount:overdue.length,ipaPaused,budgetMinutes:mode==='night'?10:mode==='low'?25:plan?plan.budgetMinutes:0};
+}
+/* FILE-STORE:END */
+const $=id=>document.getElementById(id), esc=escapeHTML;
+let state=JSON.parse($('project-data').textContent), editingId=null, openIds=new Set(), filters={eq:'',cat:'',rec:''};
+function convertFaultBackup(d,current){
+  if(d&&d.schema==='self-evolution/faults/v1')return d;
+  must(d&&Array.isArray(d.items)&&!d.schema,'不是受支持的故障备份');
+  const next=deepCopy(current);next.items=deepCopy(d.items);next.config={...next.config,...(d.config||{})};
+  next.items.forEach(i=>{if(sampleItem(i))i.isSample=true;});
+  recordEvent(next,'legacy-import-draft',{summary:'旧故障备份仅作为待核对草稿'});return next;
+}
+const fs=new ProjectFileStore({initial:state,fileHint:'data/faults.local.json',validator:validateFaults,convert:convertFaultBackup,legacyKey:'fmlib_v1',
+  onChange:d=>{state=d;buildFilters();buildSelects();render();}});
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('on');setTimeout(()=>$('toast').classList.remove('on'),2500);}
+const today=projectToday;
+const download=downloadText;
+function buildFilters(){
+  let h='<span class="flabel">机台：</span>';
+  function chips(kind,values){return [''].concat(values).map(v=>`<button class="chip ${filters[kind]===v?'on':''}" onclick="setFilter('${kind}',${esc(JSON.stringify(v))})">${esc(v||'全部')}</button>`).join('');}
+  const allEq=[...new Set(state.config.eqTypes.concat(state.items.map(i=>i.eqType).filter(Boolean)))];
+  const allCat=[...new Set(state.config.categories.concat(state.items.map(i=>i.causeCategory).filter(Boolean)))];
+  h+=chips('eq',allEq);h+='<span class="flabel">类别：</span>'+chips('cat',allCat);
+  h+=`<button class="chip ${filters.rec==='rec'?'on':''}" onclick="setFilter('rec',filters.rec==='rec'?'':'rec')">仅复发</button>`;
+  h+=`<button class="chip ${filters.rec==='unsolved'?'on':''}" onclick="setFilter('rec',filters.rec==='unsolved'?'':'unsolved')">未解决 / 待确认</button>`;
+  $('filters').innerHTML=h;
+}
+function setFilter(k,v){filters[k]=v;buildFilters();render();}
+function buildSelects(){
+  for(const [id,values] of [['f_eqType',state.config.eqTypes],['f_causeCategory',state.config.categories]]){
+    const current=$(id).value, key=id.replace('f_',''), choices=[...new Set(values.concat(state.items.map(i=>i[key]).filter(Boolean),current?[current]:[]))];
+    $(id).innerHTML='<option value="">待确认</option>'+choices.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('');$(id).value=current;
+  }
+  $('tagList').innerHTML=[...new Set(state.items.map(i=>i.rootCauseTag).filter(Boolean))].map(t=>`<option value="${esc(t)}"></option>`).join('');
+}
+function visible(){
+  const query=$('q').value.trim().toLowerCase();
+  const arr=state.items.filter(i=>{
+    if(filters.eq&&i.eqType!==filters.eq)return false;if(filters.cat&&i.causeCategory!==filters.cat)return false;
+    if(filters.rec==='rec'&&i.isRecurring!==true)return false;if(filters.rec==='unsolved'&&i.isSolved===true)return false;
+    return !query||faultTextFields.map(f=>i[f]||'').concat(i.id).join(' ').toLowerCase().includes(query);
+  });
+  const sort=$('sortSel').value;
+  arr.sort((a,b)=>sort==='date_asc'?(a.date||'').localeCompare(b.date||''):sort==='downtime_desc'?(b.downtimeMin||0)-(a.downtimeMin||0):
+    sort==='rec_first'?Number(!!b.isRecurring)-Number(!!a.isRecurring)||(b.date||'').localeCompare(a.date||''):
+    sort==='created_desc'?(new Date(b.createdAt||0).valueOf()||0)-(new Date(a.createdAt||0).valueOf()||0):(b.date||'').localeCompare(a.date||''));
+  return arr;
+}
+function chartHTML(map){
+  const rows=Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,12), max=Math.max(1,...rows.map(r=>r[1]));
+  return rows.length?rows.map(([k,v])=>`<div class="bar-row"><div class="nm" title="${esc(k)}">${esc(k)}</div><div class="tr"><div class="fi" style="width:${v/max*100}%"></div></div><div class="ct">${v}</div></div>`).join(''):'<div class="empty-hint">尚无真实数据；示例不会生成你的业绩图。</div>';
+}
+function render(){
+  $('clrBtn').style.display=$('q').value?'block':'none';const list=visible(),real=state.items.filter(i=>!sampleItem(i));
+  const rec=real.filter(i=>i.isRecurring===true).length,unknown=real.filter(i=>i.isSolved==null).length,unsolved=real.filter(i=>i.isSolved===false).length;
+  const dt=real.filter(i=>typeof i.downtimeMin==='number').map(i=>i.downtimeMin),total=dt.reduce((a,b)=>a+b,0);
+  $('stats').innerHTML=`<div class="stat a"><div class="k">真实记录 / 目标</div><div class="v">${real.length} <span style="font-size:14px">/ 30</span></div><div class="s">示例 ${state.items.length-real.length} 条，不计入成果</div></div>
+    <div class="stat r"><div class="k">已确认复发</div><div class="v">${rec}</div><div class="s">未确认的复发状态不猜测</div></div>
+    <div class="stat w"><div class="k">未彻底解决</div><div class="v">${unsolved}</div><div class="s">另有 ${unknown} 条解决状态待确认</div></div>
+    <div class="stat"><div class="k">已记录停机总量</div><div class="v">${(total/60).toFixed(1)} <span style="font-size:14px">h</span></div><div class="s">${dt.length} 条有时长；其余不当作 0</div></div>`;
+  const categories={},equip={};list.filter(i=>!sampleItem(i)).forEach(i=>{const c=i.causeCategory||'未分类',e=i.eqType||'待确认';categories[c]=(categories[c]||0)+1;equip[e]=(equip[e]||0)+1;});
+  $('chartCat').innerHTML=chartHTML(categories);$('chartEq').innerHTML=chartHTML(equip);
+  $('count').textContent='显示 '+list.length+' 条（含示例；真实 '+real.length+' 条）';
+  const privateView=document.body.dataset.private==='true';
+  $('demoWarn').innerHTML=`<div class="banner info">${privateView?'本地私有视图：包含原始内容，不要公开分享此 HTML / Markdown / JSON。':'公开工具壳默认空白。已有真实记录请打开「故障模式库.local.html」，或连接项目 data/faults.local.json。'} 示例仅用于演示，不是已验证的安全操作规程；现场以批准的 SOP 与安全要求为准。</div>`;
+  if(!list.length){$('list').innerHTML='<div class="empty"><div class="big">📋</div><p>'+ (state.items.length?'没有匹配的记录':'尚未录入真实故障')+'</p><p>直接向 agent 描述一个亲身处理的故障；未知根因、时长和状态留待确认。</p></div>';return;}
+  const flag=v=>v==null?'待确认':v?'是':'否';
+  $('list').innerHTML=list.map(i=>{
+    const open=openIds.has(i.id),dot=i.isRecurring===true?'var(--err)':i.isSolved===true?'var(--ok)':'var(--warn)';
+    const field=(label,value,sensitive=false)=>`<div class="fld"><div class="lb">${esc(label)}</div><div class="vl ${sensitive&&value?'sens':''}">${esc(value||'待确认 / 未提供')}</div></div>`;
+    return `<div class="card ${open?'open':''}" id="c_${i.id}"><div class="chead" onclick="toggleCard('${i.id}')"><div class="cdot" style="background:${dot}"></div><div class="cmain"><div class="ctitle">${sampleItem(i)?'【示例】 ':''}${esc(i.symptom||i.alarmCode||'待补现象')}</div><div class="cmeta"><span class="tag">${esc(i.id)}</span><span class="tag eq">${esc(i.eqType||'机台待确认')}</span><span class="tag cat">${esc(i.causeCategory||'未分类')}</span>${i.rootCauseTag?'<span class="tag">'+esc(i.rootCauseTag)+'</span>':''}<span class="tag date">${esc(i.date||'日期待确认')}</span><span class="tag">复发：${flag(i.isRecurring)}</span><span class="tag">解决：${flag(i.isSolved)}</span></div></div><div class="cside"><button class="btn-sm" onclick="event.stopPropagation();openEditor('${i.id}')">编辑</button></div></div>
+    <div class="cbody"><div class="fld-grid">${field('机台型号（敏感）',i.eqModel,true)}${field('机台编号（敏感）',i.eqId,true)}${field('报警代码（敏感）',i.alarmCode,true)}</div>${field('现象',i.symptom)}${field('发生条件（敏感）',i.condition,true)}${field('排查路径 ★',i.troubleshootPath)}${field('根因（未经验证时请注明假设）',i.rootCause)}${field('处理',i.action)}${field('预防 / 改善 ★',i.prevention)}${field('停机分钟',i.downtimeMin==null?'待确认':String(i.downtimeMin))}${field('相关文件（敏感）',i.links,true)}${field('备注',i.notes)}
+    <div class="cfoot"><button onclick="openEditor('${i.id}')">编辑</button><button onclick="copyMD('${i.id}')">复制原始 Markdown</button><button class="btn-danger" onclick="delItem('${i.id}')">删除</button></div></div></div>`;
+  }).join('');
+}
+function toggleCard(id){openIds.has(id)?openIds.delete(id):openIds.add(id);render();}
+function toggleAll(v){openIds=v?new Set(visible().map(i=>i.id)):new Set();render();}
+function clearSearch(){$('q').value='';render();$('q').focus();}
+const FIELDS=faultTextFields.concat(['isRecurring','isSolved','downtimeMin']);
+function openEditor(id){
+  editingId=id||null;const item=id?state.items.find(i=>i.id===id):null;
+  $('editTitle').textContent=id?'编辑 '+id:'新增故障（未知字段留空）';$('delBtn').style.display=id?'block':'none';
+  $('dateHint').textContent=item&&/^\d{4}-\d{2}$/.test(item.date||'')?'原记录仅到月：'+item.date+'；日期框留空会保留该月份。':'未知日期留空；不会默认伪造成录入日。';
+  buildSelects();
+  FIELDS.forEach(f=>{const el=$('f_'+f);if(!el)return;const value=item?item[f]:'';
+    if(f==='isRecurring'||f==='isSolved')el.value=value==null||value===''?'':value?'1':'0';
+    else el.value=value==null?'':value;
+    if(el.tagName==='SELECT'&&value&&f!=='isRecurring'&&f!=='isSolved'&&el.value!==value){const option=document.createElement('option');option.value=value;option.textContent=value;el.appendChild(option);el.value=value;}
+  });
+  $('editMask').classList.add('on');setTimeout(()=>$('f_symptom').focus(),40);
+}
+function closeEditor(){$('editMask').classList.remove('on');editingId=null;}
+async function saveItem(){
+  const patch={};FIELDS.forEach(f=>{const el=$('f_'+f);if(el)patch[f]=el.value.trim();});
+  if(!patch.symptom&&!patch.alarmCode&&!patch.rootCause){alert('至少填现象、报警或根因之一；不知道的内容不猜。');return;}
+  for(const k of ['isRecurring','isSolved'])patch[k]=patch[k]===''?null:patch[k]==='1';
+  patch.downtimeMin=patch.downtimeMin===''?null:Number(patch.downtimeMin);
+  const id=editingId;let actual=id;
+  const existing=id?state.items.find(i=>i.id===id):null;
+  if(existing&&/^\d{4}-\d{2}$/.test(existing.date||'')&&!patch.date)patch.date=existing.date;
+  const ok=await fs.update(d=>{
+    if(id){const item=d.items.find(i=>i.id===id);must(item,'该条已不在文件中；请重新载入');const before=deepCopy(item);Object.assign(item,patch,{updatedAt:projectStamp()});recordEvent(d,'fault-update',{ids:[id],before});}
+    else{let n=d.meta.nextId||1;const ids=new Set(d.items.map(i=>i.id));while(ids.has('FM-'+String(n).padStart(4,'0')))n++;
+      actual='FM-'+String(n).padStart(4,'0');d.meta.nextId=n+1;d.items.unshift({...patch,id:actual,isSample:false,createdAt:projectStamp(),updatedAt:projectStamp()});recordEvent(d,'fault-add',{ids:[actual]});}
+  });
+  if(ok){openIds.add(actual);closeEditor();render();toast(fs.mode==='file'?'记录已写入项目 JSON':'仅存草稿，导出后交给 agent');}
+}
+async function delItem(id){
+  if(!confirm('确定删除 '+id+'？这不会自动撤销学习进度。旧值会保留在历史中。'))return;
+  const ok=await fs.update(d=>{const item=d.items.find(i=>i.id===id);must(item,'记录不存在');recordEvent(d,'fault-delete',{ids:[id],before:deepCopy(item)});d.items=d.items.filter(i=>i.id!==id);});
+  if(ok){if(editingId===id)closeEditor();toast(fs.mode==='file'?'删除已写入文件':'已从草稿删除');}
+}
+function deleteCurrent(){const id=editingId;if(id)delItem(id);}
+function exportJSON(){fs.exportJSON();}
+function sanitizeItems(){
+  const allowed=['date','eqType','causeCategory','symptom','troubleshootPath','rootCause','rootCauseTag','action','prevention','notes','downtimeMin','isRecurring','isSolved'];
+  const words=new Set(state.config.sensitive||[]);state.items.forEach(i=>['eqModel','eqId','alarmCode','condition','links'].forEach(k=>{if(i[k])words.add(i[k]);}));
+  const patterns=[...words].filter(Boolean).sort((a,b)=>b.length-a.length).map(w=>new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'));
+  return state.items.filter(i=>!sampleItem(i)).map(i=>{const obj={};allowed.forEach(k=>{if(i[k]!==undefined){obj[k]=i[k];if(typeof obj[k]==='string')patterns.forEach(p=>obj[k]=obj[k].replace(p,'***'));}});if(obj.date)obj.date=obj.date.slice(0,7);return obj;});
+}
+function exportSanitized(){
+  if(!confirm('仅生成待人工复核的候选稿：删除型号、编号、报警、条件、路径、ID、精确时间戳、配置和历史；日期只到月份；替换敏感词。\n\n自由文本仍可能泄密，自动脱敏不是公开许可。继续？'))return;
+  download('故障模式库_脱敏候选_'+today()+'.local.json',JSON.stringify({note:'候选稿：须人工复核自由文本并确认厂规允许后才可分享',items:sanitizeItems()},null,2));
+}
+function exportCSV(){
+  const fields=['id',...FIELDS], quote=value=>{let s=String(value==null?'':value).replace(/\r?\n/g,' ');if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
+  const csv='\uFEFF'+[fields.map(quote).join(','),...visible().map(i=>fields.map(k=>quote(i[k])).join(','))].join('\n');
+  download('故障模式库_'+today()+'.local.csv',csv,'text/csv;charset=utf-8');toast('原始 CSV 含敏感内容，仅留本地');
+}
+function itemToMD(i){
+  const txt=v=>String(v==null?'待确认':v).replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return '## '+i.id+' · '+txt(i.symptom||'待补现象')+'\n\n'+FIELDS.map(k=>'- **'+k+'**：'+txt(i[k])).join('\n');
+}
+function exportMD(){download('故障模式库_'+today()+'.local.md','# 故障模式库 · 原始私有数据\n\n'+visible().map(itemToMD).join('\n\n---\n\n'),'text/markdown;charset=utf-8');toast('原始 Markdown 含敏感内容，仅留本地');}
+async function copyMD(id){const i=state.items.find(i=>i.id===id);if(!i)return;try{await navigator.clipboard.writeText(itemToMD(i));toast('原始内容已复制，请勿公开');}catch(e){download(id+'.local.md',itemToMD(i),'text/markdown');}}
+function openSettings(){$('s_eqTypes').value=state.config.eqTypes.join('\n');$('s_categories').value=state.config.categories.join('\n');$('s_sensitive').value=state.config.sensitive.join('\n');$('setMask').classList.add('on');}
+function closeSettings(){$('setMask').classList.remove('on');}
+async function saveSettings(){
+  const parse=id=>[...new Set($(id).value.split('\n').map(s=>s.trim()).filter(Boolean))];
+  const config={eqTypes:parse('s_eqTypes'),categories:parse('s_categories'),sensitive:parse('s_sensitive')};
+  if(await fs.update(d=>{const before=deepCopy(d.config);d.config={...d.config,...config};recordEvent(d,'fault-settings',{before});})){filters={eq:'',cat:'',rec:''};closeSettings();buildFilters();render();}
+}
+async function clearAll(){
+  if(!confirm('将清空 '+state.items.length+' 条记录，建议先导出原始备份。是否继续？'))return;
+  if(fs.mode==='snapshot'){fs.status('只读快照，未清空任何记录');return;}fs.exportJSON();
+  if(await fs.update(d=>{recordEvent(d,'fault-clear',{before:deepCopy(d.items)});d.items=[];})){closeSettings();toast('已清空当前记录；旧值在历史中');}
+}
+async function loadSamples(){
+  if(await fs.update(d=>{for(const sample of SAMPLES){if(!d.items.some(i=>i.id===sample.id))d.items.push({...deepCopy(sample),isSample:true});}recordEvent(d,'samples',{summary:'仅示例，不计入真实成果'});})){closeSettings();toast('已载入示例；真实记录数不变');}
+}
+function toggleTheme(){const next=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=next;$('themeBtn').textContent=next==='light'?'☀️':'🌙';try{localStorage.setItem('fmlib_theme',next);}catch(e){}}
+try{const t=localStorage.getItem('fmlib_theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+$('impFile').addEventListener('change',async e=>{await fs.importFile(e.target.files[0]);e.target.value='';});
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('q').focus();}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'&&$('editMask').classList.contains('on')){e.preventDefault();saveItem();}
+  if(e.key==='Escape'){closeEditor();closeSettings();}
+});
+
+const SAMPLES=[
+{
+  id:'sample1', date:'2026-09-01', eqType:'立式炉管', eqModel:'（示例·脱敏）', eqId:'', alarmCode:'（示例）',
+  causeCategory:'温控与热工',
+  symptom:'【示例条目】升温段炉内温度与设定值偏差持续超过报警阈值，工艺中途 abort，晶舟退出后炉口温度偏高。',
+  condition:'仅发生在长时间 idle 后的第一批次；升温速率设定较高的 recipe 更容易触发。',
+  troubleshootPath:'1. 先确认报警的是哪一支 TC —— 查看 profile TC 与 spike TC 读数差异\n'+
+    '2. 怀疑加热丝局部断路 → 测三相电流，发现基本平衡（走错的路，排除）\n'+
+    '3. 按批准流程复核温度均匀性，发现炉口区域实际温度高于 TC 读数\n'+
+    '4. 拔出该支 TC 检查，发现护套积垢 + 补偿导线接线端子氧化\n'+
+    '5. 更换 TC 并重做 TUS → 恢复正常',
+  rootCause:'【示例】炉口热电偶护套表面积垢导致热响应滞后，叠加补偿导线端子氧化引入附加电势，TC 读数低于真实值，闭环 PID 持续加热 → 实际过冲。',
+  rootCauseTag:'热电偶老化',
+  action:'更换该支 TC 与补偿导线端子，重做 TUS 并记录 baseline。',
+  prevention:'【示例】把"炉口 TC 目视检查 + 端子紧固"加入 PM 项，周期从季度改为月度；并在 idle 超过 X 小时后增加一次空跑 warm-up。',
+  downtimeMin:180, isRecurring:true, isSolved:true, links:'', notes:'这是一条【示例记录】，用来展示每条该记成什么样。看懂之后可以在设置里删掉。'
+},
+{
+  id:'sample2', date:'2026-08-20', eqType:'PECVD', eqModel:'（示例·脱敏）', eqId:'', alarmCode:'（示例）',
+  causeCategory:'RF与等离子体',
+  symptom:'【示例条目】起辉瞬间反射功率偏高，间歇性触发 RF 保护，偶发 process abort。',
+  condition:'PM 后重启的头几天出现频率高；随腔体温度升高后趋于稳定。',
+  troubleshootPath:'1. 记录 matcher 的 C1/C2 位置，发现与历史 baseline 偏离\n'+
+    '2. 怀疑工艺气体流量偏差 → 核对 MFC 读数，正常（排除）\n'+
+    '3. 检查腔体侧壁与 showerhead 的沉积物厚度，接近 PM 周期上限\n'+
+    '4. 做一次 chamber seasoning 后反射功率下降\n'+
+    '5. 将 matcher 位置与沉积物厚度的关系做成趋势图',
+  rootCause:'【示例】腔壁沉积物改变了腔体的等效阻抗，导致匹配网络最佳工作点漂移；PM 后腔壁状态突变，原 baseline 不再适用。',
+  rootCauseTag:'matcher 漂移',
+  action:'调整 matcher baseline，并补充一次 seasoning。',
+  prevention:'【示例】① 建立"PM 后 matcher 位置 → 沉积物厚度"的对应关系表；② 把反射功率做成 FDC 趋势监控，提前预警而不是等报警。',
+  downtimeMin:95, isRecurring:true, isSolved:false, links:'',
+  notes:'【示例】注意 isSolved 选了"否"—— 这表示只是临时处理，还没根治。这类条目在筛选"未彻底解决"时会被挑出来，是改善提案的主要来源。'
+},
+{
+  id:'sample3', date:'2026-08-05', eqType:'激光退火', eqModel:'（示例·脱敏）', eqId:'', alarmCode:'（示例）',
+  causeCategory:'激光系统',
+  symptom:'【示例条目】工艺后能量监测值缓慢下降，同一 recipe 下的退火效果出现漂移。',
+  condition:'连续生产 N 批次后逐渐出现；清洁后恢复。',
+  troubleshootPath:'1. 先排除激光器本身 —— 查激光头输出功率，正常\n'+
+    '2. 分段测能量：激光器出口 → 光路 → 工件面，发现在最后一段明显衰减\n'+
+    '3. 检查末段保护镜片，发现表面有污染/雾化\n'+
+    '4. 更换镜片 → 能量恢复\n'+
+    '5. 回溯污染来源：工艺产生的飞溅物随抽气回流至镜片附近',
+  rootCause:'【示例】工艺飞溅物在抽气流场作用下沉积到末端保护镜片，造成透过率缓慢衰减。',
+  rootCauseTag:'光学元件污染',
+  action:'更换保护镜片，清洁光路。',
+  prevention:'【示例】① 把镜片检查/更换纳入按"累计批次"而非"日历时间"的 PM 触发条件；② 将能量监测值做成 SPC 控制图，用趋势提前触发维护。',
+  downtimeMin:60, isRecurring:true, isSolved:true, links:'',
+  notes:'【示例】亮点在第 2 步：分段测量。这种"把系统切成几段、逐段排除"的写法，就是排查路径该有的样子。'
+}
+];
+fs.refresh();
+</script>
+</body>
+</html>
