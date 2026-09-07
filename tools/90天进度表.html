@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-07T00:38:31+08:00",
+    "updated": "2026-09-07T23:20:39+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 3,
+    "revision": 5,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -550,6 +550,19 @@
           "optional": true,
           "completedOn": null,
           "evidence": []
+        },
+        {
+          "id": "2-11",
+          "track": "equip",
+          "text": "知识块过一遍 · 真空技术：泵的适用量程、规的选型、氦质谱检漏为什么是最实用硬技能",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条自己话的笔记 + 一句\"为什么用错规是常见误判来源\"",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
         }
       ],
       "title": "《Lemon》和声与伴奏",
@@ -654,6 +667,19 @@
           "dueDate": "2026-09-27",
           "output": "IPA 转写笔记；真名不写公开文件",
           "optional": true,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-7",
+          "track": "equip",
+          "text": "知识块过一遍 · 气体与化学输送：MFC 漂移、阀件失效模式、特气（SiH₄/NH₃/N₂O）特性与应急",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-26",
+          "dueDate": "2026-09-26",
+          "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条笔记 + 挂靠一条亲历气路 / CVD 相关故障（没有就留空，不编造）；平台期可顺延",
+          "optional": false,
           "completedOn": null,
           "evidence": []
         }
@@ -954,6 +980,19 @@
           "dueDate": "2026-10-16",
           "output": "う 的发音观察笔记",
           "optional": true,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-6",
+          "track": "equip",
+          "text": "知识块过一遍 · 热工与温控：PID 三个参数的物理意义、SiC 高温退火为什么用 S/R/B 型热电偶",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-17",
+          "dueDate": "2026-10-17",
+          "output": "按手册 §2.7 四步法 ≤60 分钟；能答\"超调 / 震荡 / 稳态误差分别调哪个\" + 一句选型理由；术语表 ≥3 词",
+          "optional": false,
           "completedOn": null,
           "evidence": []
         }
@@ -1288,6 +1327,19 @@
           "scheduledDate": "2026-11-05",
           "dueDate": "2026-11-05",
           "output": "一段真实反思",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "9-6",
+          "track": "equip",
+          "text": "知识块过一遍 · RF 与等离子体：阻抗匹配、C1/C2 调谐、反射功率说明什么（PECVD 的 matcher）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-07",
+          "dueDate": "2026-11-07",
+          "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条笔记 + 一句\"反射功率高意味着什么\"",
           "optional": false,
           "completedOn": null,
           "evidence": []
@@ -1773,9 +1825,11 @@
       "dueDate": "2026-12-05"
     }
   ],
-  "checkins": [],
+  "checkins": [
+    "2026-09-07"
+  ],
   "stats": {
-    "totalTasks": 92,
+    "totalTasks": 96,
     "doneTasks": 3,
     "pct": 3,
     "delivDone": 0,
@@ -1968,6 +2022,10 @@
       "budgetMinutes": 280,
       "actions": [
         {
+          "taskId": "2-11",
+          "text": "设备学习处方：真空技术过一遍（手册 §2.2 / §2.7，≤60 分钟）"
+        },
+        {
           "taskId": "2-4",
           "text": "设备时间：故障累计补到 10 条"
         },
@@ -2060,6 +2118,10 @@
       "date": "2026-09-26",
       "budgetMinutes": 280,
       "actions": [
+        {
+          "taskId": "3-7",
+          "text": "设备学习处方：气体与化学输送过一遍（低能可顺延）"
+        },
         {
           "taskId": "3-2",
           "text": "设备时间可降档：故障累计到 15 条"
@@ -2324,6 +2386,10 @@
       "budgetMinutes": 280,
       "actions": [
         {
+          "taskId": "6-6",
+          "text": "设备学习处方：热工与温控（先学新内容，再做取数）"
+        },
+        {
           "taskId": "6-3",
           "text": "设备时间：在允许的本地环境整理目标 alarm 历史记录，不上传原始日志"
         }
@@ -2574,6 +2640,10 @@
       "date": "2026-11-07",
       "budgetMinutes": 280,
       "actions": [
+        {
+          "taskId": "9-6",
+          "text": "设备学习处方：RF 阻抗匹配与反射功率"
+        },
         {
           "taskId": "9-2",
           "text": "设备时间：把一页提案给主管看，验证先走批准流程"
@@ -3037,7 +3107,12 @@
     "ipa": "可挂靠但不新增时间块；音乐落后就停；每周总量约 30 分钟以内。",
     "weekend": "周六设备 2.5h + 音乐 2h；周日音乐 2h + 回顾 20 分钟；低能时都可降到 25 分钟。"
   },
-  "dailyLogs": {},
+  "dailyLogs": {
+    "2026-09-07": {
+      "note": "Day 1 工作日 25 分钟：墨墨 10′ + 耳朵 15′",
+      "minutes": 25
+    }
+  },
   "overrides": [],
   "history": [
     {
@@ -3114,6 +3189,17 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "at": "2026-09-07T20:35:55+08:00",
+      "action": "schedule",
+      "summary": "2026-09-07 本人确认：设备线增加 4 条知识点任务 2-11 / 3-7 / 6-6 / 9-6（真空 → 气体 → 热工 → RF），全部排在既有周六设备块内，不新增时间块"
+    },
+    {
+      "at": "2026-09-07T23:20:39+08:00",
+      "action": "checkin",
+      "on": "2026-09-07",
+      "summary": "2026-09-07"
     }
   ]
 }

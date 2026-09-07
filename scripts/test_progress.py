@@ -72,6 +72,37 @@ class ProjectTests(unittest.TestCase):
         self.assertFalse(info['checkedIn'])
         self.assertEqual(before, self.files())
 
+    def test_today_context_fields_are_derived_and_read_only(self):
+        before = self.files()
+        r = self.cli('today', '--date', '2026-09-07', '--json')
+        info = json.loads(r.stdout)
+        # Week context: fresh fixture has nothing done, so all ten W1 tasks remain.
+        self.assertEqual((info['weekTitle'], info['weekDone'], info['weekTotal']),
+                         ('启动与《Lemon》8 小节旋律', 0, 10))
+        self.assertEqual([x['id'] for x in info['weekRemaining']],
+                         ['1-0', '1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-7', '1-8', '1-9'])
+        self.assertIn({'id': '1-9', 'due': '2026-09-12', 'optional': True}, info['weekRemaining'])
+        # Tomorrow preview comes from the next dailyPlan entry, not from new data.
+        self.assertEqual(info['tomorrowDate'], '2026-09-08')
+        self.assertEqual(info['tomorrow']['taskId'], '1-2')
+        # Milestones: nearest two of the existing checkpoints and deliverables.
+        self.assertEqual([(m['date'], m['label']) for m in info['nextMilestones']],
+                         [('2026-10-04', '歌 #1《Lemon》截止'), ('2026-10-06', 'Day 30 复检')])
+        self.assertEqual(before, self.files())
+        # Completing a task shrinks the derived week context; still no extra writes.
+        self.cli('done', '1-0', '--on', '2026-09-07', '--note', '本人确认')
+        info = json.loads(self.cli('today', '--date', '2026-09-07', '--json').stdout)
+        self.assertNotIn('1-0', [x['id'] for x in info['weekRemaining']])
+        self.assertEqual(info['weekDone'], 1)
+
+    def test_today_text_shows_week_milestone_tomorrow_lines(self):
+        r = self.cli('today', '--date', '2026-09-07')
+        self.assertIn('本周：W1 · 启动与《Lemon》8 小节旋律 · 0/10；剩余：', r.stdout)
+        self.assertIn('下一里程碑：2026-10-04 歌 #1《Lemon》截止 · 2026-10-06 Day 30 复检', r.stdout)
+        self.assertIn('明日：[1-2]', r.stdout)
+        # Day 0 has no week number; the week line must not appear there.
+        self.assertNotIn('本周：', self.cli('today', '--date', '2026-09-06').stdout)
+
     def test_done_persists_and_generates_matching_views(self):
         self.cli('done', '1-0', '--on', '2026-09-06', '--note', '本人确认已响')
         p = self.p()

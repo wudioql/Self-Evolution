@@ -157,6 +157,10 @@ def show_today(p, faults, args):
     weekday = '一二三四五六日'[parse_date(ds).weekday()]
     print(f'{ds}（周{weekday}） · Day {d}' + (f' · W{w}' if w else ''))
     print(f'文件状态：任务 {p["stats"]["doneTasks"]}/{p["stats"]["totalTasks"]}；交付 {p["stats"]["delivDone"]}/{p["stats"]["delivTotal"]}；真实故障 {len(real_faults(faults))} 条。')
+    if info['weekTitle']:
+        remaining = '、'.join(f'{a["id"]}（{a["due"][5:]}{"·可选" if a["optional"] else ""}）' for a in info['weekRemaining'])
+        print(f'本周：W{w} · {info["weekTitle"]} · {info["weekDone"]}/{info["weekTotal"]}；'
+              + (f'剩余：{remaining}' if remaining else '本周任务已全部完成。'))
     if d < 0:
         print(f'尚未进入准备日。Day 0 = {p["meta"]["day0"]}，不把之前的日期都叫 Day 0。')
         return
@@ -180,6 +184,10 @@ def show_today(p, faults, args):
         print('复检：' + c['text'])
     if info['overdueCount'] and info['mode'] != 'night':
         print(f'另有 {info["overdueCount"]} 项到期未确认；不要求一天补齐，必要时先收缩 / 重排。')
+    if info['nextMilestones'] and info['mode'] != 'night':
+        print('下一里程碑：' + ' · '.join(f'{m["date"]} {m["label"]}' for m in info['nextMilestones']))
+    if info['tomorrow'] and info['mode'] != 'night':
+        print(f'明日：[{info["tomorrow"]["taskId"]}] {info["tomorrow"]["text"]}')
     print('已打卡。' if info['checkedIn'] else '尚未打卡；仅查询不会产生打卡或完成记录。')
     print('完成每日拆分的一小步只记备注；完成整项且你已明确确认，才勾对应 ID。')
 

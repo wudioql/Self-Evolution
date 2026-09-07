@@ -362,11 +362,30 @@ def day_info(p, ds, mode=None):
         candidates = [a for a in candidates if not a['optional']][:1]
     else:
         candidates = candidates[:3]
-    return {'date': ds, 'day': number, 'week': (number - 1)//7 + 1 if 1 <= number <= p['meta']['totalDays'] else None,
+    week = (number - 1)//7 + 1 if 1 <= number <= p['meta']['totalDays'] else None
+    week_block = next((x for x in p['weeks'] if x['n'] == week), None) if week else None
+    tomorrow_date = (d + timedelta(days=1)).isoformat()
+    tomorrow_plan = next((x for x in p['dailyPlan'] if x['date'] == tomorrow_date), None)
+    tomorrow_action = (next(({'taskId': a['taskId'], 'text': a['text']} for a in tomorrow_plan['actions']
+                             if not idx[a['taskId']]['done']), None) if tomorrow_plan else None)
+    # Derived read-only context so one `today` call answers the daily loop.
+    milestones = ([{'date': c['date'], 'label': f"Day {c['day']} 复检"} for c in p['checkpoints'] if c['date'] > ds]
+                  + [{'date': x['dueDate'], 'label': x['text'] + '截止'} for x in p['deliverables']
+                     if not x['done'] and x['dueDate'] > ds])
+    milestones.sort(key=lambda x: (x['date'], x['label']))
+    return {'date': ds, 'day': number, 'week': week,
             'mode': mode, 'actions': candidates, 'overdueCount': len(overdue), 'prerequisiteFirst': blocked,
             'budgetMinutes': 10 if mode == 'night' else 25 if mode == 'low' else current['budgetMinutes'] if current else 0,
             'checkpoints': [c for c in p['checkpoints'] if c['date'] == ds],
-            'checkedIn': ds in p['checkins'], 'ipaPaused': music_overdue}
+            'checkedIn': ds in p['checkins'], 'ipaPaused': music_overdue,
+            'weekTitle': week_block['title'] if week_block else None,
+            'weekDone': sum(t['done'] for t in week_block['tasks']) if week_block else None,
+            'weekTotal': len(week_block['tasks']) if week_block else None,
+            'weekRemaining': ([{'id': t['id'], 'due': t['dueDate'], 'optional': bool(t.get('optional'))}
+                               for t in week_block['tasks'] if not t['done']] if week_block else []),
+            'tomorrowDate': tomorrow_date if tomorrow_plan else None,
+            'tomorrow': tomorrow_action,
+            'nextMilestones': milestones[:2]}
 
 
 def safe_md(text):
