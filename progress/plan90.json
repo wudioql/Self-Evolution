@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-07T23:20:39+08:00",
+    "updated": "2026-09-09T00:41:02+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 5,
+    "revision": 11,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -63,14 +63,16 @@
           "id": "1-2",
           "track": "sound",
           "text": "扒《Lemon》前 8 小节主旋律 → 导出 melody.mid",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "扒完《Lemon》前 8 小节人声主旋律，从中导出 melody.mid",
           "scheduledDate": "2026-09-08",
           "dueDate": "2026-09-10",
           "output": "music-log/01-lemon/melody.mid（前 8 小节）",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-09-09",
+          "evidence": [
+            "music-log/01-lemon/melody.mid"
+          ],
           "dependsOn": [
             "1-0",
             "1-1"
@@ -1617,12 +1619,13 @@
     }
   ],
   "checkins": [
-    "2026-09-07"
+    "2026-09-07",
+    "2026-09-09"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 3,
-    "pct": 3,
+    "doneTasks": 4,
+    "pct": 4,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -2902,6 +2905,10 @@
     "2026-09-07": {
       "note": "Day 1 工作日 25 分钟：墨墨 10′ + 耳朵 15′",
       "minutes": 25
+    },
+    "2026-09-09": {
+      "note": "扒带 + 日语 10 分钟",
+      "minutes": 25
     }
   },
   "overrides": [],
@@ -2991,6 +2998,48 @@
       "action": "checkin",
       "on": "2026-09-07",
       "summary": "2026-09-07"
+    },
+    {
+      "at": "2026-09-09T00:03:03+08:00",
+      "action": "note",
+      "ids": [
+        "1-2"
+      ]
+    },
+    {
+      "at": "2026-09-09T00:03:03+08:00",
+      "action": "checkin",
+      "on": "2026-09-09",
+      "summary": "2026-09-09"
+    },
+    {
+      "at": "2026-09-09T00:03:06+08:00",
+      "action": "note",
+      "ids": [
+        "1-2"
+      ]
+    },
+    {
+      "at": "2026-09-09T00:09:07+08:00",
+      "action": "note",
+      "ids": [
+        "1-2"
+      ]
+    },
+    {
+      "at": "2026-09-09T00:09:10+08:00",
+      "action": "note",
+      "ids": [
+        "1-2"
+      ]
+    },
+    {
+      "at": "2026-09-09T00:41:02+08:00",
+      "action": "done",
+      "ids": [
+        "1-2"
+      ],
+      "on": "2026-09-09"
     }
   ]
 }

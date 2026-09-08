@@ -49,6 +49,8 @@ SKIP_DIRS = {'.git', '.backups', '__pycache__', 'node_modules', '.venv', 'venv',
 TEXT_SUFFIXES = {'.md', '.html', '.json', '.jsonc', '.js', '.cjs', '.mjs', '.py', '.yml', '.yaml',
                  '.txt', '.css', '.svg', '.csv', '.toml', '.ini', '.cfg', '.xml', '.sh', '.ps1'}
 TEXT_NAMES = {'.gitignore', '.gitattributes', '.editorconfig', 'LICENSE', 'Dockerfile'}
+# 二进制内容却用文本后缀存档的文件，跳过 UTF-8 读取检查（2026-09-09）
+SKIP_FILES = {'Self-Evolution.zip.txt'}
 VENDOR = '.agents/skills/neat-freak/'
 
 
@@ -63,7 +65,7 @@ def project_texts():
         for name in sorted(files):
             path = Path(directory) / name
             relative = path.relative_to(ROOT).as_posix()
-            if private_path(relative) or (path.suffix.lower() not in TEXT_SUFFIXES and name not in TEXT_NAMES):
+            if private_path(relative) or name in SKIP_FILES or (path.suffix.lower() not in TEXT_SUFFIXES and name not in TEXT_NAMES):
                 continue
             # Never follow a file link outside the inspected project.
             if not path.resolve().is_relative_to(Path(ROOT)):

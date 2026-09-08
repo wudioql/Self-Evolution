@@ -1,6 +1,6 @@
 # README · 业余学习体系
 
-> **wudioql**（GitHub: **https://github.com/wudioql**）的业余学习方向与 90 天执行体系。
+> **wudioql**（GitHub: **[https://github.com/wudioql](https://github.com/wudioql)**）的业余学习方向与 90 天执行体系。
 > 制定日期：**2026-09-05** ｜ 执行期：**2026-09-07（周一）→ 2026-12-13（周日）**
 > 最后更新：2026-09-07
 >
