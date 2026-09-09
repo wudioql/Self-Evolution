@@ -126,7 +126,7 @@
 | **生成方向** | JSON → 总览 / HTML / `03` 逐周表。禁止从 HTML 反向抽取并重建 JSON |
 | **导入边界** | 异常记录使整包停止，正本 / 原件不变；不猜日期、不静默过滤。未知但合法的 ID 归档，不计完成 |
 | **保留状态** | 增删改排期保留 ID、done、completedOn、note、evidence、周备注、checkins、dailyLogs、history、`_orphans` 及未知字段 |
-| **写入安全** | 优先用 `scripts/progress.py`；Python 路径原子写、旧内容冲突检测、`.backups/` 保留最近 20 版。不是跨进程数据库事务；浏览器直写不生成旁路备份。手改 JSON 后校验同步 |
+| **写入安全** | 优先用 `scripts/progress.py`；Python 路径原子写、旧内容冲突检测、`.backups/` 保留最近 5 版（2026-09-09 调低）。不是跨进程数据库事务；浏览器直写不生成旁路备份。手改 JSON 后校验同步 |
 | **校验** | 数据 / 视图一致性、HTML 标签与 JS 语法、文档及隐私检查均要通过 |
 
 ---

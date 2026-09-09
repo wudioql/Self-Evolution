@@ -288,7 +288,7 @@ def atomic_write(path, text, *, expected=UNCHECKED, backup=False):
             directory.mkdir(exist_ok=True)
             suffix = datetime.now(TZ).strftime('%Y%m%dT%H%M%S%f')
             (directory / f'{path.stem}.{suffix}.json').write_text(old, encoding='utf-8')
-            for stale in sorted(directory.glob(path.stem + '.*.json'))[:-20]:
+            for stale in sorted(directory.glob(path.stem + '.*.json'))[:-5]:
                 stale.unlink()
         with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', newline='\n', dir=path.parent,
                                          prefix='.' + path.name + '.', suffix='.tmp', delete=False) as f:
