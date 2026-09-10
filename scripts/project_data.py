@@ -181,6 +181,10 @@ def validate_plan(p, *, as_of=None):
                 (parse_date(point.get('date')) - d0).days == point['day'] and isinstance(point.get('text'), str), '复检点日期与 Day 编号不一致')
     for key in ('history', '_orphans'):
         require(isinstance(p.get(key, []), list), f'{key} 必须为数组')
+    validate_accumulators(p.get('accumulators', []), m, now)
+    for a in p.get('accumulators', []):
+        for cp in a.get('checkpoints', []):
+            require(cp['taskId'] in ti, f"积累项 {a['id']} 的里程碑引用了不存在的任务 {cp['taskId']}")
     expected, actual = calc_stats(p), p.get('stats')
     require(isinstance(actual, dict) and set(actual) == set(expected) and
             all(integer_number(actual[k]) and actual[k] == v for k, v in expected.items()), 'stats 与任务状态不一致；请重新计算后保存')
@@ -236,6 +240,54 @@ def validate_faults(data):
         val = data['config'].get(key)
         if not isinstance(val, list) or any(not isinstance(x, str) for x in val):
             raise ValueError(f'config.{key} 必须是文本数组')
+
+
+ACC_HINTS = {'taste': '今晚耳朵 15 分钟里听到值得记的就报一行（≤10 秒，不另花时间）',
+             'terms': '墨墨后或周六设备块顺带报 1–2 个词（≤2 分钟）',
+             'lib': '把亲身处理的一条故障口述给 agent（未知根因留空）'}
+
+
+def validate_accumulators(accums, meta, as_of):
+    """Structure check for count-based accumulators; checkpoint task ids are
+    checked against the task index by the caller that owns it."""
+    require(isinstance(accums, list), 'accumulators 必须为数组')
+    d0, end = parse_date(meta['day0']), parse_date(meta['end'])
+    seen = set()
+    for a in accums:
+        require(isinstance(a, dict), '积累项必须为对象')
+        aid = a.get('id')
+        require(isinstance(aid, str) and ID_RE.fullmatch(aid) and aid not in seen, '积累项 ID 无效或重复')
+        seen.add(aid)
+        require(isinstance(a.get('text'), str) and a['text'].strip(), f'{aid} 缺少 text')
+        require(isinstance(a.get('unit'), str) and a['unit'].strip(), f'{aid} 缺少 unit')
+        require(integer_number(a.get('target'), 1), f'{aid}.target 必须为正整数')
+        mode = a.get('mode')
+        require(mode in ('items', 'reported', 'derived'), f'{aid}.mode 必须为 items / reported / derived')
+        if 'targetDue' in a:
+            require(d0 <= parse_date(a['targetDue']) <= end, f'{aid}.targetDue 越界')
+        for key in ('source', 'note'):
+            if key in a:
+                require(isinstance(a[key], str), f'{aid}.{key} 必须为文本')
+        for cp in a.get('checkpoints', []):
+            require(isinstance(cp, dict) and integer_number(cp.get('count')) and
+                    isinstance(cp.get('taskId'), str) and ID_RE.fullmatch(cp['taskId']),
+                    f'{aid} 里程碑档位格式无效')
+        if mode == 'derived':
+            continue
+        require(integer_number(a.get('count')), f'{aid}.count 必须为非负整数')
+        lad = a.get('lastAddedOn')
+        if lad is not None:
+            require(isinstance(lad, str), f'{aid}.lastAddedOn 必须为日期或 null')
+            require(d0 <= parse_date(lad) <= end and parse_date(lad) <= as_of, f'{aid}.lastAddedOn 越界或在未来')
+        if mode == 'items':
+            items = a.get('items')
+            require(isinstance(items, list), f'{aid} items 模式必须含 items 数组')
+            for it in items:
+                require(isinstance(it, dict) and isinstance(it.get('on'), str) and
+                        isinstance(it.get('text'), str) and it['text'].strip(), f'{aid} 条目格式无效')
+                require(d0 <= parse_date(it['on']) <= end and parse_date(it['on']) <= as_of,
+                        f'{aid} 条目日期越界或在未来')
+            require(a['count'] == len(items), f'{aid} count 与 items 长度不一致')
 
 
 def is_sample(item):
@@ -321,7 +373,71 @@ def save_data(root, relative, data, original):
     atomic_write(Path(root) / relative, dump(data), expected=original, backup=True)
 
 
-def day_info(p, ds, mode=None):
+def accum_status(p, ds, faults=None):
+    """Derived read-only state of count-based accumulators, plus at most one nudge.
+
+    Count rules: derived items are counted from the real store (no double
+    bookkeeping); reported items carry only user-confirmed totals; items
+    mode counts its own entries. Nudges fire only near a milestone (≤3 days)
+    or after ≥2 idle days, so a quiet day stays quiet.
+    """
+    d = parse_date(ds)
+    m = p['meta']
+    day0, day1, end = parse_date(m['day0']), parse_date(m['day1']), parse_date(m['end'])
+    in_plan = day1 <= d <= end
+    ti = task_index(p)
+    rows, candidates = [], []
+    for a in p.get('accumulators', []):
+        aid, text, unit, target = a['id'], a['text'], a.get('unit', ''), a['target']
+        mode = a.get('mode')
+        if mode == 'derived':
+            count = None if faults is None else len(real_faults(faults))
+        else:
+            count = a.get('count', 0)
+        next_step = None
+        if count is not None and count < target:
+            remaining = [cp for cp in a.get('checkpoints', [])
+                         if integer_number(cp.get('count')) and count < cp['count'] <= target
+                         and cp.get('taskId') in ti]
+            if remaining:
+                cp = min(remaining, key=lambda c: c['count'])
+                next_step = {'count': cp['count'], 'date': ti[cp['taskId']]['dueDate']}
+            elif a.get('targetDue'):
+                next_step = {'count': target, 'date': a['targetDue']}
+        last = a.get('lastAddedOn')
+        if mode == 'derived' and faults is not None:
+            created = [i.get('createdAt', '')[:10] for i in real_faults(faults)]
+            created = [x for x in created if re.fullmatch(r'\d{4}-\d{2}-\d{2}', x)]
+            last = max(created) if created else None
+        days_idle = None
+        if in_plan and count is not None:
+            origin = last or (day1.isoformat() if count == 0 else None)
+            if origin:
+                days_idle = (d - parse_date(origin)).days
+        if count is None:
+            label = f'{text} —/{target}（无 {FAULT_PATH}，计数不可得）'
+        elif count >= target:
+            label = f'{text} {count}/{target}（已达标）'
+        elif next_step:
+            label = f'{text} {count}/{target}（下一档 {next_step["count"]}·{next_step["date"]}）'
+        else:
+            label = f'{text} {count}/{target}'
+        rows.append({'id': aid, 'text': text, 'unit': unit, 'count': count, 'target': target,
+                     'next': next_step, 'daysIdle': days_idle, 'label': label})
+        if in_plan and count is not None and days_idle is not None and next_step is not None:
+            hint = ACC_HINTS.get(aid, '顺带报一下，不另花时间')
+            due_in = (parse_date(next_step['date']) - d).days
+            if 0 <= due_in <= 3:
+                reason = (f"下一档（{next_step['count']} {unit}）今天到期" if due_in == 0
+                          else f"距下一档（{next_step['count']} {unit} · {next_step['date']}）还剩 {due_in} 天")
+                candidates.append((0, next_step['date'], f'{text}：{reason}，目前 {count} {unit}；{hint}'))
+            elif days_idle >= 2:
+                candidates.append((1, last or day1.isoformat(), f'{text}：已 {days_idle} 天没新增；{hint}'))
+    candidates.sort(key=lambda c: (c[0], c[1]))
+    return {'rows': rows, 'nudge': candidates[0][2] if candidates else None}
+
+
+def day_info(p, ds, mode=None, faults=None):
     d = parse_date(ds)
     number = (d - parse_date(p['meta']['day0'])).days
     current = next((x for x in p['dailyPlan'] if x['date'] == ds), None)
@@ -373,6 +489,7 @@ def day_info(p, ds, mode=None):
                   + [{'date': x['dueDate'], 'label': x['text'] + '截止'} for x in p['deliverables']
                      if not x['done'] and x['dueDate'] > ds])
     milestones.sort(key=lambda x: (x['date'], x['label']))
+    acc = accum_status(p, ds, faults)
     return {'date': ds, 'day': number, 'week': week,
             'mode': mode, 'actions': candidates, 'overdueCount': len(overdue), 'prerequisiteFirst': blocked,
             'budgetMinutes': 10 if mode == 'night' else 25 if mode == 'low' else current['budgetMinutes'] if current else 0,
@@ -385,14 +502,50 @@ def day_info(p, ds, mode=None):
                                for t in week_block['tasks'] if not t['done']] if week_block else []),
             'tomorrowDate': tomorrow_date if tomorrow_plan else None,
             'tomorrow': tomorrow_action,
-            'nextMilestones': milestones[:2]}
+            'nextMilestones': milestones[:2],
+            'accumulators': acc['rows'], 'accumNudge': acc['nudge']}
 
 
 def safe_md(text):
     return str(text or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('|', '\\|').replace('\n', '<br>')
 
 
-def overview_md(p):
+def accum_section(p, faults):
+    if not p.get('accumulators'):
+        return []
+    ti = task_index(p)
+    lines = ['', '## 积累项（计数型目标：向 agent 口述累计；方法见各手册，状态唯一来源在本 JSON）', '',
+             '| 项目 | 计数 | 目标 | 下一档 | 最近变化 | 最新一条 |', '|---|---|---|---|---|---|']
+    for a in p['accumulators']:
+        mode, unit, target = a.get('mode'), a.get('unit', ''), a['target']
+        last, latest = '—', '—'
+        if mode == 'derived':
+            count = None if faults is None else len(real_faults(faults))
+            if faults is not None:
+                dates = [i.get('date', '')[:7] for i in real_faults(faults)
+                         if re.fullmatch(r'\d{4}-\d{2}-\d{2}', i.get('date', ''))]
+                if dates:
+                    last = max(dates)
+        else:
+            count = a.get('count', 0)
+            last = a.get('lastAddedOn') or '—'
+            if mode == 'items' and a.get('items'):
+                latest = safe_md(a['items'][-1]['text'])
+        nxt = '—'
+        if count is not None and count < target:
+            remaining = [cp for cp in a.get('checkpoints', [])
+                         if count < cp['count'] <= target and cp.get('taskId') in ti]
+            if remaining:
+                cp = min(remaining, key=lambda c: c['count'])
+                nxt = f"{cp['count']} · {ti[cp['taskId']]['dueDate']}"
+            elif a.get('targetDue'):
+                nxt = f"{target} · {a['targetDue']}"
+        cnt = '—' if count is None else str(count)
+        lines.append(f"| **{safe_md(a['text'])}** | {cnt} | {target} {unit} | {nxt} | {last} | {latest} |")
+    return lines
+
+
+def overview_md(p, faults=None):
     m, s = p['meta'], p['stats']
     lines = ['# 进度总览 · Self-Evolution', '',
              '> 自动生成，只读。唯一记录源：[`plan90.json`](plan90.json)。不要手改勾选；直接告诉 agent。',
@@ -411,6 +564,7 @@ def overview_md(p):
     for d in p['deliverables']:
         lines.append(f'- [{"x" if d["done"] else " "}] **{d["id"]} · {safe_md(d["text"])}** · {d["dueDate"]} 前 · {safe_md(d["sub"])}')
         lines.extend(item_details(d))
+    lines += accum_section(p, faults)
     prep = p['dailyPlan'][0]
     lines += ['', '## Day 0 · 2026-09-06 · 可选准备（≤15 分钟）', '']
     for a in prep['actions']:
@@ -526,7 +680,11 @@ def sync_views(root=ROOT, check=False):
     p = load(root, PLAN_PATH)
     validate_plan(p)
     bridge = (root / 'scripts/file-store.js').read_text(encoding='utf-8')
-    outputs = {root / 'progress/进度总览.md': overview_md(p)}
+    faults = None
+    if (root / FAULT_PATH).exists():
+        faults = load(root, FAULT_PATH)
+        validate_faults(faults)
+    outputs = {root / 'progress/进度总览.md': overview_md(p, faults)}
     for name, data in [('90天进度表.html', p), ('故障模式库.html', empty_faults())]:
         path = root / 'tools' / name
         html = path.read_text(encoding='utf-8')
@@ -538,9 +696,7 @@ def sync_views(root=ROOT, check=False):
     start, end = '<!-- PLAN-SCHEDULE:BEGIN -->', '<!-- PLAN-SCHEDULE:END -->'
     a, b = block_bounds(text, start, end)
     outputs[source] = text[:a] + execution_block(p) + text[b:]
-    if (root / FAULT_PATH).exists():
-        faults = load(root, FAULT_PATH)
-        validate_faults(faults)
+    if faults is not None:
         outputs[root / 'data/故障模式库.local.md'] = fault_md(faults)
         local = replace_block(outputs[root / 'tools/故障模式库.html'], '<script type="application/json" id="project-data">', '</script><!-- PROJECT-DATA:END -->', embedded_json(faults))
         local = local.replace('<title>设备故障模式库', '<title>本地私有 · 设备故障模式库').replace('data-private="false"', 'data-private="true"')

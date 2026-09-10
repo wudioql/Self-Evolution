@@ -11,10 +11,11 @@ from pathlib import Path
 
 from project_data import (ROOT, PLAN_PATH, FAULT_PATH, PLAN_SCHEMA, FAULT_SCHEMA, TEXT_FIELDS,
                           load, dump, today, stamp, parse_date, tasks, task_index, calc_stats,
-                          validate_plan, validate_faults, empty_faults, real_faults, is_sample,
-                          normalize_fault_record, event, save_data, sync_views, day_info,
-                          sanitize_faults, atomic_write, require, integer_number, ID_RE,
-                          validation_day, validate_state, validate_daily_state)
+                          validate_plan, validate_faults, validate_accumulators, empty_faults,
+                          real_faults, is_sample, normalize_fault_record, event, save_data,
+                          sync_views, day_info, accum_status, sanitize_faults, atomic_write,
+                          require, integer_number, ID_RE, validation_day, validate_state,
+                          validate_daily_state)
 
 
 def get_document(root, relative):
@@ -139,6 +140,36 @@ def import_plan_state(p, payload, *, as_of=None):
                 dest[key] = copy.deepcopy(value)
     for src in orphans:
         keep(src)
+    # Accumulators: the master defines the set of items; incoming state is
+    # merged additively (items union, reported max) so recorded entries never
+    # lose to a stale schedule-only backup.
+    src_accums = payload.get('accumulators')
+    if src_accums is not None:
+        require(isinstance(src_accums, list), '导入的 accumulators 必须为数组')
+        validate_accumulators(src_accums, candidate['meta'], now)
+        dst_map = {a['id']: a for a in candidate.get('accumulators', [])}
+        for src in src_accums:
+            dst = dst_map.get(src['id'])
+            if dst is None:
+                keep({'kind': 'accumulator', 'id': src['id'], 'text': src.get('text', ''),
+                      'count': src.get('count'), 'lastAddedOn': src.get('lastAddedOn'),
+                      'items': copy.deepcopy(src.get('items', []))})
+                continue
+            if dst.get('mode') == 'items':
+                have = {(i['on'], i['text']) for i in dst.get('items', [])}
+                for it in src.get('items', []):
+                    key = (it['on'], it['text'])
+                    if key not in have:
+                        dst['items'].append(copy.deepcopy(it))
+                        have.add(key)
+                dst['items'].sort(key=lambda i: (i['on'], i['text']))
+                dst['count'] = len(dst['items'])
+            elif (dst.get('mode') == 'reported' and integer_number(src.get('count'))
+                  and src['count'] > dst.get('count', 0)):
+                dst['count'] = int(src['count'])
+            lad = src.get('lastAddedOn')
+            if lad and (dst.get('lastAddedOn') is None or lad > dst['lastAddedOn']):
+                dst['lastAddedOn'] = lad
     candidate['stats'] = calc_stats(candidate)
     validate_plan(candidate, as_of=now.isoformat())
     # One commit point: all parsing, validation and merge work succeeded.
@@ -149,7 +180,7 @@ def import_plan_state(p, payload, *, as_of=None):
 
 def show_today(p, faults, args):
     ds = args.date or today().isoformat()
-    info = day_info(p, ds, args.mode)
+    info = day_info(p, ds, args.mode, faults)
     if args.json:
         print(dump({**info, 'stats': p['stats'], 'realFaultCount': len(real_faults(faults)), 'habits': p['habits']}), end='')
         return
@@ -174,6 +205,11 @@ def show_today(p, faults, args):
     else:
         print(p['habits']['normal'])
         print('低能日只推进第 1 项，不加量。' if info['mode'] == 'low' else f'建议可用时间上限 {info["budgetMinutes"]} 分钟（不是必须做满）。')
+    if d >= 1 and info['mode'] != 'night':
+        if info['accumulators']:
+            print('积累：' + ' · '.join(r['label'] for r in info['accumulators']))
+        if info['accumNudge']:
+            print(info['accumNudge'])
     if info['ipaPaused'] and info['mode'] != 'night':
         print('IPA 已暂停：音乐制作、歌曲发布或交付验收有到期未确认项；先核对音乐闭环。')
     for i, a in enumerate(info['actions'], 1):
@@ -325,6 +361,12 @@ def build_parser():
     p = sub.add_parser('reschedule'); p.add_argument('id'); p.add_argument('--date', required=True); p.add_argument('--reason', required=True)
     p = sub.add_parser('mode'); p.add_argument('--start', required=True); p.add_argument('--end', required=True); p.add_argument('--kind', choices=['night', 'low'], required=True); p.add_argument('--note', default='')
     p = sub.add_parser('clear-mode'); p.add_argument('--start', required=True); p.add_argument('--end', required=True)
+    p = sub.add_parser('accumulate', help='累计计数型目标：taste 报一行原文 / terms 报累计数；故障库由 fault add 派生，不接受手设计数')
+    p.add_argument('id')
+    group = p.add_mutually_exclusive_group(required=True)
+    group.add_argument('--text', help='items 模式：一条记录内容')
+    group.add_argument('--set', dest='set_count', type=int, help='reported 模式：新的累计数')
+    p.add_argument('--on'); p.add_argument('--note', default=''); p.add_argument('--force', action='store_true')
     p = sub.add_parser('import-plan'); p.add_argument('--file', required=True)
     p = sub.add_parser('fault'); fs = p.add_subparsers(dest='fault_command', required=True)
     f = fs.add_parser('list'); f.add_argument('--query', default='')
@@ -433,6 +475,47 @@ def main(argv=None):
             if before == p['overrides']:
                 raise ValueError('未找到相同起止日期的模式；为避免误删未做修改')
             event(p, 'clear-mode', before=before, summary=f'{args.start}—{args.end}')
+        elif cmd == 'accumulate':
+            ds = date_used(args.on)
+            acc = next((a for a in p.get('accumulators', []) if a['id'] == args.id), None)
+            if acc is None:
+                existing = ', '.join(a['id'] for a in p.get('accumulators', [])) or '无'
+                raise ValueError('积累项 ' + args.id + ' 不存在；当前积累项：' + existing)
+            mode = acc.get('mode')
+            if mode == 'derived':
+                raise ValueError(f"{acc['text']} 实时派生自 {FAULT_PATH}；请用 fault add 录入真实故障，不手设计数")
+            before = copy.deepcopy(acc)
+            grew = False
+            if mode == 'items':
+                text = (args.text or '').strip()
+                if not text:
+                    raise ValueError('--text 内容不能为空')
+                if any(i.get('on') == ds and i.get('text') == text for i in acc.get('items', [])):
+                    print('这一条已记录过，不重复累计。')
+                    return 0
+                acc.setdefault('items', []).append({'on': ds, 'text': text})
+                acc['count'] = len(acc['items'])
+                grew = True
+            else:  # reported：只记本人确认的累计数
+                n = args.set_count
+                require(n is not None and n >= 0, '--set 需要非负整数')
+                cur = acc.get('count', 0)
+                if n == cur:
+                    print(f'累计数已是 {n}，无变化；未新增版本 / 历史。')
+                    return 0
+                if n < cur and not args.force:
+                    raise ValueError(f'累计数只允许增长（当前 {cur} → {n}）；确属更正请加 --force')
+                acc['count'] = n
+                grew = n > cur
+            if grew:
+                lad = acc.get('lastAddedOn')
+                acc['lastAddedOn'] = ds if (lad is None or ds >= lad) else lad
+            if args.note:
+                acc['note'] = merge_notes(acc.get('note', ''), args.note)
+            if acc == before:
+                print('状态没有变化；未新增版本 / 历史。')
+                return 0
+            event(p, 'accumulate', ids=[args.id], on=ds, before=before)
         elif cmd == 'import-plan':
             source = json.loads(Path(args.file).read_text(encoding='utf-8-sig'))
             count = import_plan_state(p, source)
@@ -440,6 +523,10 @@ def main(argv=None):
         finish(root, PLAN_PATH, p, raw)
         if cmd in ('done', 'undo'):
             print(('已勾选：' if cmd == 'done' else '已撤销：') + ', '.join(dict.fromkeys(args.ids)))
+        if cmd == 'accumulate':
+            st = next(r for r in accum_status(p, ds)['rows'] if r['id'] == args.id)
+            extra = f"；下一档 {st['next']['count']} {st['unit']} · {st['next']['date']}" if st['next'] else '；已达标'
+            print(f"积累已更新：{st['text']} {st['count']}/{st['target']}{extra}。")
         return 0
     except (ValueError, KeyError, TypeError, OSError) as exc:
         print('操作未完成：' + str(exc), file=sys.stderr)

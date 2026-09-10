@@ -31,6 +31,16 @@ class ProjectTests(unittest.TestCase):
         p.update(checkins=[], dailyLogs={}, overrides=[], history=[], _orphans=[])
         p['meta']['revision'] = 1
         p['meta']['updated'] = '2026-09-06'
+        # Fixtures contain the schedule, not the user's actual state:
+        # reset accumulator counters too.
+        for a in p.get('accumulators', []):
+            if a.get('mode') == 'derived':
+                continue
+            a['count'] = 0
+            a['lastAddedOn'] = None
+            a['note'] = ''
+            if a.get('mode') == 'items':
+                a['items'] = []
         p['stats'] = calc_stats(p)
         for rel, obj in ((PLAN_PATH, p), (FAULT_PATH, empty_faults())):
             path = self.root / rel
@@ -102,6 +112,121 @@ class ProjectTests(unittest.TestCase):
         self.assertIn('明日：[1-2]', r.stdout)
         # Day 0 has no week number; the week line must not appear there.
         self.assertNotIn('本周：', self.cli('today', '--date', '2026-09-06').stdout)
+
+    def accumulator(self, p, aid):
+        return next(a for a in p['accumulators'] if a['id'] == aid)
+
+    def test_accumulator_status_in_today_and_read_only(self):
+        before = self.files()
+        info = json.loads(self.cli('today', '--date', '2026-09-10', '--json').stdout)
+        rows = {x['id']: x for x in info['accumulators']}
+        self.assertEqual(set(rows), {'taste', 'terms', 'lib'})
+        self.assertEqual(rows['taste']['label'], '好听元素清单 0/30（下一档 3·2026-11-02）')
+        self.assertEqual(rows['terms']['label'], '英语术语表 0/80（下一档 10·2026-09-19）')
+        self.assertEqual(rows['lib']['label'], '故障模式库 0/30（下一档 5·2026-09-13）')
+        self.assertIn('故障模式库', info['accumNudge'])
+        self.assertIn('积累：好听元素清单 0/30', self.cli('today', '--date', '2026-09-10').stdout)
+        # Day 0 shows no accumulator line (collection starts W1).
+        self.assertNotIn('积累：', self.cli('today', '--date', '2026-09-06').stdout)
+        self.assertEqual(before, self.files())
+
+    def test_accumulate_items_appends_syncs_and_idempotent(self):
+        rev = self.p()['meta']['revision']
+        text = '[Lemon] 1:23 鼓停了半拍才进副歌'
+        self.cli('accumulate', 'taste', '--text', text, '--on', '2026-09-10')
+        p = self.p()
+        a = self.accumulator(p, 'taste')
+        self.assertEqual(a['count'], 1)
+        self.assertEqual(a['items'], [{'on': '2026-09-10', 'text': text}])
+        self.assertEqual(a['lastAddedOn'], '2026-09-10')
+        self.assertEqual(p['meta']['revision'], rev + 1)
+        self.assertIn(text, (self.root / 'progress/进度总览.md').read_text(encoding='utf-8'))
+        self.assertEqual(sync_views(self.root, check=True), [])
+        # Same entry again: no new revision, no duplicate item.
+        r2 = self.cli('accumulate', 'taste', '--text', text, '--on', '2026-09-10')
+        self.assertIn('已记录过', r2.stdout)
+        p2 = self.p()
+        self.assertEqual(p2['meta']['revision'], rev + 1)
+        self.assertEqual(len(self.accumulator(p2, 'taste')['items']), 1)
+        # A different entry grows the count; reaching the 3-item checkpoint
+        # moves the next step to the overall target.
+        self.cli('accumulate', 'taste', '--text', '[Lemon] 2:10 弦乐进前的留白', '--on', '2026-09-10')
+        out = self.cli('accumulate', 'taste', '--text', '第三条', '--on', '2026-09-10').stdout
+        self.assertEqual(self.accumulator(self.p(), 'taste')['count'], 3)
+        self.assertIn('积累已更新：好听元素清单 3/30', out)
+        self.assertIn('下一档 30 条 · 2026-12-05', out)
+
+    def test_accumulate_reported_grows_and_rejects_downgrade(self):
+        self.cli('accumulate', 'terms', '--set', '10', '--note', 'Service Manual Ch.1 读完', '--on', '2026-09-10')
+        a = self.accumulator(self.p(), 'terms')
+        self.assertEqual((a['count'], a['lastAddedOn']), (10, '2026-09-10'))
+        self.assertIn('Service Manual Ch.1 读完', a['note'])
+        self.assertIn('英语术语表 10/80（下一档 25·2026-09-26）', self.cli('today', '--date', '2026-09-10').stdout)
+        r = self.cli('accumulate', 'terms', '--set', '5', '--on', '2026-09-10', ok=False)
+        self.assertIn('只允许增长', r.stderr)
+        self.assertEqual(self.accumulator(self.p(), 'terms')['count'], 10)
+        self.cli('accumulate', 'terms', '--set', '5', '--on', '2026-09-10', '--force')
+        self.assertEqual(self.accumulator(self.p(), 'terms')['count'], 5)
+        self.assertIn('累计数已是 5', self.cli('accumulate', 'terms', '--set', '5', '--on', '2026-09-10').stdout)
+
+    def test_accumulate_derived_and_future_rejected(self):
+        r = self.cli('accumulate', 'lib', '--text', '不该手设', '--on', '2026-09-10', ok=False)
+        self.assertIn('fault add', r.stderr)
+        # The derived count follows real fault records only.
+        self.cli('fault', 'add', '--data', json.dumps({'symptom': '测试故障现象'}, ensure_ascii=False))
+        self.assertIn('故障模式库 1/30', self.cli('today', '--date', '2026-09-10').stdout)
+        r2 = self.cli('accumulate', 'taste', '--text', '未来条目', '--on', '2027-01-15', ok=False)
+        self.assertIn('未来', r2.stderr)
+        self.assertEqual(self.accumulator(self.p(), 'taste')['count'], 0)
+
+    def test_accumulator_nudges_stale_and_near_milestone(self):
+        # Nothing recorded yet: day 1 has no nudge at all.
+        self.assertNotIn('没新增', self.cli('today', '--date', '2026-09-08').stdout)
+        # Two idle days: staleness fires; taste and lib tie, list order wins.
+        self.assertIn('好听元素清单：已 2 天没新增', self.cli('today', '--date', '2026-09-09').stdout)
+        # Milestone proximity (lib due 2026-09-13) outranks staleness.
+        out = self.cli('today', '--date', '2026-09-12').stdout
+        self.assertIn('故障模式库：距下一档（5 条 · 2026-09-13）还剩 1 天', out)
+        self.assertNotIn('好听元素清单：', out)
+        # A recorded entry resets its staleness window.
+        self.cli('accumulate', 'taste', '--text', '[Lemon] 1:23 鼓停了半拍才进副歌', '--on', '2026-09-09')
+        self.assertNotIn('没新增', self.cli('today', '--date', '2026-09-10').stdout)
+
+    def test_night_mode_suppresses_accumulator_lines(self):
+        self.cli('mode', '--start', '2026-09-10', '--end', '2026-09-10', '--kind', 'night')
+        out = self.cli('today', '--date', '2026-09-10').stdout
+        self.assertNotIn('积累：', out)
+        self.assertNotIn('没新增', out)
+        self.assertNotIn('距下一档', out)
+        # Low-energy day keeps the status line (顺带, 不加量).
+        self.assertIn('积累：', self.cli('today', '--date', '2026-09-10', '--mode', 'low').stdout)
+
+    def test_import_plan_merges_accumulators(self):
+        p = self.p()
+        payload = copy.deepcopy(p)
+        taste = self.accumulator(payload, 'taste')
+        taste['items'] = [{'on': '2026-09-08', 'text': '来自备份的一条'}]
+        taste['count'] = 1
+        taste['lastAddedOn'] = '2026-09-08'
+        self.accumulator(payload, 'terms')['count'] = 5
+        payload['accumulators'].append({'id': 'mystery', 'text': 'x', 'unit': '个', 'target': 1,
+                                        'mode': 'reported', 'count': 1, 'lastAddedOn': None})
+        path = self.root / 'backup.local.json'
+        path.write_text(dump(payload), encoding='utf-8')
+        self.cli('import-plan', '--file', str(path))
+        p2 = self.p()
+        self.assertEqual(self.accumulator(p2, 'taste')['count'], 1)
+        self.assertEqual(self.accumulator(p2, 'terms')['count'], 5)
+        self.assertNotIn('mystery', [a['id'] for a in p2['accumulators']])
+        self.assertTrue(any(o.get('kind') == 'accumulator' and o.get('id') == 'mystery' for o in p2['_orphans']))
+        # Newer master entries never lose to an older backup.
+        self.cli('accumulate', 'taste', '--text', '正本新条目', '--on', '2026-09-09')
+        self.cli('import-plan', '--file', str(path))
+        a2 = self.accumulator(self.p(), 'taste')
+        self.assertEqual(a2['count'], 2)
+        self.assertEqual(a2['items'], [{'on': '2026-09-08', 'text': '来自备份的一条'},
+                                       {'on': '2026-09-09', 'text': '正本新条目'}])
+        self.assertEqual(self.accumulator(self.p(), 'terms')['count'], 5)
 
     def test_done_persists_and_generates_matching_views(self):
         self.cli('done', '1-0', '--on', '2026-09-06', '--note', '本人确认已响')
@@ -578,6 +703,22 @@ class ProjectTests(unittest.TestCase):
         case('stats-extra', [(['stats', 'extra'], 1)])
         case('null-history', [(['history'], None)])
         case('null-orphans', [(['_orphans'], None)])
+        def acc_doc(mode='items', count=1, on='2026-09-06', cp=('9-0',), last='2026-09-06'):
+            a = {'id': 'taste', 'text': '好听元素清单', 'unit': '条', 'target': 30, 'mode': mode,
+                 'checkpoints': [{'count': 3, 'taskId': t} for t in cp]}
+            if mode != 'derived':
+                a['count'] = count
+                a['lastAddedOn'] = last
+                if mode == 'items':
+                    a['items'] = [{'on': on, 'text': 'x'}]
+            return a
+        case('acc-clean', [(['accumulators'], [acc_doc()])], True)
+        case('acc-count-mismatch', [(['accumulators'], [acc_doc(count=2)])])
+        case('acc-future-item', [(['accumulators'], [acc_doc(on='2026-09-07')])])
+        case('acc-bad-mode', [(['accumulators'], [acc_doc(mode='itemsX')])])
+        case('acc-unknown-checkpoint', [(['accumulators'], [acc_doc(cp=('99-9',))])])
+        case('acc-derived-minimal', [(['accumulators'], [acc_doc(mode='derived')])], True)
+        case('acc-negative-count', [(['accumulators'], [acc_doc(mode='reported', count=-1)])])
         case('fault-clean', expected=True, kind='fault')
         case('fault-negative-revision', [(['meta', 'revision'], -1)], kind='fault')
         case('fault-boolean-revision', [(['meta', 'revision'], True)], kind='fault')

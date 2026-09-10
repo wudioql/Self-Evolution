@@ -562,6 +562,29 @@ function validatePlan(p,asOf=projectToday()) {
   must(Array.isArray(p.checkpoints),'缺少复检点数组');
   p.checkpoints.forEach(c=>must(isRecord(c)&&integerNumber(c.day)&&c.day<=m.totalDays&&validDate(c.date)&&dayNumber(c.date,m.day0)===c.day&&typeof c.text==='string','复检日期无效'));
   ['history','_orphans'].forEach(k=>must(!hasOwn(p,k)||Array.isArray(p[k]),k+' 必须为数组'));
+  const accums=hasOwn(p,'accumulators')?p.accumulators:[];
+  must(Array.isArray(accums),'accumulators 必须为数组');
+  const accSeen=new Set();
+  accums.forEach(a=>{
+    must(isRecord(a)&&typeof a.id==='string'&&/^[A-Za-z0-9_-]+$/.test(a.id)&&!accSeen.has(a.id),'积累项 ID 无效或重复');
+    accSeen.add(a.id);
+    must(typeof a.text==='string'&&a.text.trim().length>0&&typeof a.unit==='string'&&a.unit.trim().length>0,'积累项 text / unit 无效');
+    must(integerNumber(a.target,1),'积累项 target 必须为正整数');
+    must(['items','reported','derived'].includes(a.mode),'积累项 mode 必须为 items / reported / derived');
+    if(a.mode==='derived')return;
+    must(integerNumber(a.count),'累计数必须为非负整数');
+    if(a.lastAddedOn!=null)must(validDate(a.lastAddedOn)&&m.day0<=a.lastAddedOn&&a.lastAddedOn<=m.end&&a.lastAddedOn<=asOf,'积累最近变化日期无效');
+    if(a.mode==='items'){
+      must(Array.isArray(a.items),'items 模式必须含 items 数组');
+      a.items.forEach(it=>must(isRecord(it)&&validDate(it.on)&&m.day0<=it.on&&it.on<=m.end&&it.on<=asOf&&
+        typeof it.text==='string'&&it.text.trim().length>0,'积累条目格式无效'));
+      must(a.count===a.items.length,'累计数与 items 长度不一致');
+    }
+    if(hasOwn(a,'targetDue'))must(validDate(a.targetDue)&&m.day0<=a.targetDue&&a.targetDue<=m.end,'积累目标日期越界');
+    ['source','note'].forEach(k=>{if(hasOwn(a,k))must(typeof a[k]==='string',a.id+'.'+k+' 必须为文本');});
+    (hasOwn(a,'checkpoints')?a.checkpoints:[]).forEach(cp=>must(isRecord(cp)&&integerNumber(cp.count)&&
+      typeof cp.taskId==='string'&&/^[A-Za-z0-9_-]+$/.test(cp.taskId)&&index.has(cp.taskId),'积累里程碑格式无效'));
+  });
   const stats=planStats(p);must(isRecord(p.stats)&&Object.keys(p.stats).length===Object.keys(stats).length&&
     Object.keys(stats).every(k=>integerNumber(p.stats[k])&&p.stats[k]===stats[k]),'统计与任务状态不符');
 }

@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-09T22:53:09+08:00",
+    "updated": "2026-09-10T23:21:43+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 13,
+    "revision": 15,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -1830,7 +1830,8 @@
   "checkins": [
     "2026-09-07",
     "2026-09-08",
-    "2026-09-09"
+    "2026-09-09",
+    "2026-09-10"
   ],
   "stats": {
     "totalTasks": 96,
@@ -3105,6 +3106,97 @@
       "text": "14 周收尾：REVIEW.md + 2027 Q1；未完成项明确后续处置"
     }
   ],
+  "accumulators": [
+    {
+      "id": "taste",
+      "text": "好听元素清单",
+      "unit": "条",
+      "target": 30,
+      "mode": "items",
+      "count": 0,
+      "lastAddedOn": null,
+      "items": [],
+      "note": "",
+      "source": "manuals/音乐学习手册.md §2.9",
+      "targetDue": "2026-12-05",
+      "checkpoints": [
+        {
+          "count": 3,
+          "taskId": "9-0"
+        }
+      ]
+    },
+    {
+      "id": "terms",
+      "text": "英语术语表",
+      "unit": "词",
+      "target": 80,
+      "mode": "reported",
+      "count": 0,
+      "lastAddedOn": null,
+      "note": "",
+      "source": "manuals/半导体设备成长手册.md §2.6",
+      "targetDue": "2026-12-05",
+      "checkpoints": [
+        {
+          "count": 10,
+          "taskId": "2-5"
+        },
+        {
+          "count": 25,
+          "taskId": "3-3"
+        },
+        {
+          "count": 40,
+          "taskId": "4-4"
+        },
+        {
+          "count": 60,
+          "taskId": "11-4"
+        },
+        {
+          "count": 80,
+          "taskId": "12-4"
+        }
+      ]
+    },
+    {
+      "id": "lib",
+      "text": "故障模式库",
+      "unit": "条",
+      "target": 30,
+      "mode": "derived",
+      "note": "",
+      "source": "data/faults.local.json · manuals/半导体设备成长手册.md §2.3",
+      "targetDue": "2026-12-05",
+      "checkpoints": [
+        {
+          "count": 5,
+          "taskId": "1-6"
+        },
+        {
+          "count": 10,
+          "taskId": "2-4"
+        },
+        {
+          "count": 15,
+          "taskId": "3-2"
+        },
+        {
+          "count": 20,
+          "taskId": "4-4"
+        },
+        {
+          "count": 25,
+          "taskId": "9-3"
+        },
+        {
+          "count": 30,
+          "taskId": "11-4"
+        }
+      ]
+    }
+  ],
   "habits": {
     "normal": "最低剂量 25 分钟：墨墨 10 分钟 + 耳朵 15 分钟（可用日语歌词听读）；和具体动作重叠时不重复计时。",
     "night": "只保留墨墨复习 10 分钟；工作中确有故障才顺手记，其余豁免。",
@@ -3122,6 +3214,10 @@
     },
     "2026-09-08": {
       "note": "扒带前 4 小节 + 日语 10 分钟",
+      "minutes": 25
+    },
+    "2026-09-10": {
+      "note": "标准最低剂量：墨墨10分+耳朵15分",
       "minutes": 25
     }
   },
@@ -3260,6 +3356,17 @@
       "action": "checkin",
       "on": "2026-09-08",
       "summary": "2026-09-08"
+    },
+    {
+      "at": "2026-09-10T22:50:03+08:00",
+      "action": "checkin",
+      "on": "2026-09-10",
+      "summary": "2026-09-10"
+    },
+    {
+      "at": "2026-09-10T23:21:43+08:00",
+      "action": "accumulators-init",
+      "summary": "新增计数型积累目标 accumulators（好听元素清单 / 英语术语表 / 故障模式库）；接入每日闭环提醒；不改变任何排期与任务状态"
     }
   ]
 }
@@ -3361,6 +3468,29 @@ function validatePlan(p,asOf=projectToday()) {
   must(Array.isArray(p.checkpoints),'缺少复检点数组');
   p.checkpoints.forEach(c=>must(isRecord(c)&&integerNumber(c.day)&&c.day<=m.totalDays&&validDate(c.date)&&dayNumber(c.date,m.day0)===c.day&&typeof c.text==='string','复检日期无效'));
   ['history','_orphans'].forEach(k=>must(!hasOwn(p,k)||Array.isArray(p[k]),k+' 必须为数组'));
+  const accums=hasOwn(p,'accumulators')?p.accumulators:[];
+  must(Array.isArray(accums),'accumulators 必须为数组');
+  const accSeen=new Set();
+  accums.forEach(a=>{
+    must(isRecord(a)&&typeof a.id==='string'&&/^[A-Za-z0-9_-]+$/.test(a.id)&&!accSeen.has(a.id),'积累项 ID 无效或重复');
+    accSeen.add(a.id);
+    must(typeof a.text==='string'&&a.text.trim().length>0&&typeof a.unit==='string'&&a.unit.trim().length>0,'积累项 text / unit 无效');
+    must(integerNumber(a.target,1),'积累项 target 必须为正整数');
+    must(['items','reported','derived'].includes(a.mode),'积累项 mode 必须为 items / reported / derived');
+    if(a.mode==='derived')return;
+    must(integerNumber(a.count),'累计数必须为非负整数');
+    if(a.lastAddedOn!=null)must(validDate(a.lastAddedOn)&&m.day0<=a.lastAddedOn&&a.lastAddedOn<=m.end&&a.lastAddedOn<=asOf,'积累最近变化日期无效');
+    if(a.mode==='items'){
+      must(Array.isArray(a.items),'items 模式必须含 items 数组');
+      a.items.forEach(it=>must(isRecord(it)&&validDate(it.on)&&m.day0<=it.on&&it.on<=m.end&&it.on<=asOf&&
+        typeof it.text==='string'&&it.text.trim().length>0,'积累条目格式无效'));
+      must(a.count===a.items.length,'累计数与 items 长度不一致');
+    }
+    if(hasOwn(a,'targetDue'))must(validDate(a.targetDue)&&m.day0<=a.targetDue&&a.targetDue<=m.end,'积累目标日期越界');
+    ['source','note'].forEach(k=>{if(hasOwn(a,k))must(typeof a[k]==='string',a.id+'.'+k+' 必须为文本');});
+    (hasOwn(a,'checkpoints')?a.checkpoints:[]).forEach(cp=>must(isRecord(cp)&&integerNumber(cp.count)&&
+      typeof cp.taskId==='string'&&/^[A-Za-z0-9_-]+$/.test(cp.taskId)&&index.has(cp.taskId),'积累里程碑格式无效'));
+  });
   const stats=planStats(p);must(isRecord(p.stats)&&Object.keys(p.stats).length===Object.keys(stats).length&&
     Object.keys(stats).every(k=>integerNumber(p.stats[k])&&p.stats[k]===stats[k]),'统计与任务状态不符');
 }

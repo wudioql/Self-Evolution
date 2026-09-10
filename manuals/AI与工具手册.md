@@ -5,7 +5,7 @@
 > ⚠️ **本手册对应的不是一条"轨道"，是一个「工具部门」。**
 > 它的存在意义是**服务主线 A（音乐）和支持轨道 2（设备）**，不单独立项、不设独立目标。
 >
-> 制定：2026-09-05 / 最后更新：2026-09-06
+> 制定：2026-09-05 / 最后更新：2026-09-10
 
 ---
 
@@ -215,6 +215,10 @@ python3 scripts/progress.py fault add --file /path/to/record.local.json
 python3 scripts/progress.py fault update FM-0001 --file /path/to/patch.local.json
 python3 scripts/progress.py fault import --file /path/to/faults.backup.json
 python3 scripts/progress.py fault export-sanitized --output data/share-draft.local.json --reviewed
+
+# 积累项（计数型目标，AGENTS §8.2）：taste = 好听元素清单（原文入 JSON）；terms = 术语表（只记累计数）；故障库由 fault add 派生，不手设计数
+python3 scripts/progress.py accumulate taste --text "[Lemon] 1:23 鼓停了半拍才进副歌"
+python3 scripts/progress.py accumulate terms --set 10 --note "Service Manual Ch.1 读完"
 
 python3 scripts/sync-plan.py         # 只生成视图，不改 JSON
 python3 scripts/sync-plan.py --check # 检查是否漂移，不写文件

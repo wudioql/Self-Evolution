@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-09T22:53:09+08:00",
+    "updated": "2026-09-10T23:21:43+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 13,
+    "revision": 15,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -1621,7 +1621,8 @@
   "checkins": [
     "2026-09-07",
     "2026-09-08",
-    "2026-09-09"
+    "2026-09-09",
+    "2026-09-10"
   ],
   "stats": {
     "totalTasks": 96,
@@ -2896,6 +2897,97 @@
       "text": "14 周收尾：REVIEW.md + 2027 Q1；未完成项明确后续处置"
     }
   ],
+  "accumulators": [
+    {
+      "id": "taste",
+      "text": "好听元素清单",
+      "unit": "条",
+      "target": 30,
+      "mode": "items",
+      "count": 0,
+      "lastAddedOn": null,
+      "items": [],
+      "note": "",
+      "source": "manuals/音乐学习手册.md §2.9",
+      "targetDue": "2026-12-05",
+      "checkpoints": [
+        {
+          "count": 3,
+          "taskId": "9-0"
+        }
+      ]
+    },
+    {
+      "id": "terms",
+      "text": "英语术语表",
+      "unit": "词",
+      "target": 80,
+      "mode": "reported",
+      "count": 0,
+      "lastAddedOn": null,
+      "note": "",
+      "source": "manuals/半导体设备成长手册.md §2.6",
+      "targetDue": "2026-12-05",
+      "checkpoints": [
+        {
+          "count": 10,
+          "taskId": "2-5"
+        },
+        {
+          "count": 25,
+          "taskId": "3-3"
+        },
+        {
+          "count": 40,
+          "taskId": "4-4"
+        },
+        {
+          "count": 60,
+          "taskId": "11-4"
+        },
+        {
+          "count": 80,
+          "taskId": "12-4"
+        }
+      ]
+    },
+    {
+      "id": "lib",
+      "text": "故障模式库",
+      "unit": "条",
+      "target": 30,
+      "mode": "derived",
+      "note": "",
+      "source": "data/faults.local.json · manuals/半导体设备成长手册.md §2.3",
+      "targetDue": "2026-12-05",
+      "checkpoints": [
+        {
+          "count": 5,
+          "taskId": "1-6"
+        },
+        {
+          "count": 10,
+          "taskId": "2-4"
+        },
+        {
+          "count": 15,
+          "taskId": "3-2"
+        },
+        {
+          "count": 20,
+          "taskId": "4-4"
+        },
+        {
+          "count": 25,
+          "taskId": "9-3"
+        },
+        {
+          "count": 30,
+          "taskId": "11-4"
+        }
+      ]
+    }
+  ],
   "habits": {
     "normal": "最低剂量 25 分钟：墨墨 10 分钟 + 耳朵 15 分钟（可用日语歌词听读）；和具体动作重叠时不重复计时。",
     "night": "只保留墨墨复习 10 分钟；工作中确有故障才顺手记，其余豁免。",
@@ -2913,6 +3005,10 @@
     },
     "2026-09-08": {
       "note": "扒带前 4 小节 + 日语 10 分钟",
+      "minutes": 25
+    },
+    "2026-09-10": {
+      "note": "标准最低剂量：墨墨10分+耳朵15分",
       "minutes": 25
     }
   },
@@ -3051,6 +3147,17 @@
       "action": "checkin",
       "on": "2026-09-08",
       "summary": "2026-09-08"
+    },
+    {
+      "at": "2026-09-10T22:50:03+08:00",
+      "action": "checkin",
+      "on": "2026-09-10",
+      "summary": "2026-09-10"
+    },
+    {
+      "at": "2026-09-10T23:21:43+08:00",
+      "action": "accumulators-init",
+      "summary": "新增计数型积累目标 accumulators（好听元素清单 / 英语术语表 / 故障模式库）；接入每日闭环提醒；不改变任何排期与任务状态"
     }
   ]
 }
