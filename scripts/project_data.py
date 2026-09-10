@@ -510,31 +510,33 @@ def safe_md(text):
     return str(text or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('|', '\\|').replace('\n', '<br>')
 
 
-def accum_section(p, faults):
+def accum_section(p):
+    """Rows for the PUBLIC overview: must be derivable from plan90.json alone.
+
+    CI has no data/faults.local.json (gitignored), so the derived fault count
+    is shown as '—' here; the live count stays in the local `today` output and
+    the private fault views.
+    """
     if not p.get('accumulators'):
         return []
     ti = task_index(p)
-    lines = ['', '## 积累项（计数型目标：向 agent 口述累计；方法见各手册，状态唯一来源在本 JSON）', '',
+    lines = ['', '## 积累项（计数型目标：向 agent 口述累计；方法见各手册）', '',
              '| 项目 | 计数 | 目标 | 下一档 | 最近变化 | 最新一条 |', '|---|---|---|---|---|---|']
     for a in p['accumulators']:
         mode, unit, target = a.get('mode'), a.get('unit', ''), a['target']
         last, latest = '—', '—'
         if mode == 'derived':
-            count = None if faults is None else len(real_faults(faults))
-            if faults is not None:
-                dates = [i.get('date', '')[:7] for i in real_faults(faults)
-                         if re.fullmatch(r'\d{4}-\d{2}-\d{2}', i.get('date', ''))]
-                if dates:
-                    last = max(dates)
+            count = None  # 私有派生数据，不在公开视图展开
         else:
             count = a.get('count', 0)
             last = a.get('lastAddedOn') or '—'
             if mode == 'items' and a.get('items'):
                 latest = safe_md(a['items'][-1]['text'])
         nxt = '—'
-        if count is not None and count < target:
+        if count is None or count < target:
             remaining = [cp for cp in a.get('checkpoints', [])
-                         if count < cp['count'] <= target and cp.get('taskId') in ti]
+                         if cp['count'] <= target and (count is None or count < cp['count'])
+                         and cp.get('taskId') in ti]
             if remaining:
                 cp = min(remaining, key=lambda c: c['count'])
                 nxt = f"{cp['count']} · {ti[cp['taskId']]['dueDate']}"
@@ -545,7 +547,7 @@ def accum_section(p, faults):
     return lines
 
 
-def overview_md(p, faults=None):
+def overview_md(p):
     m, s = p['meta'], p['stats']
     lines = ['# 进度总览 · Self-Evolution', '',
              '> 自动生成，只读。唯一记录源：[`plan90.json`](plan90.json)。不要手改勾选；直接告诉 agent。',
@@ -564,7 +566,7 @@ def overview_md(p, faults=None):
     for d in p['deliverables']:
         lines.append(f'- [{"x" if d["done"] else " "}] **{d["id"]} · {safe_md(d["text"])}** · {d["dueDate"]} 前 · {safe_md(d["sub"])}')
         lines.extend(item_details(d))
-    lines += accum_section(p, faults)
+    lines += accum_section(p)
     prep = p['dailyPlan'][0]
     lines += ['', '## Day 0 · 2026-09-06 · 可选准备（≤15 分钟）', '']
     for a in prep['actions']:
@@ -684,7 +686,9 @@ def sync_views(root=ROOT, check=False):
     if (root / FAULT_PATH).exists():
         faults = load(root, FAULT_PATH)
         validate_faults(faults)
-    outputs = {root / 'progress/进度总览.md': overview_md(p, faults)}
+    # Public views must be regenerable from public inputs alone (CI has no
+    # gitignored *.local.* files); the fault count never enters 进度总览.md.
+    outputs = {root / 'progress/进度总览.md': overview_md(p)}
     for name, data in [('90天进度表.html', p), ('故障模式库.html', empty_faults())]:
         path = root / 'tools' / name
         html = path.read_text(encoding='utf-8')

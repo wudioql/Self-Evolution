@@ -11,13 +11,14 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '20'
+          package-manager-cache: false
       - name: JSON 与只读视图一致性（不写入）
         run: python3 scripts/sync-plan.py --check
       - name: 文档 / 隐私 / 单一来源检查

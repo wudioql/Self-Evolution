@@ -6,6 +6,15 @@
 
 ## [2026-09-10]
 
+### 修复 · CI「需要同步」（公开视图依赖私有故障文件）+ workflow Node 20 警告
+
+- 诊断：`accumulators` 变更让 `sync_views` 把 `data/faults.local.json`（gitignored、CI 不存在）的内容带入公开视图 `progress/进度总览.md`（提交进 Git）——本地故障计数为 `0`、CI 再生成为 `—`，`sync-plan.py --check` 报「需要同步」失败。根因：**公开视图必须只由公开输入再生成**。
+- `scripts/project_data.py`：`overview_md` / `accum_section` 不再接收故障文件，公开总览的故障库计数固定为 `—`（下一档日期仍取公开任务排期）；实时计数仍由 `today` 输出与本地私有视图（`故障模式库.local.md` / `.local.html`）承担。
+- `scripts/test_progress.py`：补「公开总览独立于私有故障文件」回归（删故障文件后同步检查全绿、总览内容不变）。
+- `.github/workflows/docs-check.yml`：`actions/checkout@v5` / `setup-python@v6` / `setup-node@v5`（Node 24 action 运行时，消除 Node 20 deprecation warning；项目运行时仍 Node 20，setup-node 按 v5 迁移说明显式 `package-manager-cache: false`）。
+- 验证：模拟 CI 环境（移除全部 `*.local.*` 与 `.backups/`）依次跑五步命令全绿；本地回归 59/59、Node 23/23、`check-docs.py`、`check-tools.py`、`sync-plan.py --check` 全绿。
+- 提醒：`progress/进度总览.md` 已按新规则重新生成（故障库行改为 `—`），须与本次代码修复一并提交。
+
 ### 维护 · AGENTS.md 瘦身（去重 + 压缩，零规则丢失；本人确认）
 
 - 诊断：按节字节计量，§8 每日协议（7.3 KB）是 agent 操作规范、不能搬离日常文件（参考层标"不通读"、速查层只放硬事实）；可减部分 = 与 AI 手册 §4.6 / `01` 头部 / §6.1 / CI workflow 重复的内容。15 KB 基线自 2026-09-07 工作流变更后即已超出，2026-09-06 审计中"仍在尺寸基线内"的说法随之过期。

@@ -8,8 +8,8 @@ import unittest
 from pathlib import Path
 
 from project_data import (ROOT, PLAN_PATH, FAULT_PATH, dump, load, tasks, task_index, calc_stats,
-                          day_info, validate_plan, validate_faults, empty_faults, real_faults,
-                          sync_views, atomic_write, sanitize_faults, save_data)
+                          day_info, overview_md, validate_plan, validate_faults, empty_faults,
+                          real_faults, sync_views, atomic_write, sanitize_faults, save_data)
 from progress import import_plan_state
 
 
@@ -200,6 +200,18 @@ class ProjectTests(unittest.TestCase):
         self.assertNotIn('距下一档', out)
         # Low-energy day keeps the status line (顺带, 不加量).
         self.assertIn('积累：', self.cli('today', '--date', '2026-09-10', '--mode', 'low').stdout)
+
+    def test_public_overview_deterministic_without_private_fault_file(self):
+        # progress/进度总览.md is public and committed; CI never has
+        # data/faults.local.json, so the view must be derivable from
+        # plan90.json alone and `sync-plan.py --check` must pass there.
+        p = self.p()
+        rendered = (self.root / 'progress/进度总览.md').read_text(encoding='utf-8')
+        self.assertEqual(rendered, overview_md(p))
+        (self.root / FAULT_PATH).unlink()
+        self.assertEqual(sync_views(self.root, check=True), [])
+        self.assertEqual((self.root / 'progress/进度总览.md').read_text(encoding='utf-8'), overview_md(p))
+        self.assertIn('| **故障模式库** | — |', rendered)
 
     def test_import_plan_merges_accumulators(self):
         p = self.p()
