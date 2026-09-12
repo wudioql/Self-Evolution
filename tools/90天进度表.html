@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-11T23:22:23+08:00",
+    "updated": "2026-09-12T19:43:44+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 20,
+    "revision": 24,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -334,7 +334,7 @@
           "track": "equip",
           "text": "建故障模式库，录入最近亲身处理过的 5 个故障",
           "done": false,
-          "note": "",
+          "note": "09-12 录 3 条亲历故障：FM-0001 mapping error / FM-0002 WAP 选错 / FM-0003 选错 recipe；还差 2 条达 5 条（09-13 补）",
           "scheduledDate": "2026-09-12",
           "dueDate": "2026-09-13",
           "output": "data/faults.local.json 中 5 条亲历真实故障（不含示例）",
@@ -377,13 +377,13 @@
           "id": "1-9",
           "track": "ipa",
           "text": "阶段 0：搞懂「音素 ≠ 字母」（30 分钟一次做完：数 10 个英文单词里有几个音）",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "阶段0：数10个英文词音素（think4/box4/knight3/through3/rhythm5/knowledge5/sixths6/foreign5/daughter4/eighth3）全对：静音字母、双元音算一个、x=ks、ge=dʒ",
           "scheduledDate": "2026-09-12",
           "dueDate": "2026-09-12",
           "output": "10 个英文词的音素计数记录",
           "optional": true,
-          "completedOn": null,
+          "completedOn": "2026-09-12",
           "evidence": []
         }
       ],
@@ -1832,12 +1832,13 @@
     "2026-09-08",
     "2026-09-09",
     "2026-09-10",
-    "2026-09-11"
+    "2026-09-11",
+    "2026-09-12"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 6,
-    "pct": 6,
+    "doneTasks": 7,
+    "pct": 7,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -3224,6 +3225,10 @@
     "2026-09-11": {
       "note": "最低剂量 25 分钟完成\n今日 25 分钟：Praat 基频观察 + 常规剂量",
       "minutes": 25
+    },
+    "2026-09-12": {
+      "note": "最低剂量25分钟：墨墨10+耳朵15（含日语歌词听读）",
+      "minutes": 25
     }
   },
   "overrides": [],
@@ -3473,6 +3478,49 @@
       "action": "checkin",
       "on": "2026-09-11",
       "summary": "2026-09-11"
+    },
+    {
+      "at": "2026-09-12T19:11:58+08:00",
+      "action": "done",
+      "ids": [
+        "1-9"
+      ],
+      "on": "2026-09-12",
+      "before": [
+        {
+          "id": "1-9",
+          "track": "ipa",
+          "text": "阶段 0：搞懂「音素 ≠ 字母」（30 分钟一次做完：数 10 个英文单词里有几个音）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-12",
+          "dueDate": "2026-09-12",
+          "output": "10 个英文词的音素计数记录",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-12T19:14:06+08:00",
+      "action": "checkin",
+      "on": "2026-09-12",
+      "summary": "2026-09-12"
+    },
+    {
+      "at": "2026-09-12T19:43:40+08:00",
+      "action": "note",
+      "ids": [
+        "1-6"
+      ]
+    },
+    {
+      "at": "2026-09-12T19:43:44+08:00",
+      "action": "note",
+      "ids": [
+        "1-6"
+      ]
     }
   ]
 }
