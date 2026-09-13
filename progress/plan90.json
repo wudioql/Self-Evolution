@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-12T19:43:44+08:00",
+    "updated": "2026-09-13T20:47:41+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 24,
+    "revision": 26,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -124,40 +124,46 @@
           "id": "1-6",
           "track": "equip",
           "text": "建故障模式库，录入最近亲身处理过的 5 个故障",
-          "done": false,
-          "note": "09-12 录 3 条亲历故障：FM-0001 mapping error / FM-0002 WAP 选错 / FM-0003 选错 recipe；还差 2 条达 5 条（09-13 补）",
+          "done": true,
+          "note": "09-12 录 3 条亲历故障：FM-0001 mapping error / FM-0002 WAP 选错 / FM-0003 选错 recipe；还差 2 条达 5 条（09-13 补）\nW1收尾：故障库5条达标(1-6)；公开承诺发布并可公开访问(1-7)；MIDI+故障+承诺三项检查通过(1-8)",
           "scheduledDate": "2026-09-12",
           "dueDate": "2026-09-13",
           "output": "data/faults.local.json 中 5 条亲历真实故障（不含示例）",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-09-13",
+          "evidence": [
+            "https://github.com/wudioql/Self-Evolution/blob/main/music-log/%E5%85%AC%E5%BC%80%E6%89%BF%E8%AF%BA.md"
+          ]
         },
         {
           "id": "1-7",
           "track": "pub",
           "text": "保存第一条版本记录 + 发一条公开动态（只发可公开内容）",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "W1收尾：故障库5条达标(1-6)；公开承诺发布并可公开访问(1-7)；MIDI+故障+承诺三项检查通过(1-8)",
           "scheduledDate": "2026-09-13",
           "dueDate": "2026-09-13",
           "output": "版本记录和公开承诺链接（没有公开链接不能代称已发布）",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-09-13",
+          "evidence": [
+            "https://github.com/wudioql/Self-Evolution/blob/main/music-log/%E5%85%AC%E5%BC%80%E6%89%BF%E8%AF%BA.md"
+          ]
         },
         {
           "id": "1-8",
           "track": "key",
           "text": "检查点：MIDI 存在 + 故障库 5 条 + 公开承诺已发出",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "W1收尾：故障库5条达标(1-6)；公开承诺发布并可公开访问(1-7)；MIDI+故障+承诺三项检查通过(1-8)",
           "scheduledDate": "2026-09-13",
           "dueDate": "2026-09-13",
           "output": "核对 melody.mid、5 条真实故障、公开承诺",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-09-13",
+          "evidence": [
+            "https://github.com/wudioql/Self-Evolution/blob/main/music-log/%E5%85%AC%E5%BC%80%E6%89%BF%E8%AF%BA.md"
+          ],
           "dependsOn": [
             "1-2",
             "1-6",
@@ -179,7 +185,7 @@
         }
       ],
       "title": "启动与《Lemon》8 小节旋律",
-      "note": ""
+      "note": "W1 回顾：\n本周产出：melody.mid 扒完《Lemon》前8小节主旋律 / faults.local.json 5条亲历真实故障 / 公开承诺.md 已发（含 GitHub 链接）\n下周唯一大事：只开贝斯轨降速50%，扒《Lemon》主歌根音走向（2-0）\n卡住的地方：progress.py 在沙箱下 ID 偶发跳号（FM-0002/0004 需人工核对）"
     },
     {
       "n": 2,
@@ -1624,12 +1630,13 @@
     "2026-09-09",
     "2026-09-10",
     "2026-09-11",
-    "2026-09-12"
+    "2026-09-12",
+    "2026-09-13"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 7,
-    "pct": 7,
+    "doneTasks": 10,
+    "pct": 10,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -3020,6 +3027,10 @@
     "2026-09-12": {
       "note": "最低剂量25分钟：墨墨10+耳朵15（含日语歌词听读）",
       "minutes": 25
+    },
+    "2026-09-13": {
+      "note": "最低剂量25分钟：墨墨10+耳朵15",
+      "minutes": 25
     }
   },
   "overrides": [],
@@ -3312,6 +3323,68 @@
       "ids": [
         "1-6"
       ]
+    },
+    {
+      "at": "2026-09-13T20:46:41+08:00",
+      "action": "done",
+      "ids": [
+        "1-6",
+        "1-7",
+        "1-8"
+      ],
+      "on": "2026-09-13",
+      "before": [
+        {
+          "id": "1-6",
+          "track": "equip",
+          "text": "建故障模式库，录入最近亲身处理过的 5 个故障",
+          "done": false,
+          "note": "09-12 录 3 条亲历故障：FM-0001 mapping error / FM-0002 WAP 选错 / FM-0003 选错 recipe；还差 2 条达 5 条（09-13 补）",
+          "scheduledDate": "2026-09-12",
+          "dueDate": "2026-09-13",
+          "output": "data/faults.local.json 中 5 条亲历真实故障（不含示例）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-7",
+          "track": "pub",
+          "text": "保存第一条版本记录 + 发一条公开动态（只发可公开内容）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-13",
+          "dueDate": "2026-09-13",
+          "output": "版本记录和公开承诺链接（没有公开链接不能代称已发布）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "1-8",
+          "track": "key",
+          "text": "检查点：MIDI 存在 + 故障库 5 条 + 公开承诺已发出",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-13",
+          "dueDate": "2026-09-13",
+          "output": "核对 melody.mid、5 条真实故障、公开承诺",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-2",
+            "1-6",
+            "1-7"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-09-13T20:47:41+08:00",
+      "action": "checkin",
+      "on": "2026-09-13",
+      "summary": "2026-09-13"
     }
   ]
 }
