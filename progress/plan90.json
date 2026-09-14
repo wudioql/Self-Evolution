@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-13T20:47:41+08:00",
+    "updated": "2026-09-15T00:46:02+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 26,
+    "revision": 37,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -198,12 +198,12 @@
         {
           "id": "2-0",
           "track": "sound",
-          "text": "分轨提 bass → 降速 50% → 扒根音",
+          "text": "分轨提 bass → 降速 50% → 走线点进 bass.mid，根音/和弦结论写进 chords.md",
           "done": false,
-          "note": "",
+          "note": "已扒《Lemon》主歌 bass 走线（前17小节：前3小节无bass；5-9小节仅第3拍一音F；10-17小节每1-2拍一带八度与经过音）\nbass.mid 已导出（前17小节走线）＋根音已判（5-9: F；10-17: 4/E）",
           "scheduledDate": "2026-09-14",
           "dueDate": "2026-09-15",
-          "output": "chords.md 中主歌 bass 根音走线",
+          "output": "music-log/01-lemon/bass.mid（主歌 bass 逐音符走线）＋chords.md（根音/和弦结论）",
           "optional": false,
           "completedOn": null,
           "evidence": [],
@@ -289,13 +289,13 @@
           "id": "2-6",
           "track": "jp",
           "text": "建立每天 15 分钟日语可理解输入习惯（歌词也算，挂靠耳朵时间）",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "实际采用的歌词听读方式＝每日墨墨 10 词 ＋ 边听日语歌边看歌词（挂靠耳朵 15 分钟）",
           "scheduledDate": "2026-09-14",
           "dueDate": "2026-09-14",
           "output": "记录实际采用的歌词听读方式；每日执行另记打卡",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-15",
           "evidence": []
         },
         {
@@ -1631,12 +1631,13 @@
     "2026-09-10",
     "2026-09-11",
     "2026-09-12",
-    "2026-09-13"
+    "2026-09-13",
+    "2026-09-14"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 10,
-    "pct": 10,
+    "doneTasks": 11,
+    "pct": 11,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -1765,7 +1766,7 @@
       "actions": [
         {
           "taskId": "2-0",
-          "text": "只开贝斯轨，听《Lemon》前 4 小节根音"
+          "text": "只开贝斯轨，扒《Lemon》bass 走线（有音点进 bass.mid，空拍留白）"
         },
         {
           "taskId": "2-6",
@@ -1780,7 +1781,7 @@
       "actions": [
         {
           "taskId": "2-0",
-          "text": "补后 4 小节根音，在 chords.md 记走线"
+          "text": "补后 4 小节走线进 bass.mid，根音/和弦结论写进 chords.md"
         }
       ]
     },
@@ -2913,9 +2914,22 @@
       "unit": "条",
       "target": 30,
       "mode": "items",
-      "count": 0,
-      "lastAddedOn": null,
-      "items": [],
+      "count": 3,
+      "lastAddedOn": "2026-09-15",
+      "items": [
+        {
+          "on": "2026-09-15",
+          "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
+        },
+        {
+          "on": "2026-09-15",
+          "text": "偶尔出现的'说话'感（而不是纯唱）"
+        },
+        {
+          "on": "2026-09-15",
+          "text": "'耳语'元素插入"
+        }
+      ],
       "note": "",
       "source": "manuals/音乐学习手册.md §2.9",
       "targetDue": "2026-12-05",
@@ -3030,6 +3044,10 @@
     },
     "2026-09-13": {
       "note": "最低剂量25分钟：墨墨10+耳朵15",
+      "minutes": 25
+    },
+    "2026-09-14": {
+      "note": "25 分钟：扒《Lemon》bass 走线（#2-0）",
       "minutes": 25
     }
   },
@@ -3385,6 +3403,172 @@
       "action": "checkin",
       "on": "2026-09-13",
       "summary": "2026-09-13"
+    },
+    {
+      "at": "2026-09-14T23:57:40+08:00",
+      "action": "note",
+      "ids": [
+        "2-0"
+      ]
+    },
+    {
+      "at": "2026-09-14T23:57:40+08:00",
+      "action": "checkin",
+      "on": "2026-09-14",
+      "summary": "2026-09-14"
+    },
+    {
+      "at": "2026-09-14T23:57:43+08:00",
+      "action": "note",
+      "ids": [
+        "2-0"
+      ]
+    },
+    {
+      "at": "2026-09-15T00:24:25+08:00",
+      "action": "accumulate",
+      "ids": [
+        "taste"
+      ],
+      "on": "2026-09-15",
+      "before": {
+        "id": "taste",
+        "text": "好听元素清单",
+        "unit": "条",
+        "target": 30,
+        "mode": "items",
+        "count": 0,
+        "lastAddedOn": null,
+        "items": [],
+        "note": "",
+        "source": "manuals/音乐学习手册.md §2.9",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 3,
+            "taskId": "9-0"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-15T00:24:25+08:00",
+      "action": "accumulate",
+      "ids": [
+        "taste"
+      ],
+      "on": "2026-09-15",
+      "before": {
+        "id": "taste",
+        "text": "好听元素清单",
+        "unit": "条",
+        "target": 30,
+        "mode": "items",
+        "count": 1,
+        "lastAddedOn": "2026-09-15",
+        "items": [
+          {
+            "on": "2026-09-15",
+            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
+          }
+        ],
+        "note": "",
+        "source": "manuals/音乐学习手册.md §2.9",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 3,
+            "taskId": "9-0"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-15T00:24:25+08:00",
+      "action": "accumulate",
+      "ids": [
+        "taste"
+      ],
+      "on": "2026-09-15",
+      "before": {
+        "id": "taste",
+        "text": "好听元素清单",
+        "unit": "条",
+        "target": 30,
+        "mode": "items",
+        "count": 2,
+        "lastAddedOn": "2026-09-15",
+        "items": [
+          {
+            "on": "2026-09-15",
+            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
+          },
+          {
+            "on": "2026-09-15",
+            "text": "偶尔出现的'说话'感（而不是纯唱）"
+          }
+        ],
+        "note": "",
+        "source": "manuals/音乐学习手册.md §2.9",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 3,
+            "taskId": "9-0"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-15T00:31:06+08:00",
+      "action": "note",
+      "ids": [
+        "2-0"
+      ]
+    },
+    {
+      "at": "2026-09-15T00:31:09+08:00",
+      "action": "note",
+      "ids": [
+        "2-0"
+      ]
+    },
+    {
+      "at": "2026-09-15T00:44:53+08:00",
+      "action": "note",
+      "ids": [
+        "2-6"
+      ]
+    },
+    {
+      "at": "2026-09-15T00:44:54+08:00",
+      "action": "done",
+      "ids": [
+        "2-6"
+      ],
+      "on": "2026-09-15",
+      "before": [
+        {
+          "id": "2-6",
+          "track": "jp",
+          "text": "建立每天 15 分钟日语可理解输入习惯（歌词也算，挂靠耳朵时间）",
+          "done": false,
+          "note": "实际采用的歌词听读方式＝每日墨墨 10 词 ＋ 边听日语歌边看歌词（挂靠耳朵 15 分钟）",
+          "scheduledDate": "2026-09-14",
+          "dueDate": "2026-09-14",
+          "output": "记录实际采用的歌词听读方式；每日执行另记打卡",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-15T00:46:02+08:00",
+      "action": "note",
+      "ids": [
+        "2-6"
+      ]
     }
   ]
 }

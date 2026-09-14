@@ -26,6 +26,10 @@ music-log/**/stems/
 *.song
 *.songx
 *.als
+
+# Studio One 工程随附缓存（Cache/ 波形 .peak / 自动保存，派生自有版权音频，不入库）
+music-log/**/Cache/
+*.peak
 *.flp
 *.cpr
 *.logicx

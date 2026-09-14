@@ -4,6 +4,25 @@
 
 本文件记「**改了什么**」；审计核对范围、验证边界与待修登记记 [`AUDIT.md`](AUDIT.md)（2026-09-07 前名「维护审计.md」），记「**核对过什么、边界在哪**」。2026-09-07 前的条目自原 README §6 与原维护审计 §6 迁入，文字基本保留原貌；旧记录保留历史意义，与 2026-09-06 审计不符的旧结论不能作为「已解决」的证据。
 
+## [2026-09-15]
+
+### 维护 · .gitignore 封堵 Studio One 工程缓存上传风险
+
+- 排查（用户提问驱动）：`git status -uall` 显示 `music-log/01-lemon/Lemon/Cache/Images/` 下 7 个 `.peak`（Studio One 波形缓存，派生自有版权分轨音频）为未追踪；原 `.gitignore` 无 `.peak` 或 `Cache/` 规则，`git add` 会误带上 GitHub。
+- 改动：`.gitignore` 的 §1 music-log DAW 段新增 `music-log/**/Cache/` 与 `*.peak` 两条。
+- 验证：`git check-ignore` 对示例 `.peak` 命中 `.gitignore:31`；`git status -uall` 中该目录下未追踪文件仅余应入库的 `chords.md`。
+
+## [2026-09-14]
+
+### 变更 · 扒带记法职责切分（本人确认）：精确 bass 走线进 MIDI，chords.md 只记和声结论
+
+- 起因（2-0 实际扒带反馈）：《Lemon》主歌 bass 不是每小节一个根音 —— 前 3 小节无 bass、5–9 小节仅第 3 拍一个音、10–17 小节每 1–2 拍一个音并带八度 / 经过音走线（首调 `6-5-4-1-4-1-♭2-3`）；文本手写音符串难读、不可回放，记"走线"用 MIDI 更贴切，也与既有 `melody.mid` / 鼓 MIDI 的做法一致。
+- `manuals/音乐学习手册.md` §2.10 Step 2：产出由单一 `chords.md` 切分为 `bass.mid`（逐音符走线：空拍留白 · 八度 / 节奏照实画）+ `chords.md`（只记和声结论：根音所在小节 / 和弦 / 对账 / 盲区）；新增"别把经过音 / 八度当根音"。
+- `04-扒带作业单.md`：目录模板补 `bass.mid`；W2 任务措辞改为"走线点进 bass.mid、结论写进 chords.md"；歌 #1 完成标准补 `bass.mid` 存在项；验收重点补"`bass.mid` 须为耳扒，不直接用音转 MIDI 工具冒充"。
+- `00-速查表.md` §3 Step 2 行与音乐手册「与执行层的对接」表 W2 行同步更新（带 `→` 指向手册不变）。
+- `progress/plan90.json`（执行层唯一来源）同步：2-0 的 `text` / `output` 及今日（09-14）与明日（09-15）`dailyPlan` 分步文本改为「走线点进 bass.mid、结论写进 chords.md」；`sync-plan --check` 与 `check-docs.py` 全绿（rev 29）。
+- 记录方式语义不变：先扒再对账、盲区留痕仍保留；本变更不涉及真值 / 敏感映射。
+
 ## [2026-09-13]
 
 ### 维护 · AGENTS.md 补两条落地规则（W1 回顾 + 沙箱快照）
