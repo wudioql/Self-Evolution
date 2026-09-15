@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-15T00:46:02+08:00",
+    "updated": "2026-09-15T23:32:43+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 37,
+    "revision": 41,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -408,14 +408,16 @@
           "id": "2-0",
           "track": "sound",
           "text": "分轨提 bass → 降速 50% → 走线点进 bass.mid，根音/和弦结论写进 chords.md",
-          "done": false,
-          "note": "已扒《Lemon》主歌 bass 走线（前17小节：前3小节无bass；5-9小节仅第3拍一音F；10-17小节每1-2拍一带八度与经过音）\nbass.mid 已导出（前17小节走线）＋根音已判（5-9: F；10-17: 4/E）",
+          "done": true,
+          "note": "已扒《Lemon》主歌 bass 走线（前17小节：前3小节无bass；5-9小节仅第3拍一音F；10-17小节每1-2拍一带八度与经过音）\nbass.mid 已导出（前17小节走线）＋根音已判（5-9: F；10-17: 4/E）\nbass.mid 走线（5-17 小节）完成于 09-14；今日补后 4 小节并填 chords.md 根音与盲区",
           "scheduledDate": "2026-09-14",
           "dueDate": "2026-09-15",
           "output": "music-log/01-lemon/bass.mid（主歌 bass 逐音符走线）＋chords.md（根音/和弦结论）",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-09-15",
+          "evidence": [
+            "music-log/01-lemon/bass.mid; music-log/01-lemon/chords.md"
+          ],
           "dependsOn": [
             "1-2"
           ]
@@ -1841,12 +1843,13 @@
     "2026-09-11",
     "2026-09-12",
     "2026-09-13",
-    "2026-09-14"
+    "2026-09-14",
+    "2026-09-15"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 11,
-    "pct": 11,
+    "doneTasks": 12,
+    "pct": 13,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -3155,8 +3158,8 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 0,
-      "lastAddedOn": null,
+      "count": 2,
+      "lastAddedOn": "2026-09-15",
       "note": "",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
@@ -3257,6 +3260,10 @@
     },
     "2026-09-14": {
       "note": "25 分钟：扒《Lemon》bass 走线（#2-0）",
+      "minutes": 25
+    },
+    "2026-09-15": {
+      "note": "最低剂量25分钟：墨墨10+耳朵15",
       "minutes": 25
     }
   },
@@ -3777,6 +3784,86 @@
       "action": "note",
       "ids": [
         "2-6"
+      ]
+    },
+    {
+      "at": "2026-09-15T21:21:26+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-09-15",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 0,
+        "lastAddedOn": null,
+        "note": "",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-15T21:55:03+08:00",
+      "action": "checkin",
+      "on": "2026-09-15",
+      "summary": "2026-09-15"
+    },
+    {
+      "at": "2026-09-15T21:55:44+08:00",
+      "action": "checkin",
+      "on": "2026-09-15",
+      "summary": "2026-09-15"
+    },
+    {
+      "at": "2026-09-15T23:32:43+08:00",
+      "action": "done",
+      "ids": [
+        "2-0"
+      ],
+      "on": "2026-09-15",
+      "before": [
+        {
+          "id": "2-0",
+          "track": "sound",
+          "text": "分轨提 bass → 降速 50% → 走线点进 bass.mid，根音/和弦结论写进 chords.md",
+          "done": false,
+          "note": "已扒《Lemon》主歌 bass 走线（前17小节：前3小节无bass；5-9小节仅第3拍一音F；10-17小节每1-2拍一带八度与经过音）\nbass.mid 已导出（前17小节走线）＋根音已判（5-9: F；10-17: 4/E）",
+          "scheduledDate": "2026-09-14",
+          "dueDate": "2026-09-15",
+          "output": "music-log/01-lemon/bass.mid（主歌 bass 逐音符走线）＋chords.md（根音/和弦结论）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "1-2"
+          ]
+        }
       ]
     }
   ]

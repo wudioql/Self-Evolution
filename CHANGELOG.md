@@ -6,6 +6,13 @@
 
 ## [2026-09-15]
 
+### 约定 · 术语表每日候选词推荐固化进工作流（本人确认 2026-09-15）
+
+- 起因：用户提出"每天推荐几个候选词让我选"；约定只停在对话里会在换会话后失忆，须写入文件。
+- `manuals/半导体设备成长手册.md` §2.6：新增「每日候选词推荐（agent 工作流）」——每日 WF1 默认带 2–3 个候选词、来源顺序（已记故障英文词 → 当周知识块 → Service Manual Ch.1）、每个词挂靠一句话、本人确认后才累计。
+- `AGENTS.md` §8.2：术语表行下新增「术语候选词」bullet，每日默认带候选词，指向手册 §2.6。
+- 验证：`check-docs.py` 通过；不涉及真值 / 敏感映射。
+
 ### 维护 · .gitignore 封堵 Studio One 工程缓存上传风险
 
 - 排查（用户提问驱动）：`git status -uall` 显示 `music-log/01-lemon/Lemon/Cache/Images/` 下 7 个 `.peak`（Studio One 波形缓存，派生自有版权分轨音频）为未追踪；原 `.gitignore` 无 `.peak` 或 `Cache/` 规则，`git add` 会误带上 GitHub。
