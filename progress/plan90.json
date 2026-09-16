@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-15T23:32:43+08:00",
+    "updated": "2026-09-17T00:07:18+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 41,
+    "revision": 44,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -217,13 +217,13 @@
           "id": "2-1",
           "track": "sound",
           "text": "用旋律 3 音补完和弦性质",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "判定表填完：10-17 大部分三度自洽；13后 D♯Maj 复核无误；17前改 D♯7? 待对账；5-8 根音存疑（F 不在调内）留空待 2-2 对账",
           "scheduledDate": "2026-09-16",
           "dueDate": "2026-09-16",
           "output": "chords.md 中和弦性质与不确定点",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-16",
           "evidence": [],
           "dependsOn": [
             "2-0"
@@ -1635,12 +1635,13 @@
     "2026-09-12",
     "2026-09-13",
     "2026-09-14",
-    "2026-09-15"
+    "2026-09-15",
+    "2026-09-16"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 12,
-    "pct": 13,
+    "doneTasks": 13,
+    "pct": 14,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -2949,9 +2950,9 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 2,
-      "lastAddedOn": "2026-09-15",
-      "note": "",
+      "count": 6,
+      "lastAddedOn": "2026-09-16",
+      "note": "墨墨新增 4 词",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
       "checkpoints": [
@@ -3055,6 +3056,10 @@
     },
     "2026-09-15": {
       "note": "最低剂量25分钟：墨墨10+耳朵15",
+      "minutes": 25
+    },
+    "2026-09-16": {
+      "note": "最低剂量 25 分钟（墨墨 10′ + 耳朵 15′）",
       "minutes": 25
     }
   },
@@ -3653,6 +3658,80 @@
           "evidence": [],
           "dependsOn": [
             "1-2"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-09-16T22:49:00+08:00",
+      "action": "checkin",
+      "on": "2026-09-16",
+      "summary": "2026-09-16"
+    },
+    {
+      "at": "2026-09-16T22:49:01+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-09-16",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 2,
+        "lastAddedOn": "2026-09-15",
+        "note": "",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-17T00:07:18+08:00",
+      "action": "done",
+      "ids": [
+        "2-1"
+      ],
+      "on": "2026-09-16",
+      "before": [
+        {
+          "id": "2-1",
+          "track": "sound",
+          "text": "用旋律 3 音补完和弦性质",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-16",
+          "dueDate": "2026-09-16",
+          "output": "chords.md 中和弦性质与不确定点",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-0"
           ]
         }
       ]
