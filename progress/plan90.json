@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-17T00:07:18+08:00",
+    "updated": "2026-09-17T23:29:52+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 44,
+    "revision": 48,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -233,13 +233,13 @@
           "id": "2-2",
           "track": "sound",
           "text": "去 Hooktheory / U-FRET 对账，标出你的盲区",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "对账完成：10-12、14-17 对上；13 对不上（Ddim7? 与判定表差异）；盲区：只看2音难判三/七和弦",
           "scheduledDate": "2026-09-17",
           "dueDate": "2026-09-17",
           "output": "chords.md 中对账结果和至少一处盲区",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-17",
           "evidence": [],
           "dependsOn": [
             "2-1"
@@ -304,13 +304,13 @@
           "id": "2-7",
           "track": "jp",
           "text": "确认第 2 首目标曲 =《うっせぇわ》",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "本人确认目标曲《うっせぇわ》，不重新开选曲流程",
           "scheduledDate": "2026-09-17",
           "dueDate": "2026-09-17",
           "output": "本人确认目标曲，不重新开选曲流程",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-17",
           "evidence": []
         },
         {
@@ -1636,12 +1636,13 @@
     "2026-09-13",
     "2026-09-14",
     "2026-09-15",
-    "2026-09-16"
+    "2026-09-16",
+    "2026-09-17"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 13,
-    "pct": 14,
+    "doneTasks": 15,
+    "pct": 16,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -2950,9 +2951,9 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 6,
-      "lastAddedOn": "2026-09-16",
-      "note": "墨墨新增 4 词",
+      "count": 10,
+      "lastAddedOn": "2026-09-17",
+      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
       "checkpoints": [
@@ -3060,6 +3061,10 @@
     },
     "2026-09-16": {
       "note": "最低剂量 25 分钟（墨墨 10′ + 耳朵 15′）",
+      "minutes": 25
+    },
+    "2026-09-17": {
+      "note": "最低剂量：墨墨10′ + 耳朵15′（日语歌词听读）",
       "minutes": 25
     }
   },
@@ -3735,6 +3740,103 @@
           ]
         }
       ]
+    },
+    {
+      "at": "2026-09-17T23:29:51+08:00",
+      "action": "done",
+      "ids": [
+        "2-2"
+      ],
+      "on": "2026-09-17",
+      "before": [
+        {
+          "id": "2-2",
+          "track": "sound",
+          "text": "去 Hooktheory / U-FRET 对账，标出你的盲区",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-17",
+          "dueDate": "2026-09-17",
+          "output": "chords.md 中对账结果和至少一处盲区",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-1"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-09-17T23:29:51+08:00",
+      "action": "done",
+      "ids": [
+        "2-7"
+      ],
+      "on": "2026-09-17",
+      "before": [
+        {
+          "id": "2-7",
+          "track": "jp",
+          "text": "确认第 2 首目标曲 =《うっせぇわ》",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-17",
+          "dueDate": "2026-09-17",
+          "output": "本人确认目标曲，不重新开选曲流程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-17T23:29:51+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-09-17",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 6,
+        "lastAddedOn": "2026-09-16",
+        "note": "墨墨新增 4 词",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-17T23:29:52+08:00",
+      "action": "checkin",
+      "on": "2026-09-17",
+      "summary": "2026-09-17"
     }
   ]
 }
