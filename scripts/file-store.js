@@ -119,7 +119,7 @@ function validatePlan(p,asOf=projectToday()) {
   const stats=planStats(p);must(isRecord(p.stats)&&Object.keys(p.stats).length===Object.keys(stats).length&&
     Object.keys(stats).every(k=>integerNumber(p.stats[k])&&p.stats[k]===stats[k]),'统计与任务状态不符');
 }
-const faultTextFields=['date','eqType','eqModel','eqId','alarmCode','causeCategory','symptom','condition','troubleshootPath','rootCause','rootCauseTag','action','prevention','links','notes'];
+const faultTextFields=['date','eqType','eqModel','eqId','alarmCode','causeCategory','title','symptom','condition','troubleshootPath','rootCause','rootCauseTag','action','prevention','links','notes'];
 function validateFaults(d) {
   must(isRecord(d)&&d.schema==='self-evolution/faults/v1'&&Array.isArray(d.items),'不是故障库 JSON');
   must(isRecord(d.meta)&&integerNumber(d.meta.revision),'缺少有效 revision');

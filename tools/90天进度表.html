@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-17T23:29:52+08:00",
+    "updated": "2026-09-18T23:45:29+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 48,
+    "revision": 54,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -458,13 +458,13 @@
           "id": "2-3",
           "track": "sound",
           "text": "DAW 里做一版 8 小节伴奏",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "Studio One：钢琴轨识别和弦→和弦轨修正→新建乐器轨拉入1-8小节自动生成柱式和弦，与原曲并放听辨通过",
           "scheduledDate": "2026-09-18",
           "dueDate": "2026-09-20",
           "output": "8 小节伴奏工程 / 音频（本地）",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-18",
           "evidence": [],
           "dependsOn": [
             "2-2"
@@ -474,13 +474,13 @@
           "id": "2-4",
           "track": "equip",
           "text": "故障库加到 10 条",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "故障库已达 10 条（FM-0001~FM-0010），本人确认完成\n故障库真实记录达 10 条，本人确认完成\n真实故障累计达 10 条（FM-0006~FM-0010），本人确认完成",
           "scheduledDate": "2026-09-19",
           "dueDate": "2026-09-19",
           "output": "真实故障累计 10 条",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-18",
           "evidence": []
         },
         {
@@ -1846,12 +1846,13 @@
     "2026-09-14",
     "2026-09-15",
     "2026-09-16",
-    "2026-09-17"
+    "2026-09-17",
+    "2026-09-18"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 15,
-    "pct": 16,
+    "doneTasks": 17,
+    "pct": 18,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -3160,9 +3161,9 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 10,
-      "lastAddedOn": "2026-09-17",
-      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）",
+      "count": 14,
+      "lastAddedOn": "2026-09-18",
+      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
       "checkpoints": [
@@ -3273,6 +3274,10 @@
       "minutes": 25
     },
     "2026-09-17": {
+      "note": "最低剂量：墨墨10′ + 耳朵15′（日语歌词听读）",
+      "minutes": 25
+    },
+    "2026-09-18": {
       "note": "最低剂量：墨墨10′ + 耳朵15′（日语歌词听读）",
       "minutes": 25
     }
@@ -4046,6 +4051,149 @@
       "action": "checkin",
       "on": "2026-09-17",
       "summary": "2026-09-17"
+    },
+    {
+      "at": "2026-09-18T22:00:54+08:00",
+      "action": "done",
+      "ids": [
+        "2-3"
+      ],
+      "on": "2026-09-18",
+      "before": [
+        {
+          "id": "2-3",
+          "track": "sound",
+          "text": "DAW 里做一版 8 小节伴奏",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-18",
+          "dueDate": "2026-09-20",
+          "output": "8 小节伴奏工程 / 音频（本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-2"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-09-18T22:17:36+08:00",
+      "action": "checkin",
+      "on": "2026-09-18",
+      "summary": "2026-09-18"
+    },
+    {
+      "at": "2026-09-18T22:17:36+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-09-18",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 10,
+        "lastAddedOn": "2026-09-17",
+        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-18T23:39:50+08:00",
+      "action": "done",
+      "ids": [
+        "2-4"
+      ],
+      "on": "2026-09-18",
+      "before": [
+        {
+          "id": "2-4",
+          "track": "equip",
+          "text": "故障库加到 10 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "真实故障累计 10 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-18T23:44:08+08:00",
+      "action": "done",
+      "ids": [
+        "2-4"
+      ],
+      "on": "2026-09-18",
+      "before": [
+        {
+          "id": "2-4",
+          "track": "equip",
+          "text": "故障库加到 10 条",
+          "done": true,
+          "note": "故障库已达 10 条（FM-0001~FM-0010），本人确认完成",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "真实故障累计 10 条",
+          "optional": false,
+          "completedOn": "2026-09-18",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-18T23:45:29+08:00",
+      "action": "done",
+      "ids": [
+        "2-4"
+      ],
+      "on": "2026-09-18",
+      "before": [
+        {
+          "id": "2-4",
+          "track": "equip",
+          "text": "故障库加到 10 条",
+          "done": true,
+          "note": "故障库已达 10 条（FM-0001~FM-0010），本人确认完成\n故障库真实记录达 10 条，本人确认完成",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "真实故障累计 10 条",
+          "optional": false,
+          "completedOn": "2026-09-18",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
@@ -4173,7 +4321,7 @@ function validatePlan(p,asOf=projectToday()) {
   const stats=planStats(p);must(isRecord(p.stats)&&Object.keys(p.stats).length===Object.keys(stats).length&&
     Object.keys(stats).every(k=>integerNumber(p.stats[k])&&p.stats[k]===stats[k]),'统计与任务状态不符');
 }
-const faultTextFields=['date','eqType','eqModel','eqId','alarmCode','causeCategory','symptom','condition','troubleshootPath','rootCause','rootCauseTag','action','prevention','links','notes'];
+const faultTextFields=['date','eqType','eqModel','eqId','alarmCode','causeCategory','title','symptom','condition','troubleshootPath','rootCause','rootCauseTag','action','prevention','links','notes'];
 function validateFaults(d) {
   must(isRecord(d)&&d.schema==='self-evolution/faults/v1'&&Array.isArray(d.items),'不是故障库 JSON');
   must(isRecord(d.meta)&&integerNumber(d.meta.revision),'缺少有效 revision');

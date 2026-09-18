@@ -12,7 +12,7 @@ from pathlib import Path
 from project_data import (ROOT, PLAN_PATH, FAULT_PATH, PLAN_SCHEMA, FAULT_SCHEMA, TEXT_FIELDS,
                           load, dump, today, stamp, parse_date, tasks, task_index, calc_stats,
                           validate_plan, validate_faults, validate_accumulators, empty_faults,
-                          real_faults, is_sample, normalize_fault_record, event, save_data,
+                          real_faults, is_sample, normalize_fault_record, reorder_fault_items, event, save_data,
                           sync_views, day_info, accum_status, sanitize_faults, atomic_write,
                           require, integer_number, ID_RE, validation_day, validate_state,
                           validate_daily_state)
@@ -251,7 +251,7 @@ def fault_command(root, args):
                 selected = [i for i in selected if q in json.dumps(i, ensure_ascii=False).casefold()]
             print(f'真实记录 {len(real_faults(data))} 条；当前匹配 {len(selected)} 条（示例不计成果）')
             for i in selected:
-                print(f'{i["id"]} · {i.get("date") or "日期待确认"} · {i.get("eqType", "")} · {i.get("symptom", "")}' + ('【示例】' if is_sample(i) else ''))
+                print(f'{i["id"]} · {i.get("date") or "日期待确认"} · {i.get("eqType", "")} · {i.get("title") or i.get("symptom", "")}' + ('【示例】' if is_sample(i) else ''))
         return
     if cmd == 'export-sanitized':
         if not args.reviewed:
@@ -282,6 +282,7 @@ def fault_command(root, args):
         rid = f'FM-{n:04d}'
         data['items'].append(normalize_fault_record(payload, rid, stamp()))
         data['meta']['nextId'] = n + 1
+        reorder_fault_items(data['items'])
         event(data, 'fault-add', ids=[rid])
         finish(root, FAULT_PATH, data, raw)
         print(f'新增 {rid}；真实记录 {len(real_faults(data))} 条。未自动勾选任何学习任务。')
@@ -295,6 +296,7 @@ def fault_command(root, args):
         before = copy.deepcopy(old)
         old.update(payload)
         old['updatedAt'] = stamp()
+        reorder_fault_items(data['items'])
         event(data, 'fault-update', ids=[args.id], before=before)
         finish(root, FAULT_PATH, data, raw)
     elif cmd == 'delete':
@@ -340,6 +342,7 @@ def fault_command(root, args):
             if not isinstance(extra, list) or any(not isinstance(x, str) for x in extra):
                 raise ValueError('导入配置必须为文本数组')
             data['config'][key] = list(dict.fromkeys(data['config'][key] + extra))
+        reorder_fault_items(data['items'])
         event(data, 'fault-import', summary=f'新增 {count} 条；同 ID 内容冲突会拒绝')
         finish(root, FAULT_PATH, data, raw)
         print(f'导入 {count} 条；真实记录 {len(real_faults(data))} 条。')

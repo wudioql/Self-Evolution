@@ -26,7 +26,7 @@ UNCHECKED = object()  # omitted expectation != explicit None (the file must not 
 MUSIC_RELEASE_IDS = frozenset(('4-5', '8-2', '13-2'))
 DEFAULT_EQ = ['立式炉管', '卧式炉管', '高温退火', 'RTA', '激光退火', 'PECVD', 'SACVD', '溅镀', '蒸镀', '离子注入', '其他']
 DEFAULT_CAT = ['真空系统', '气体与化学输送', '温控与热工', 'RF与等离子体', '传片与自动化', '电气与控制', '激光系统', '量测与检测', '耗材与备件', '工艺相关', '软件与通信', '厂务动力', '其他']
-TEXT_FIELDS = ['date', 'eqType', 'eqModel', 'eqId', 'alarmCode', 'causeCategory', 'symptom', 'condition',
+TEXT_FIELDS = ['title', 'date', 'eqType', 'eqModel', 'eqId', 'alarmCode', 'causeCategory', 'symptom', 'condition',
                'troubleshootPath', 'rootCause', 'rootCauseTag', 'action', 'prevention', 'links', 'notes']
 SENSITIVE_FIELDS = ['eqModel', 'eqId', 'alarmCode', 'condition', 'links']
 
@@ -307,6 +307,19 @@ def normalize_fault_record(payload, rid, at):
     if not any(obj.get(k, '').strip() for k in ('symptom', 'alarmCode', 'rootCause')):
         raise ValueError('至少记录现象、报警或根因之一；未知内容留空，不能编造')
     return obj
+
+
+FAULT_ORDER = TEXT_FIELDS + ['isRecurring', 'isSolved', 'downtimeMin', 'isSample', 'id', 'updatedAt', 'createdAt']
+
+
+def reorder_fault_items(items):
+    """每次写入后统一故障记录的键序，保证 title 等核心字段稳定在前。"""
+    for it in items:
+        tmp = dict(it)
+        it.clear()
+        for k in FAULT_ORDER + [k for k in tmp if k not in FAULT_ORDER]:
+            if k in tmp:
+                it[k] = tmp[k]
 
 
 def event(data, action, **details):
@@ -630,7 +643,7 @@ def fault_md(data):
               'causeCategory': '故障类别', 'symptom': '现象', 'condition': '发生条件（敏感）', 'troubleshootPath': '排查路径',
               'rootCause': '根因', 'rootCauseTag': '根因标签', 'action': '处理', 'prevention': '预防 / 改善', 'links': '相关文件（敏感）', 'notes': '备注'}
     for i in data['items']:
-        lines += ['', f'## {i["id"]} · {safe_md(i.get("symptom") or "待补现象")}' + ('【示例】' if is_sample(i) else ''), '']
+        lines += ['', f'## {i["id"]} · {safe_md(i.get("title") or i.get("symptom") or "待补标题")}' + ('【示例】' if is_sample(i) else ''), '']
         for field, label in labels.items():
             lines.append(f'- **{label}**：{safe_md(i.get(field)) or "待确认 / 未提供"}')
         for f, label in [('isRecurring', '是否复发'), ('isSolved', '是否彻底解决')]:
