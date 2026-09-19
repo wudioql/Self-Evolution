@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-18T23:45:29+08:00",
+    "updated": "2026-09-19T21:30:33+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 54,
+    "revision": 61,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -278,13 +278,13 @@
           "id": "2-5",
           "track": "equip",
           "text": "Service Manual Ch.1（安全/规格）+ 术语表 10 词",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "Service Manual Ch.1 安全/规格读完，术语 10 词达成（累计含此前 Service Manual 术语）；敏感内容仅本地",
           "scheduledDate": "2026-09-19",
           "dueDate": "2026-09-19",
           "output": "术语表 10 词及手册章节记录（敏感内容仅本地）",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-19",
           "evidence": []
         },
         {
@@ -331,7 +331,7 @@
           "track": "ipa",
           "text": "阶段 1 开始：用 IPA 写出普通话声母表（只标你嘴里已经会了的音）",
           "done": false,
-          "note": "",
+          "note": "普通话声母 IPA 笔记（21 个全对，对照手册 §5.1）：b p m f → /p/ /pʰ/ /m/ /f/；d t n l → /t/ /tʰ/ /n/ /l/；g k h → /k/ /kʰ/ /x/；j q x → /tɕ/ /tɕʰ/ /ɕ/；zh ch sh r → /ʈʂ/ /ʈʂʰ/ /ʂ/ /ʐ/；z c s → /ts/ /tsʰ/ /s/。自评：嘴里全会，写符号要查表（找得慢）→ 4-8 抄表贴墙补这环。",
           "scheduledDate": "2026-09-19",
           "dueDate": "2026-09-19",
           "output": "普通话声母 IPA 笔记",
@@ -357,7 +357,7 @@
           "track": "equip",
           "text": "知识块过一遍 · 真空技术：泵的适用量程、规的选型、氦质谱检漏为什么是最实用硬技能",
           "done": false,
-          "note": "",
+          "note": "真空技术处方完成（四步法）。①干泵（螺杆/爪式/涡旋）vs油泵（旋片式）：干泵初始成本高但维护低/噪音低/洁净度高；油泵需定期换油/极限真空更低/噪音偏大/油雾返流风险/抗杂抗水汽强。②真空规量程：皮拉尼(热传导率)粗-低真空10^5~10^-1;电离(离子流,受气体种类与污染影响)高-超高真空10^-1~10^-8;电容薄膜(绝对,压差膜片变形+电容变化)常压-较低真空精密控制。③氦检:逆扩散+分子泵对氦压缩比极低+磁偏转离子流确认漏率。一句话(挂靠throttle):类似蝶阀但口小精度高,控压不住的常见原因=阀芯运动受阻/密封面磨损泄露/节流口堵塞。",
           "scheduledDate": "2026-09-19",
           "dueDate": "2026-09-19",
           "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条自己话的笔记 + 一句\"为什么用错规是常见误判来源\"",
@@ -1638,12 +1638,13 @@
     "2026-09-15",
     "2026-09-16",
     "2026-09-17",
-    "2026-09-18"
+    "2026-09-18",
+    "2026-09-19"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 17,
-    "pct": 18,
+    "doneTasks": 18,
+    "pct": 19,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -2952,9 +2953,9 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 14,
-      "lastAddedOn": "2026-09-18",
-      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）",
+      "count": 17,
+      "lastAddedOn": "2026-09-19",
+      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
       "checkpoints": [
@@ -3070,6 +3071,10 @@
     },
     "2026-09-18": {
       "note": "最低剂量：墨墨10′ + 耳朵15′（日语歌词听读）",
+      "minutes": 25
+    },
+    "2026-09-19": {
+      "note": "最低25分钟：墨墨10 + 耳朵15",
       "minutes": 25
     }
   },
@@ -3982,6 +3987,105 @@
           "output": "真实故障累计 10 条",
           "optional": false,
           "completedOn": "2026-09-18",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-19T20:59:02+08:00",
+      "action": "note",
+      "ids": [
+        "2-11"
+      ]
+    },
+    {
+      "at": "2026-09-19T20:59:05+08:00",
+      "action": "note",
+      "ids": [
+        "2-11"
+      ]
+    },
+    {
+      "at": "2026-09-19T21:08:22+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-09-19",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 14,
+        "lastAddedOn": "2026-09-18",
+        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-19T21:08:22+08:00",
+      "action": "checkin",
+      "on": "2026-09-19",
+      "summary": "2026-09-19"
+    },
+    {
+      "at": "2026-09-19T21:28:56+08:00",
+      "action": "note",
+      "ids": [
+        "2-9"
+      ]
+    },
+    {
+      "at": "2026-09-19T21:28:59+08:00",
+      "action": "note",
+      "ids": [
+        "2-9"
+      ]
+    },
+    {
+      "at": "2026-09-19T21:30:33+08:00",
+      "action": "done",
+      "ids": [
+        "2-5"
+      ],
+      "on": "2026-09-19",
+      "before": [
+        {
+          "id": "2-5",
+          "track": "equip",
+          "text": "Service Manual Ch.1（安全/规格）+ 术语表 10 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-19",
+          "dueDate": "2026-09-19",
+          "output": "术语表 10 词及手册章节记录（敏感内容仅本地）",
+          "optional": false,
+          "completedOn": null,
           "evidence": []
         }
       ]
