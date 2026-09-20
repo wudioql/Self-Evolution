@@ -557,6 +557,16 @@ def accum_section(p):
                 nxt = f"{target} · {a['targetDue']}"
         cnt = '—' if count is None else str(count)
         lines.append(f"| **{safe_md(a['text'])}** | {cnt} | {target} {unit} | {nxt} | {last} | {latest} |")
+    items_accs = [a for a in p['accumulators'] if a.get('mode') == 'items']
+    if items_accs:
+        lines += ['', '### 积累项完整清单（原文）', '']
+        for a in items_accs:
+            items = a.get('items', [])
+            lines.append(f"**{safe_md(a['text'])}**（{len(items)}/{a['target']}）：")
+            if not items:
+                lines.append('  - 尚无条目')
+            for i in items:
+                lines.append(f"  - {safe_md(i.get('on', ''))} · {safe_md(i.get('text', ''))}")
     return lines
 
 

@@ -156,6 +156,26 @@ class ProjectTests(unittest.TestCase):
         self.assertIn('积累已更新：好听元素清单 3/30', out)
         self.assertIn('下一档 30 条 · 2026-12-05', out)
 
+    def test_accumulate_list_is_read_only_and_shows_items(self):
+        self.cli('accumulate', 'taste', '--text', '[Lemon] 0:45 鼓点前移让律动突然立起来', '--on', '2026-09-10')
+        before = self.files()
+        rev = self.p()['meta']['revision']
+        out = self.cli('accumulate', '--list').stdout
+        self.assertIn('好听元素清单（taste）1/30', out)
+        self.assertIn('2026-09-10 · [Lemon] 0:45 鼓点前移让律动突然立起来', out)
+        self.assertIn('累计数', out)  # terms reported mode has no stored text
+        overview = (self.root / 'progress/进度总览.md').read_text(encoding='utf-8')
+        self.assertIn('### 积累项完整清单（原文）', overview)
+        self.assertIn('[Lemon] 0:45 鼓点前移让律动突然立起来', overview)
+        self.assertEqual(self.p()['meta']['revision'], rev)
+        self.assertEqual(before, self.files())
+
+    def test_accumulate_without_action_or_id_rejected(self):
+        r = self.cli('accumulate', ok=False)
+        self.assertIn('请提供积累项 ID', r.stderr)
+        r2 = self.cli('accumulate', 'taste', ok=False)
+        self.assertIn('请提供 --text', r2.stderr)
+
     def test_accumulate_reported_grows_and_rejects_downgrade(self):
         self.cli('accumulate', 'terms', '--set', '10', '--note', 'Service Manual Ch.1 读完', '--on', '2026-09-10')
         a = self.accumulator(self.p(), 'terms')

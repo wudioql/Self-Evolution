@@ -228,6 +228,33 @@ def show_today(p, faults, args):
     print('完成每日拆分的一小步只记备注；完成整项且你已明确确认，才勾对应 ID。')
 
 
+def show_acc_list(p):
+    """只读：列出所有积累项及其完整条目原文。不写盘、不生成视图。"""
+    accs = p.get('accumulators', [])
+    if not accs:
+        print('暂无积累项。')
+        return
+    for a in accs:
+        mode = a.get('mode')
+        count = '—' if mode == 'derived' else a.get('count', 0)
+        head = f"{a['text']}（{a['id']}）{count}/{a['target']} · {mode} 模式"
+        if a.get('lastAddedOn'):
+            head += f" · 最近 {a['lastAddedOn']}"
+        print(head)
+        if mode == 'items':
+            items = a.get('items', [])
+            if not items:
+                print('  尚无条目')
+            for i in items:
+                print(f"  {i.get('on')} · {i.get('text')}")
+        elif mode == 'derived':
+            print(f"  实时派生自 {FAULT_PATH}，不手设计数；用 fault list 查看")
+        else:
+            print(f"  累计数 {count}；原文在外部记录（墨墨 / 手册阅读），不在此存储")
+        if a.get('note'):
+            print(f"  备注：{a['note']}")
+
+
 def read_payload(args):
     if args.file:
         return json.loads(Path(args.file).read_text(encoding='utf-8-sig'))
@@ -365,10 +392,11 @@ def build_parser():
     p = sub.add_parser('mode'); p.add_argument('--start', required=True); p.add_argument('--end', required=True); p.add_argument('--kind', choices=['night', 'low'], required=True); p.add_argument('--note', default='')
     p = sub.add_parser('clear-mode'); p.add_argument('--start', required=True); p.add_argument('--end', required=True)
     p = sub.add_parser('accumulate', help='累计计数型目标：taste 报一行原文 / terms 报累计数；故障库由 fault add 派生，不接受手设计数')
-    p.add_argument('id')
-    group = p.add_mutually_exclusive_group(required=True)
+    p.add_argument('id', nargs='?', help='积累项 ID；--list 时可省略')
+    group = p.add_mutually_exclusive_group()
     group.add_argument('--text', help='items 模式：一条记录内容')
     group.add_argument('--set', dest='set_count', type=int, help='reported 模式：新的累计数')
+    group.add_argument('--list', action='store_true', help='只读：列出所有积累项及其完整条目原文')
     p.add_argument('--on'); p.add_argument('--note', default=''); p.add_argument('--force', action='store_true')
     p = sub.add_parser('import-plan'); p.add_argument('--file', required=True)
     p = sub.add_parser('fault'); fs = p.add_subparsers(dest='fault_command', required=True)
@@ -479,6 +507,13 @@ def main(argv=None):
                 raise ValueError('未找到相同起止日期的模式；为避免误删未做修改')
             event(p, 'clear-mode', before=before, summary=f'{args.start}—{args.end}')
         elif cmd == 'accumulate':
+            if args.list:
+                show_acc_list(p)
+                return 0
+            if args.id is None:
+                raise ValueError('请提供积累项 ID（如 taste / terms），或用 --list 查看清单')
+            if not (args.text or args.set_count is not None):
+                raise ValueError('请提供 --text（items 模式）或 --set（reported 模式）')
             ds = date_used(args.on)
             acc = next((a for a in p.get('accumulators', []) if a['id'] == args.id), None)
             if acc is None:
