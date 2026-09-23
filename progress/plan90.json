@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-22T23:50:08+08:00",
+    "updated": "2026-09-23T23:35:22+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 78,
+    "revision": 80,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -394,13 +394,13 @@
           "id": "3-1",
           "track": "sound",
           "text": "加鼓的基本型",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "drum.mid 导出；10-17 小节循环：动次啪次（clap 代 snare），第3拍kick与第4拍clap前各一个三连16分kick；17 小节末半拍改三连16分 snare；18 小节开场低 tom 衔接。已与分轨波形 + 原曲并听核对",
           "scheduledDate": "2026-09-23",
           "dueDate": "2026-09-24",
           "output": "带基本鼓型的工程",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-23",
           "evidence": [],
           "dependsOn": [
             "2-3"
@@ -1642,12 +1642,13 @@
     "2026-09-19",
     "2026-09-20",
     "2026-09-21",
-    "2026-09-22"
+    "2026-09-22",
+    "2026-09-23"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 23,
-    "pct": 24,
+    "doneTasks": 24,
+    "pct": 25,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -3103,6 +3104,10 @@
     "2026-09-22": {
       "note": "最低剂量 25 分钟完成：3-0 结构图 + 对账",
       "minutes": 25
+    },
+    "2026-09-23": {
+      "note": "最低剂量 25 分钟：3-1 鼓型扒制 + 墨墨/耳朵",
+      "minutes": 25
     }
   },
   "overrides": [],
@@ -4419,6 +4424,38 @@
       "action": "checkin",
       "on": "2026-09-22",
       "summary": "2026-09-22"
+    },
+    {
+      "at": "2026-09-23T23:34:58+08:00",
+      "action": "done",
+      "ids": [
+        "3-1"
+      ],
+      "on": "2026-09-23",
+      "before": [
+        {
+          "id": "3-1",
+          "track": "sound",
+          "text": "加鼓的基本型",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-23",
+          "dueDate": "2026-09-24",
+          "output": "带基本鼓型的工程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "2-3"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-09-23T23:35:22+08:00",
+      "action": "checkin",
+      "on": "2026-09-23",
+      "summary": "2026-09-23"
     }
   ]
 }
