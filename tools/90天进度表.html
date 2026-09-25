@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-23T23:35:22+08:00",
+    "updated": "2026-09-26T00:04:17+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 80,
+    "revision": 87,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -632,26 +632,26 @@
           "id": "3-3",
           "track": "equip",
           "text": "术语表 25 词",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "术语累计 26 词（09-25 报）",
           "scheduledDate": "2026-09-26",
           "dueDate": "2026-09-26",
           "output": "术语累计 25 词",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-25",
           "evidence": []
         },
         {
           "id": "3-4",
           "track": "equip",
           "text": "选定一个 recurring alarm 作为 3 个月改善目标",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "改善目标（09-25 选定）：颗粒超卡控类 Monitor FAIL（代称「PA 超卡」，PECVD 范围）；3 个月目标 = 降频 / 降停机，W6 拉历史记录后补量化口径",
           "scheduledDate": "2026-09-25",
           "dueDate": "2026-09-26",
           "output": "一个明确的改善目标；公开记录只写代称",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-25",
           "evidence": []
         },
         {
@@ -1852,12 +1852,14 @@
     "2026-09-20",
     "2026-09-21",
     "2026-09-22",
-    "2026-09-23"
+    "2026-09-23",
+    "2026-09-24",
+    "2026-09-25"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 24,
-    "pct": 25,
+    "doneTasks": 26,
+    "pct": 27,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -3178,8 +3180,8 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 17,
-      "lastAddedOn": "2026-09-19",
+      "count": 26,
+      "lastAddedOn": "2026-09-25",
       "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
@@ -3316,6 +3318,14 @@
     },
     "2026-09-23": {
       "note": "最低剂量 25 分钟：3-1 鼓型扒制 + 墨墨/耳朵",
+      "minutes": 25
+    },
+    "2026-09-24": {
+      "note": "最低剂量 25′",
+      "minutes": 25
+    },
+    "2026-09-25": {
+      "note": "最低剂量 25′",
       "minutes": 25
     }
   },
@@ -4665,6 +4675,120 @@
       "action": "checkin",
       "on": "2026-09-23",
       "summary": "2026-09-23"
+    },
+    {
+      "at": "2026-09-24T23:13:26+08:00",
+      "action": "checkin",
+      "on": "2026-09-24",
+      "summary": "2026-09-24"
+    },
+    {
+      "at": "2026-09-25T19:50:18+08:00",
+      "action": "checkin",
+      "on": "2026-09-25",
+      "summary": "2026-09-25"
+    },
+    {
+      "at": "2026-09-25T19:50:27+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-09-25",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 17,
+        "lastAddedOn": "2026-09-19",
+        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-25T23:58:42+08:00",
+      "action": "done",
+      "ids": [
+        "3-3"
+      ],
+      "on": "2026-09-25",
+      "before": [
+        {
+          "id": "3-3",
+          "track": "equip",
+          "text": "术语表 25 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-26",
+          "dueDate": "2026-09-26",
+          "output": "术语累计 25 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-25T23:58:42+08:00",
+      "action": "note",
+      "ids": [
+        "3-4"
+      ]
+    },
+    {
+      "at": "2026-09-25T23:58:49+08:00",
+      "action": "note",
+      "ids": [
+        "3-4"
+      ]
+    },
+    {
+      "at": "2026-09-26T00:04:17+08:00",
+      "action": "done",
+      "ids": [
+        "3-4"
+      ],
+      "on": "2026-09-25",
+      "before": [
+        {
+          "id": "3-4",
+          "track": "equip",
+          "text": "选定一个 recurring alarm 作为 3 个月改善目标",
+          "done": false,
+          "note": "改善目标（09-25 选定）：颗粒超卡控类 Monitor FAIL（代称「PA 超卡」，PECVD 范围）；3 个月目标 = 降频 / 降停机，W6 拉历史记录后补量化口径",
+          "scheduledDate": "2026-09-25",
+          "dueDate": "2026-09-26",
+          "output": "一个明确的改善目标；公开记录只写代称",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
     }
   ]
 }
