@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-09-26T00:04:17+08:00",
+    "updated": "2026-09-27T18:40:54+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 87,
+    "revision": 100,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -619,13 +619,13 @@
           "id": "3-2",
           "track": "equip",
           "text": "故障库加到 15 条",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "故障库 15 条（FM-0001~FM-0015）",
           "scheduledDate": "2026-09-26",
           "dueDate": "2026-09-26",
           "output": "真实故障累计 15 条",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-26",
           "evidence": []
         },
         {
@@ -658,45 +658,45 @@
           "id": "3-5",
           "track": "pub",
           "text": "commit 结构图",
-          "done": false,
+          "done": true,
           "note": "",
           "scheduledDate": "2026-09-27",
           "dueDate": "2026-09-27",
           "output": "结构笔记版本记录",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-27",
           "evidence": []
         },
         {
           "id": "3-6",
           "track": "ipa",
           "text": "阶段 1：能用 IPA 写出自己的名字 + 3 句日常话",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "阶段1 验收（09-27）：假名「何念生」= [xɤ njɛn ʂɤŋ]；你好 [ni xɑʊ]；谢谢 [ɕjɛ ɕjɛ]；再见 [tsaɪ tɕjɛn]。先自己查手册写再对答案，4 条全对；ai 原写 [ai] 属通行简写，现改 [aɪ]。盲区已解：[ɪ]/[ʊ] 原先不在手册符号表中，已随 IPA 手册 §5.1 复韵母表补入。",
           "scheduledDate": "2026-09-27",
           "dueDate": "2026-09-27",
           "output": "IPA 转写笔记；真名不写公开文件",
           "optional": true,
-          "completedOn": null,
+          "completedOn": "2026-09-27",
           "evidence": []
         },
         {
           "id": "3-7",
           "track": "equip",
           "text": "知识块过一遍 · 气体与化学输送：MFC 漂移、阀件失效模式、特气（SiH₄/NH₃/N₂O）特性与应急",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "气体与化学输送知识块已过：3 条自己话笔记（MFC 原理与漂移 / 特气特性与应急 / 尾气处理三法）+ 一句总结（控压 = inflow = pumping speed，涉及 MFC·真空规·APC）；笔记原文不入库、不计术语数\n气体与化学输送知识块已过：3 条自己话笔记（MFC 原理与漂移 / 特气特性与应急 / 尾气处理三法）+ 一句总结（控压 = inflow = pumping speed，涉及 MFC·真空规·APC）；挂靠 FM-0013（B3/B4 流量核对、servo 压力 2.7 torr）；无盲区；笔记原文不入库、不计术语数",
           "scheduledDate": "2026-09-26",
           "dueDate": "2026-09-26",
           "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条笔记 + 挂靠一条亲历气路 / CVD 相关故障（没有就留空，不编造）；平台期可顺延",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-09-26",
           "evidence": []
         }
       ],
       "warn": "平台期高发周：允许只做每晚 25 分钟，周末大块可以不做。硬扛会死，降低强度穿过去。",
       "title": "结构与鼓（平台期可降档）",
-      "note": ""
+      "note": "W3 回顾（2026-09-21 – 2026-09-27）\n本周产出\n- structure.md 全曲结构闭环：时间戳 19 条 + 方块图 14 块（0→92）+ 段落表 14 段；09-22 与 lrc 逐句核对，9 处人声段落起全对齐（≤0.3s）；已 commit 上线（309bb9c）\n- drum.mid 主歌鼓基本型（10–17 小节「动次啪次」+ 三连 16 分 kick，与分轨波形并听核对）\n- 故障库新增 5 条（FM-0011~FM-0015）；术语表 17 → 26 词\n- 3-4 选定 3 个月改善目标「PA 超卡」（PECVD 颗粒超卡控类 Monitor FAIL，公开只写代称）\n- 3-7 气体与化学输送知识块（3 条自己话笔记 + 挂靠 FM-0013）\n卡点\n- bridge3 的功能归类没把握：编排与 bridge1/2 完全不同，但功能感仍是 bridge\n- 1~2 小节的静音 / 填充（rest 9、fill 58、fill 75-76）该并入前段还是独立成段，未定\n- 和弦只覆盖 0–17 小节，18 之后未扒（Step 3 不补，留给 W4）"
     },
     {
       "n": 4,
@@ -1854,12 +1854,14 @@
     "2026-09-22",
     "2026-09-23",
     "2026-09-24",
-    "2026-09-25"
+    "2026-09-25",
+    "2026-09-26",
+    "2026-09-27"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 26,
-    "pct": 27,
+    "doneTasks": 30,
+    "pct": 31,
     "delivDone": 0,
     "delivTotal": 6
   },
@@ -3327,6 +3329,12 @@
     "2026-09-25": {
       "note": "最低剂量 25′",
       "minutes": 25
+    },
+    "2026-09-26": {
+      "note": "最低剂量；另完成 3-7 知识块（气体与化学输送）"
+    },
+    "2026-09-27": {
+      "note": ""
     }
   },
   "overrides": [],
@@ -4785,6 +4793,141 @@
           "dueDate": "2026-09-26",
           "output": "一个明确的改善目标；公开记录只写代称",
           "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-26T15:33:52+08:00",
+      "action": "done",
+      "ids": [
+        "3-2"
+      ],
+      "on": "2026-09-26",
+      "before": [
+        {
+          "id": "3-2",
+          "track": "equip",
+          "text": "故障库加到 15 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-26",
+          "dueDate": "2026-09-26",
+          "output": "真实故障累计 15 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-26T17:01:35+08:00",
+      "action": "note",
+      "ids": [
+        "3-7"
+      ]
+    },
+    {
+      "at": "2026-09-26T17:01:40+08:00",
+      "action": "note",
+      "ids": [
+        "3-7"
+      ]
+    },
+    {
+      "at": "2026-09-26T17:03:17+08:00",
+      "action": "note",
+      "ids": [
+        "3-7"
+      ]
+    },
+    {
+      "at": "2026-09-26T17:03:17+08:00",
+      "action": "done",
+      "ids": [
+        "3-7"
+      ],
+      "on": "2026-09-26",
+      "before": [
+        {
+          "id": "3-7",
+          "track": "equip",
+          "text": "知识块过一遍 · 气体与化学输送：MFC 漂移、阀件失效模式、特气（SiH₄/NH₃/N₂O）特性与应急",
+          "done": false,
+          "note": "气体与化学输送知识块已过：3 条自己话笔记（MFC 原理与漂移 / 特气特性与应急 / 尾气处理三法）+ 一句总结（控压 = inflow = pumping speed，涉及 MFC·真空规·APC）；笔记原文不入库、不计术语数\n气体与化学输送知识块已过：3 条自己话笔记（MFC 原理与漂移 / 特气特性与应急 / 尾气处理三法）+ 一句总结（控压 = inflow = pumping speed，涉及 MFC·真空规·APC）；挂靠 FM-0013（B3/B4 流量核对、servo 压力 2.7 torr）；无盲区；笔记原文不入库、不计术语数",
+          "scheduledDate": "2026-09-26",
+          "dueDate": "2026-09-26",
+          "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条笔记 + 挂靠一条亲历气路 / CVD 相关故障（没有就留空，不编造）；平台期可顺延",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-09-26T17:03:17+08:00",
+      "action": "checkin",
+      "on": "2026-09-26",
+      "summary": "2026-09-26"
+    },
+    {
+      "at": "2026-09-26T17:03:24+08:00",
+      "action": "note",
+      "ids": [
+        "3-7"
+      ]
+    },
+    {
+      "at": "2026-09-27T17:52:24+08:00",
+      "action": "checkin",
+      "on": "2026-09-27",
+      "summary": "2026-09-27"
+    },
+    {
+      "at": "2026-09-27T18:39:44+08:00",
+      "action": "note",
+      "ids": [
+        "3-6"
+      ]
+    },
+    {
+      "at": "2026-09-27T18:40:03+08:00",
+      "action": "week-note",
+      "summary": "W3"
+    },
+    {
+      "at": "2026-09-27T18:40:54+08:00",
+      "action": "done",
+      "ids": [
+        "3-5",
+        "3-6"
+      ],
+      "on": "2026-09-27",
+      "before": [
+        {
+          "id": "3-5",
+          "track": "pub",
+          "text": "commit 结构图",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-09-27",
+          "dueDate": "2026-09-27",
+          "output": "结构笔记版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "3-6",
+          "track": "ipa",
+          "text": "阶段 1：能用 IPA 写出自己的名字 + 3 句日常话",
+          "done": false,
+          "note": "阶段1 验收（09-27）：假名「何念生」= [xɤ njɛn ʂɤŋ]；你好 [ni xɑʊ]；谢谢 [ɕjɛ ɕjɛ]；再见 [tsaɪ tɕjɛn]。先自己查手册写再对答案，4 条全对；ai 原写 [ai] 属通行简写，现改 [aɪ]。盲区已解：[ɪ]/[ʊ] 原先不在手册符号表中，已随 IPA 手册 §5.1 复韵母表补入。",
+          "scheduledDate": "2026-09-27",
+          "dueDate": "2026-09-27",
+          "output": "IPA 转写笔记；真名不写公开文件",
+          "optional": true,
           "completedOn": null,
           "evidence": []
         }
