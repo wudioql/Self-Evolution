@@ -218,11 +218,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-02T01:12:37+08:00",
+    "updated": "2026-10-02T23:22:48+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 120,
+    "revision": 123,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -1862,7 +1862,8 @@
     "2026-09-28",
     "2026-09-29",
     "2026-09-30",
-    "2026-10-01"
+    "2026-10-01",
+    "2026-10-02"
   ],
   "stats": {
     "totalTasks": 96,
@@ -3196,9 +3197,9 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 26,
-      "lastAddedOn": "2026-09-25",
-      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）",
+      "count": 35,
+      "lastAddedOn": "2026-10-02",
+      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
       "checkpoints": [
@@ -3361,6 +3362,10 @@
     },
     "2026-10-01": {
       "note": ""
+    },
+    "2026-10-02": {
+      "note": "墨墨10′ + 耳朵15′（最低剂量）",
+      "minutes": 25
     }
   },
   "overrides": [],
@@ -3387,35 +3392,7 @@
         "1-0",
         "1-4"
       ],
-      "on": "2026-09-07",
-      "before": [
-        {
-          "id": "1-0",
-          "track": "sound",
-          "text": "Tiny+ 拆箱上电，Studio One 里弹响一个音",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-06",
-          "dueDate": "2026-09-07",
-          "output": "Studio One 接到 MIDI 输入并确实发声；本人确认即可",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "1-4",
-          "track": "jp",
-          "text": "Kaishi 每日新卡降到 10 张",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-06",
-          "dueDate": "2026-09-07",
-          "output": "本人确认 Kaishi 每日新卡上限为 10",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-07"
     },
     {
       "at": "2026-09-07T00:38:31+08:00",
@@ -3423,22 +3400,7 @@
       "ids": [
         "1-1"
       ],
-      "on": "2026-09-07",
-      "before": [
-        {
-          "id": "1-1",
-          "track": "sound",
-          "text": "确认现有 music-log/ 三首歌目录，补 README 三行（目标曲 / 交付 / 不做清单）",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-07",
-          "dueDate": "2026-09-07",
-          "output": "music-log/README.md 三行说明；目录复用，不必另开仓库",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-07"
     },
     {
       "at": "2026-09-07T20:35:55+08:00",
@@ -3517,38 +3479,7 @@
         "1-3",
         "1-5"
       ],
-      "on": "2026-09-11",
-      "before": [
-        {
-          "id": "1-3",
-          "track": "sound",
-          "text": "用 Praat 打开人声干声，看一眼基频曲线",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-11",
-          "dueDate": "2026-09-11",
-          "output": "看过基频曲线的确认 / 一句观察，截图可只存本地",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "1-5"
-          ]
-        },
-        {
-          "id": "1-5",
-          "track": "jp",
-          "text": "按需准备 Praat 和现有 DAW；music-to-midi / MyPitch 可选，安装不得拖延作品",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-11",
-          "dueDate": "2026-09-11",
-          "output": "所需工具能用 / 明确采用现有替代方案，不以安装数量验收",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-11"
     },
     {
       "at": "2026-09-11T23:20:08+08:00",
@@ -3562,25 +3493,7 @@
       "ids": [
         "1-3"
       ],
-      "on": "2026-09-11",
-      "before": [
-        {
-          "id": "1-3",
-          "track": "sound",
-          "text": "用 Praat 打开人声干声，看一眼基频曲线",
-          "done": true,
-          "note": "Praat 正常打开；基频曲线已看：长音有明显颤音；音头习惯先滑过头再返位（音头颤）",
-          "scheduledDate": "2026-09-11",
-          "dueDate": "2026-09-11",
-          "output": "看过基频曲线的确认 / 一句观察，截图可只存本地",
-          "optional": false,
-          "completedOn": "2026-09-11",
-          "evidence": [],
-          "dependsOn": [
-            "1-5"
-          ]
-        }
-      ]
+      "on": "2026-09-11"
     },
     {
       "at": "2026-09-11T23:22:18+08:00",
@@ -3588,22 +3501,7 @@
       "ids": [
         "1-5"
       ],
-      "on": "2026-09-11",
-      "before": [
-        {
-          "id": "1-5",
-          "track": "jp",
-          "text": "按需准备 Praat 和现有 DAW；music-to-midi / MyPitch 可选，安装不得拖延作品",
-          "done": true,
-          "note": "Praat 正常打开；基频曲线已看：长音有明显颤音；音头习惯先滑过头再返位（音头颤）",
-          "scheduledDate": "2026-09-11",
-          "dueDate": "2026-09-11",
-          "output": "所需工具能用 / 明确采用现有替代方案，不以安装数量验收",
-          "optional": false,
-          "completedOn": "2026-09-11",
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-11"
     },
     {
       "at": "2026-09-11T23:22:23+08:00",
@@ -3617,22 +3515,7 @@
       "ids": [
         "1-9"
       ],
-      "on": "2026-09-12",
-      "before": [
-        {
-          "id": "1-9",
-          "track": "ipa",
-          "text": "阶段 0：搞懂「音素 ≠ 字母」（30 分钟一次做完：数 10 个英文单词里有几个音）",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-12",
-          "dueDate": "2026-09-12",
-          "output": "10 个英文词的音素计数记录",
-          "optional": true,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-12"
     },
     {
       "at": "2026-09-12T19:14:06+08:00",
@@ -3662,53 +3545,7 @@
         "1-7",
         "1-8"
       ],
-      "on": "2026-09-13",
-      "before": [
-        {
-          "id": "1-6",
-          "track": "equip",
-          "text": "建故障模式库，录入最近亲身处理过的 5 个故障",
-          "done": false,
-          "note": "09-12 录 3 条亲历故障：FM-0001 mapping error / FM-0002 WAP 选错 / FM-0003 选错 recipe；还差 2 条达 5 条（09-13 补）",
-          "scheduledDate": "2026-09-12",
-          "dueDate": "2026-09-13",
-          "output": "data/faults.local.json 中 5 条亲历真实故障（不含示例）",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "1-7",
-          "track": "pub",
-          "text": "保存第一条版本记录 + 发一条公开动态（只发可公开内容）",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-13",
-          "dueDate": "2026-09-13",
-          "output": "版本记录和公开承诺链接（没有公开链接不能代称已发布）",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "1-8",
-          "track": "key",
-          "text": "检查点：MIDI 存在 + 故障库 5 条 + 公开承诺已发出",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-13",
-          "dueDate": "2026-09-13",
-          "output": "核对 melody.mid、5 条真实故障、公开承诺",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "1-2",
-            "1-6",
-            "1-7"
-          ]
-        }
-      ]
+      "on": "2026-09-13"
     },
     {
       "at": "2026-09-13T20:47:41+08:00",
@@ -3742,26 +3579,7 @@
       "ids": [
         "taste"
       ],
-      "on": "2026-09-15",
-      "before": {
-        "id": "taste",
-        "text": "好听元素清单",
-        "unit": "条",
-        "target": 30,
-        "mode": "items",
-        "count": 0,
-        "lastAddedOn": null,
-        "items": [],
-        "note": "",
-        "source": "manuals/音乐学习手册.md §2.9",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 3,
-            "taskId": "9-0"
-          }
-        ]
-      }
+      "on": "2026-09-15"
     },
     {
       "at": "2026-09-15T00:24:25+08:00",
@@ -3769,31 +3587,7 @@
       "ids": [
         "taste"
       ],
-      "on": "2026-09-15",
-      "before": {
-        "id": "taste",
-        "text": "好听元素清单",
-        "unit": "条",
-        "target": 30,
-        "mode": "items",
-        "count": 1,
-        "lastAddedOn": "2026-09-15",
-        "items": [
-          {
-            "on": "2026-09-15",
-            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
-          }
-        ],
-        "note": "",
-        "source": "manuals/音乐学习手册.md §2.9",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 3,
-            "taskId": "9-0"
-          }
-        ]
-      }
+      "on": "2026-09-15"
     },
     {
       "at": "2026-09-15T00:24:25+08:00",
@@ -3801,35 +3595,7 @@
       "ids": [
         "taste"
       ],
-      "on": "2026-09-15",
-      "before": {
-        "id": "taste",
-        "text": "好听元素清单",
-        "unit": "条",
-        "target": 30,
-        "mode": "items",
-        "count": 2,
-        "lastAddedOn": "2026-09-15",
-        "items": [
-          {
-            "on": "2026-09-15",
-            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "偶尔出现的'说话'感（而不是纯唱）"
-          }
-        ],
-        "note": "",
-        "source": "manuals/音乐学习手册.md §2.9",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 3,
-            "taskId": "9-0"
-          }
-        ]
-      }
+      "on": "2026-09-15"
     },
     {
       "at": "2026-09-15T00:31:06+08:00",
@@ -3858,22 +3624,7 @@
       "ids": [
         "2-6"
       ],
-      "on": "2026-09-15",
-      "before": [
-        {
-          "id": "2-6",
-          "track": "jp",
-          "text": "建立每天 15 分钟日语可理解输入习惯（歌词也算，挂靠耳朵时间）",
-          "done": false,
-          "note": "实际采用的歌词听读方式＝每日墨墨 10 词 ＋ 边听日语歌边看歌词（挂靠耳朵 15 分钟）",
-          "scheduledDate": "2026-09-14",
-          "dueDate": "2026-09-14",
-          "output": "记录实际采用的歌词听读方式；每日执行另记打卡",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-15"
     },
     {
       "at": "2026-09-15T00:46:02+08:00",
@@ -3888,41 +3639,7 @@
       "ids": [
         "terms"
       ],
-      "on": "2026-09-15",
-      "before": {
-        "id": "terms",
-        "text": "英语术语表",
-        "unit": "词",
-        "target": 80,
-        "mode": "reported",
-        "count": 0,
-        "lastAddedOn": null,
-        "note": "",
-        "source": "manuals/半导体设备成长手册.md §2.6",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 10,
-            "taskId": "2-5"
-          },
-          {
-            "count": 25,
-            "taskId": "3-3"
-          },
-          {
-            "count": 40,
-            "taskId": "4-4"
-          },
-          {
-            "count": 60,
-            "taskId": "11-4"
-          },
-          {
-            "count": 80,
-            "taskId": "12-4"
-          }
-        ]
-      }
+      "on": "2026-09-15"
     },
     {
       "at": "2026-09-15T21:55:03+08:00",
@@ -3942,25 +3659,7 @@
       "ids": [
         "2-0"
       ],
-      "on": "2026-09-15",
-      "before": [
-        {
-          "id": "2-0",
-          "track": "sound",
-          "text": "分轨提 bass → 降速 50% → 走线点进 bass.mid，根音/和弦结论写进 chords.md",
-          "done": false,
-          "note": "已扒《Lemon》主歌 bass 走线（前17小节：前3小节无bass；5-9小节仅第3拍一音F；10-17小节每1-2拍一带八度与经过音）\nbass.mid 已导出（前17小节走线）＋根音已判（5-9: F；10-17: 4/E）",
-          "scheduledDate": "2026-09-14",
-          "dueDate": "2026-09-15",
-          "output": "music-log/01-lemon/bass.mid（主歌 bass 逐音符走线）＋chords.md（根音/和弦结论）",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "1-2"
-          ]
-        }
-      ]
+      "on": "2026-09-15"
     },
     {
       "at": "2026-09-16T22:49:00+08:00",
@@ -3974,41 +3673,7 @@
       "ids": [
         "terms"
       ],
-      "on": "2026-09-16",
-      "before": {
-        "id": "terms",
-        "text": "英语术语表",
-        "unit": "词",
-        "target": 80,
-        "mode": "reported",
-        "count": 2,
-        "lastAddedOn": "2026-09-15",
-        "note": "",
-        "source": "manuals/半导体设备成长手册.md §2.6",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 10,
-            "taskId": "2-5"
-          },
-          {
-            "count": 25,
-            "taskId": "3-3"
-          },
-          {
-            "count": 40,
-            "taskId": "4-4"
-          },
-          {
-            "count": 60,
-            "taskId": "11-4"
-          },
-          {
-            "count": 80,
-            "taskId": "12-4"
-          }
-        ]
-      }
+      "on": "2026-09-16"
     },
     {
       "at": "2026-09-17T00:07:18+08:00",
@@ -4016,25 +3681,7 @@
       "ids": [
         "2-1"
       ],
-      "on": "2026-09-16",
-      "before": [
-        {
-          "id": "2-1",
-          "track": "sound",
-          "text": "用旋律 3 音补完和弦性质",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-16",
-          "dueDate": "2026-09-16",
-          "output": "chords.md 中和弦性质与不确定点",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "2-0"
-          ]
-        }
-      ]
+      "on": "2026-09-16"
     },
     {
       "at": "2026-09-17T23:29:51+08:00",
@@ -4042,25 +3689,7 @@
       "ids": [
         "2-2"
       ],
-      "on": "2026-09-17",
-      "before": [
-        {
-          "id": "2-2",
-          "track": "sound",
-          "text": "去 Hooktheory / U-FRET 对账，标出你的盲区",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-17",
-          "dueDate": "2026-09-17",
-          "output": "chords.md 中对账结果和至少一处盲区",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "2-1"
-          ]
-        }
-      ]
+      "on": "2026-09-17"
     },
     {
       "at": "2026-09-17T23:29:51+08:00",
@@ -4068,22 +3697,7 @@
       "ids": [
         "2-7"
       ],
-      "on": "2026-09-17",
-      "before": [
-        {
-          "id": "2-7",
-          "track": "jp",
-          "text": "确认第 2 首目标曲 =《うっせぇわ》",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-17",
-          "dueDate": "2026-09-17",
-          "output": "本人确认目标曲，不重新开选曲流程",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-17"
     },
     {
       "at": "2026-09-17T23:29:51+08:00",
@@ -4091,41 +3705,7 @@
       "ids": [
         "terms"
       ],
-      "on": "2026-09-17",
-      "before": {
-        "id": "terms",
-        "text": "英语术语表",
-        "unit": "词",
-        "target": 80,
-        "mode": "reported",
-        "count": 6,
-        "lastAddedOn": "2026-09-16",
-        "note": "墨墨新增 4 词",
-        "source": "manuals/半导体设备成长手册.md §2.6",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 10,
-            "taskId": "2-5"
-          },
-          {
-            "count": 25,
-            "taskId": "3-3"
-          },
-          {
-            "count": 40,
-            "taskId": "4-4"
-          },
-          {
-            "count": 60,
-            "taskId": "11-4"
-          },
-          {
-            "count": 80,
-            "taskId": "12-4"
-          }
-        ]
-      }
+      "on": "2026-09-17"
     },
     {
       "at": "2026-09-17T23:29:52+08:00",
@@ -4139,25 +3719,7 @@
       "ids": [
         "2-3"
       ],
-      "on": "2026-09-18",
-      "before": [
-        {
-          "id": "2-3",
-          "track": "sound",
-          "text": "DAW 里做一版 8 小节伴奏",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-18",
-          "dueDate": "2026-09-20",
-          "output": "8 小节伴奏工程 / 音频（本地）",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "2-2"
-          ]
-        }
-      ]
+      "on": "2026-09-18"
     },
     {
       "at": "2026-09-18T22:17:36+08:00",
@@ -4171,41 +3733,7 @@
       "ids": [
         "terms"
       ],
-      "on": "2026-09-18",
-      "before": {
-        "id": "terms",
-        "text": "英语术语表",
-        "unit": "词",
-        "target": 80,
-        "mode": "reported",
-        "count": 10,
-        "lastAddedOn": "2026-09-17",
-        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）",
-        "source": "manuals/半导体设备成长手册.md §2.6",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 10,
-            "taskId": "2-5"
-          },
-          {
-            "count": 25,
-            "taskId": "3-3"
-          },
-          {
-            "count": 40,
-            "taskId": "4-4"
-          },
-          {
-            "count": 60,
-            "taskId": "11-4"
-          },
-          {
-            "count": 80,
-            "taskId": "12-4"
-          }
-        ]
-      }
+      "on": "2026-09-18"
     },
     {
       "at": "2026-09-18T23:39:50+08:00",
@@ -4213,22 +3741,7 @@
       "ids": [
         "2-4"
       ],
-      "on": "2026-09-18",
-      "before": [
-        {
-          "id": "2-4",
-          "track": "equip",
-          "text": "故障库加到 10 条",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-19",
-          "dueDate": "2026-09-19",
-          "output": "真实故障累计 10 条",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-18"
     },
     {
       "at": "2026-09-18T23:44:08+08:00",
@@ -4236,22 +3749,7 @@
       "ids": [
         "2-4"
       ],
-      "on": "2026-09-18",
-      "before": [
-        {
-          "id": "2-4",
-          "track": "equip",
-          "text": "故障库加到 10 条",
-          "done": true,
-          "note": "故障库已达 10 条（FM-0001~FM-0010），本人确认完成",
-          "scheduledDate": "2026-09-19",
-          "dueDate": "2026-09-19",
-          "output": "真实故障累计 10 条",
-          "optional": false,
-          "completedOn": "2026-09-18",
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-18"
     },
     {
       "at": "2026-09-18T23:45:29+08:00",
@@ -4259,22 +3757,7 @@
       "ids": [
         "2-4"
       ],
-      "on": "2026-09-18",
-      "before": [
-        {
-          "id": "2-4",
-          "track": "equip",
-          "text": "故障库加到 10 条",
-          "done": true,
-          "note": "故障库已达 10 条（FM-0001~FM-0010），本人确认完成\n故障库真实记录达 10 条，本人确认完成",
-          "scheduledDate": "2026-09-19",
-          "dueDate": "2026-09-19",
-          "output": "真实故障累计 10 条",
-          "optional": false,
-          "completedOn": "2026-09-18",
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-18"
     },
     {
       "at": "2026-09-19T20:59:02+08:00",
@@ -4296,41 +3779,7 @@
       "ids": [
         "terms"
       ],
-      "on": "2026-09-19",
-      "before": {
-        "id": "terms",
-        "text": "英语术语表",
-        "unit": "词",
-        "target": 80,
-        "mode": "reported",
-        "count": 14,
-        "lastAddedOn": "2026-09-18",
-        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）",
-        "source": "manuals/半导体设备成长手册.md §2.6",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 10,
-            "taskId": "2-5"
-          },
-          {
-            "count": 25,
-            "taskId": "3-3"
-          },
-          {
-            "count": 40,
-            "taskId": "4-4"
-          },
-          {
-            "count": 60,
-            "taskId": "11-4"
-          },
-          {
-            "count": 80,
-            "taskId": "12-4"
-          }
-        ]
-      }
+      "on": "2026-09-19"
     },
     {
       "at": "2026-09-19T21:08:22+08:00",
@@ -4358,22 +3807,7 @@
       "ids": [
         "2-5"
       ],
-      "on": "2026-09-19",
-      "before": [
-        {
-          "id": "2-5",
-          "track": "equip",
-          "text": "Service Manual Ch.1（安全/规格）+ 术语表 10 词",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-19",
-          "dueDate": "2026-09-19",
-          "output": "术语表 10 词及手册章节记录（敏感内容仅本地）",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-19"
     },
     {
       "at": "2026-09-20T22:25:47+08:00",
@@ -4382,35 +3816,7 @@
         "2-9",
         "2-11"
       ],
-      "on": "2026-09-19",
-      "before": [
-        {
-          "id": "2-9",
-          "track": "ipa",
-          "text": "阶段 1 开始：用 IPA 写出普通话声母表（只标你嘴里已经会了的音）",
-          "done": false,
-          "note": "普通话声母 IPA 笔记（21 个全对，对照手册 §5.1）：b p m f → /p/ /pʰ/ /m/ /f/；d t n l → /t/ /tʰ/ /n/ /l/；g k h → /k/ /kʰ/ /x/；j q x → /tɕ/ /tɕʰ/ /ɕ/；zh ch sh r → /ʈʂ/ /ʈʂʰ/ /ʂ/ /ʐ/；z c s → /ts/ /tsʰ/ /s/。自评：嘴里全会，写符号要查表（找得慢）→ 4-8 抄表贴墙补这环。",
-          "scheduledDate": "2026-09-19",
-          "dueDate": "2026-09-19",
-          "output": "普通话声母 IPA 笔记",
-          "optional": true,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "2-11",
-          "track": "equip",
-          "text": "知识块过一遍 · 真空技术：泵的适用量程、规的选型、氦质谱检漏为什么是最实用硬技能",
-          "done": false,
-          "note": "真空技术处方完成（四步法）。①干泵（螺杆/爪式/涡旋）vs油泵（旋片式）：干泵初始成本高但维护低/噪音低/洁净度高；油泵需定期换油/极限真空更低/噪音偏大/油雾返流风险/抗杂抗水汽强。②真空规量程：皮拉尼(热传导率)粗-低真空10^5~10^-1;电离(离子流,受气体种类与污染影响)高-超高真空10^-1~10^-8;电容薄膜(绝对,压差膜片变形+电容变化)常压-较低真空精密控制。③氦检:逆扩散+分子泵对氦压缩比极低+磁偏转离子流确认漏率。一句话(挂靠throttle):类似蝶阀但口小精度高,控压不住的常见原因=阀芯运动受阻/密封面磨损泄露/节流口堵塞。",
-          "scheduledDate": "2026-09-19",
-          "dueDate": "2026-09-19",
-          "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条自己话的笔记 + 一句\"为什么用错规是常见误判来源\"",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-19"
     },
     {
       "at": "2026-09-20T23:04:29+08:00",
@@ -4418,39 +3824,7 @@
       "ids": [
         "taste"
       ],
-      "on": "2026-09-20",
-      "before": {
-        "id": "taste",
-        "text": "好听元素清单",
-        "unit": "条",
-        "target": 30,
-        "mode": "items",
-        "count": 3,
-        "lastAddedOn": "2026-09-15",
-        "items": [
-          {
-            "on": "2026-09-15",
-            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "偶尔出现的'说话'感（而不是纯唱）"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "'耳语'元素插入"
-          }
-        ],
-        "note": "",
-        "source": "manuals/音乐学习手册.md §2.9",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 3,
-            "taskId": "9-0"
-          }
-        ]
-      }
+      "on": "2026-09-20"
     },
     {
       "at": "2026-09-20T23:04:29+08:00",
@@ -4458,43 +3832,7 @@
       "ids": [
         "taste"
       ],
-      "on": "2026-09-20",
-      "before": {
-        "id": "taste",
-        "text": "好听元素清单",
-        "unit": "条",
-        "target": 30,
-        "mode": "items",
-        "count": 4,
-        "lastAddedOn": "2026-09-20",
-        "items": [
-          {
-            "on": "2026-09-15",
-            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "偶尔出现的'说话'感（而不是纯唱）"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "'耳语'元素插入"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "自由的真假声转换"
-          }
-        ],
-        "note": "",
-        "source": "manuals/音乐学习手册.md §2.9",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 3,
-            "taskId": "9-0"
-          }
-        ]
-      }
+      "on": "2026-09-20"
     },
     {
       "at": "2026-09-20T23:04:30+08:00",
@@ -4502,47 +3840,7 @@
       "ids": [
         "taste"
       ],
-      "on": "2026-09-20",
-      "before": {
-        "id": "taste",
-        "text": "好听元素清单",
-        "unit": "条",
-        "target": 30,
-        "mode": "items",
-        "count": 5,
-        "lastAddedOn": "2026-09-20",
-        "items": [
-          {
-            "on": "2026-09-15",
-            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "偶尔出现的'说话'感（而不是纯唱）"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "'耳语'元素插入"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "自由的真假声转换"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "自由且令人头皮发麻的嘶吼"
-          }
-        ],
-        "note": "",
-        "source": "manuals/音乐学习手册.md §2.9",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 3,
-            "taskId": "9-0"
-          }
-        ]
-      }
+      "on": "2026-09-20"
     },
     {
       "at": "2026-09-20T23:04:30+08:00",
@@ -4556,22 +3854,7 @@
       "ids": [
         "2-10"
       ],
-      "on": "2026-09-20",
-      "before": [
-        {
-          "id": "2-10",
-          "track": "ipa",
-          "text": "验证啊哈 #1：拿张纸放嘴前说「爸」「怕」，看吹不吹得动",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-20",
-          "dueDate": "2026-09-20",
-          "output": "“爸 / 怕”送气差别的一句观察",
-          "optional": true,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-20"
     },
     {
       "at": "2026-09-20T23:04:47+08:00",
@@ -4584,22 +3867,7 @@
       "ids": [
         "2-8"
       ],
-      "on": "2026-09-20",
-      "before": [
-        {
-          "id": "2-8",
-          "track": "pub",
-          "text": "commit 和声进行图",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-20",
-          "dueDate": "2026-09-20",
-          "output": "可公开的和声笔记版本记录",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-20"
     },
     {
       "at": "2026-09-21T23:15:15+08:00",
@@ -4655,22 +3923,7 @@
       "ids": [
         "3-0"
       ],
-      "on": "2026-09-22",
-      "before": [
-        {
-          "id": "3-0",
-          "track": "sound",
-          "text": "扒全曲结构，画成方块图（含时间戳 + 编曲变化点）",
-          "done": false,
-          "note": "已完成①时间戳表（19 条，段落边界经换算基本落在整数小节线）；②方块图 / ③段落表 / ④和声时间换算 / 盲区 未完成，09-22 续做\n①②已完成：时间戳 19 条 + 方块图 14 个方块（0→92 小节闭环）；③段落表 / ④和声换算 / 盲区 待做；bridge3 方块数 8 与区间 59-74 不符\n①②③ 完成（①时间戳 19 条 · ②方块图 14 个 0→92 · ③段落表 14 段，bridge3 方块数已对齐 16）；④和声换算、待核对、盲区 待做（09-22 续）",
-          "scheduledDate": "2026-09-21",
-          "dueDate": "2026-09-22",
-          "output": "music-log/01-lemon/structure.md（时间戳与编曲变化）",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-22"
     },
     {
       "at": "2026-09-22T23:50:08+08:00",
@@ -4684,25 +3937,7 @@
       "ids": [
         "3-1"
       ],
-      "on": "2026-09-23",
-      "before": [
-        {
-          "id": "3-1",
-          "track": "sound",
-          "text": "加鼓的基本型",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-23",
-          "dueDate": "2026-09-24",
-          "output": "带基本鼓型的工程",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "2-3"
-          ]
-        }
-      ]
+      "on": "2026-09-23"
     },
     {
       "at": "2026-09-23T23:35:22+08:00",
@@ -4728,41 +3963,7 @@
       "ids": [
         "terms"
       ],
-      "on": "2026-09-25",
-      "before": {
-        "id": "terms",
-        "text": "英语术语表",
-        "unit": "词",
-        "target": 80,
-        "mode": "reported",
-        "count": 17,
-        "lastAddedOn": "2026-09-19",
-        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）",
-        "source": "manuals/半导体设备成长手册.md §2.6",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 10,
-            "taskId": "2-5"
-          },
-          {
-            "count": 25,
-            "taskId": "3-3"
-          },
-          {
-            "count": 40,
-            "taskId": "4-4"
-          },
-          {
-            "count": 60,
-            "taskId": "11-4"
-          },
-          {
-            "count": 80,
-            "taskId": "12-4"
-          }
-        ]
-      }
+      "on": "2026-09-25"
     },
     {
       "at": "2026-09-25T23:58:42+08:00",
@@ -4770,22 +3971,7 @@
       "ids": [
         "3-3"
       ],
-      "on": "2026-09-25",
-      "before": [
-        {
-          "id": "3-3",
-          "track": "equip",
-          "text": "术语表 25 词",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-26",
-          "dueDate": "2026-09-26",
-          "output": "术语累计 25 词",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-25"
     },
     {
       "at": "2026-09-25T23:58:42+08:00",
@@ -4807,22 +3993,7 @@
       "ids": [
         "3-4"
       ],
-      "on": "2026-09-25",
-      "before": [
-        {
-          "id": "3-4",
-          "track": "equip",
-          "text": "选定一个 recurring alarm 作为 3 个月改善目标",
-          "done": false,
-          "note": "改善目标（09-25 选定）：颗粒超卡控类 Monitor FAIL（代称「PA 超卡」，PECVD 范围）；3 个月目标 = 降频 / 降停机，W6 拉历史记录后补量化口径",
-          "scheduledDate": "2026-09-25",
-          "dueDate": "2026-09-26",
-          "output": "一个明确的改善目标；公开记录只写代称",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-25"
     },
     {
       "at": "2026-09-26T15:33:52+08:00",
@@ -4830,22 +4001,7 @@
       "ids": [
         "3-2"
       ],
-      "on": "2026-09-26",
-      "before": [
-        {
-          "id": "3-2",
-          "track": "equip",
-          "text": "故障库加到 15 条",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-26",
-          "dueDate": "2026-09-26",
-          "output": "真实故障累计 15 条",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-26"
     },
     {
       "at": "2026-09-26T17:01:35+08:00",
@@ -4874,22 +4030,7 @@
       "ids": [
         "3-7"
       ],
-      "on": "2026-09-26",
-      "before": [
-        {
-          "id": "3-7",
-          "track": "equip",
-          "text": "知识块过一遍 · 气体与化学输送：MFC 漂移、阀件失效模式、特气（SiH₄/NH₃/N₂O）特性与应急",
-          "done": false,
-          "note": "气体与化学输送知识块已过：3 条自己话笔记（MFC 原理与漂移 / 特气特性与应急 / 尾气处理三法）+ 一句总结（控压 = inflow = pumping speed，涉及 MFC·真空规·APC）；笔记原文不入库、不计术语数\n气体与化学输送知识块已过：3 条自己话笔记（MFC 原理与漂移 / 特气特性与应急 / 尾气处理三法）+ 一句总结（控压 = inflow = pumping speed，涉及 MFC·真空规·APC）；挂靠 FM-0013（B3/B4 流量核对、servo 压力 2.7 torr）；无盲区；笔记原文不入库、不计术语数",
-          "scheduledDate": "2026-09-26",
-          "dueDate": "2026-09-26",
-          "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条笔记 + 挂靠一条亲历气路 / CVD 相关故障（没有就留空，不编造）；平台期可顺延",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-26"
     },
     {
       "at": "2026-09-26T17:03:17+08:00",
@@ -4929,35 +4070,7 @@
         "3-5",
         "3-6"
       ],
-      "on": "2026-09-27",
-      "before": [
-        {
-          "id": "3-5",
-          "track": "pub",
-          "text": "commit 结构图",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-09-27",
-          "dueDate": "2026-09-27",
-          "output": "结构笔记版本记录",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "3-6",
-          "track": "ipa",
-          "text": "阶段 1：能用 IPA 写出自己的名字 + 3 句日常话",
-          "done": false,
-          "note": "阶段1 验收（09-27）：假名「何念生」= [xɤ njɛn ʂɤŋ]；你好 [ni xɑʊ]；谢谢 [ɕjɛ ɕjɛ]；再见 [tsaɪ tɕjɛn]。先自己查手册写再对答案，4 条全对；ai 原写 [ai] 属通行简写，现改 [aɪ]。盲区已解：[ɪ]/[ʊ] 原先不在手册符号表中，已随 IPA 手册 §5.1 复韵母表补入。",
-          "scheduledDate": "2026-09-27",
-          "dueDate": "2026-09-27",
-          "output": "IPA 转写笔记；真名不写公开文件",
-          "optional": true,
-          "completedOn": null,
-          "evidence": []
-        }
-      ]
+      "on": "2026-09-27"
     },
     {
       "at": "2026-09-28T23:50:32+08:00",
@@ -4978,26 +4091,7 @@
       "ids": [
         "4-0"
       ],
-      "on": "2026-09-29",
-      "before": [
-        {
-          "id": "4-0",
-          "track": "sound",
-          "text": "补齐到 60–90 秒",
-          "done": false,
-          "note": "4-0 验收通过（09-29 交，按期）：Lemon.song 09-29 01:06 存盘。结构＝intro 8 → 空1 → verse1 8 → 空1 → chorus1 10；bar0 弱起 1 拍 + bar29 收尾 3 拍 = 116 拍 = 80.0 秒（87 BPM、4/4），落在 60–90。为控时长砍掉原曲 bridge1（4 小节），副歌比原曲提前 3 小节（A/B 时把原曲 22 小节对到工程 19 小节）；intro 1-8 与 verse1 10-17 与原曲小节完全重合，可整轨对位。听检 3 条全过：① 段间不断裂、无掉拍错位；② chorus1 鼓比 verse1 更满且节奏型不同；③ bar9 空＝原曲即全空，bar18 用 2/3/4 拍各一声鼓做接缝、未死静（听感单薄，原曲此处是 4 小节 bridge1，属编曲丰富度、不属 4-0 验收范围，留待后续）。不含弦乐与和声。",
-          "scheduledDate": "2026-09-28",
-          "dueDate": "2026-09-29",
-          "output": "60–90 秒、有结构的工程草稿",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "3-0",
-            "3-1"
-          ]
-        }
-      ]
+      "on": "2026-09-29"
     },
     {
       "at": "2026-09-29T01:43:14+08:00",
@@ -5019,25 +4113,7 @@
       "ids": [
         "4-1"
       ],
-      "on": "2026-09-29",
-      "before": [
-        {
-          "id": "4-1",
-          "track": "sound",
-          "text": "人声：SV 或自己唱，一遍过不重录",
-          "done": false,
-          "note": "4-1 路线（09-29 定）：SV 保底 + 补一次自唱后取优。① 已完成：在 Studio One 内用 SV 的 VST 插件做完 intro/verse1/chorus1 三段人声，本人已听过可验收（4-1 验收项「工程中的人声轨」已满足，但本项留到自唱那遍做完再勾）。② 试唱观察：原调 B 下最高处需用假声，原唱米津玄師同一处也用假声，故不以此判为原调不可唱；移调从降 2–4 个半音试起（手册 §2.7 以实际唱着舒服为准；§2.12 练习调为 G＝降 4 个半音）。③ 待办：另存原调版保底 → 工程整体移调 → 小声跟唱定调 → 整段录 1 遍、不逐句补录 → 用 Praat 验证（手册要求不靠耳朵）。④ 混音用哪版（SV／自唱）须在 10-01 前定，否则 4-2 会卡。\n验收（09-29）：本人听过，确认歌 #1 人声采用 SV 版（Studio One 内 SV 的 VST 轨，覆盖 intro/verse1/chorus1 三段）。自唱录音也已在工程中（本人试唱，最高处需假声、与原唱同一处一致），按本人决定不发布、留作参照；手册 §2.7「歌 #1 试一次自己唱」的建议已执行过一遍，歌 #2（Ado，原调偏高）仍按既定方案用 SV。后续 4-2 混音用 SV 版。",
-          "scheduledDate": "2026-09-30",
-          "dueDate": "2026-09-30",
-          "output": "工程中的人声轨",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "4-0"
-          ]
-        }
-      ]
+      "on": "2026-09-29"
     },
     {
       "at": "2026-09-29T23:16:39+08:00",
@@ -5064,25 +4140,7 @@
       "ids": [
         "4-2"
       ],
-      "on": "2026-10-01",
-      "before": [
-        {
-          "id": "4-2",
-          "track": "sound",
-          "text": "混音：只做 4 件事",
-          "done": false,
-          "note": "验收（10-01，本人确认）：只做 4 件事（参考曲 A/B、LUFS、EQ 只减、压缩看 GR），未加混响/延时/立体声扩展/多段压缩，未装新插件。① 响度：LUFS integrated 最高 −14.x，落在 −14~−16 区间上限；A/B 切换无明显跳音。② 人声清晰：与参考曲听感相当。③ 观察：未加 limiter 时总线输出偶有爆电平指示，加 limiter（−0.3／−1.0）后不再出现；按 4-2 的 60 分标准未追根因，留待歌 #2。（更正：原先记录的「LUFS 读数会掉到 −18~−20」经本人 10-02 复核系看错表，实无此问题，特此更正。）④ 移交 4-3：主输出串透明 limiter（Threshold −0.3／Ceiling −1.0）防爆，导出后离线整段复测 LUFS 以确定性读数确认；导出前确认自唱录音轨已静音。",
-          "scheduledDate": "2026-10-01",
-          "dueDate": "2026-10-01",
-          "output": "只用四个手法的混音版本，工时不超过总工时 20%",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "4-1"
-          ]
-        }
-      ]
+      "on": "2026-10-01"
     },
     {
       "at": "2026-10-01T23:22:34+08:00",
@@ -5096,51 +4154,7 @@
       "ids": [
         "taste"
       ],
-      "on": "2026-10-01",
-      "before": {
-        "id": "taste",
-        "text": "好听元素清单",
-        "unit": "条",
-        "target": 30,
-        "mode": "items",
-        "count": 6,
-        "lastAddedOn": "2026-09-20",
-        "items": [
-          {
-            "on": "2026-09-15",
-            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "偶尔出现的'说话'感（而不是纯唱）"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "'耳语'元素插入"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "自由的真假声转换"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "自由且令人头皮发麻的嘶吼"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "重复（但不单调重复）的标志性记忆旋律，有各种渐进/层次等的变化"
-          }
-        ],
-        "note": "",
-        "source": "manuals/音乐学习手册.md §2.9",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 3,
-            "taskId": "9-0"
-          }
-        ]
-      }
+      "on": "2026-10-01"
     },
     {
       "at": "2026-10-01T23:47:46+08:00",
@@ -5148,55 +4162,7 @@
       "ids": [
         "taste"
       ],
-      "on": "2026-10-01",
-      "before": {
-        "id": "taste",
-        "text": "好听元素清单",
-        "unit": "条",
-        "target": 30,
-        "mode": "items",
-        "count": 7,
-        "lastAddedOn": "2026-10-01",
-        "items": [
-          {
-            "on": "2026-09-15",
-            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "偶尔出现的'说话'感（而不是纯唱）"
-          },
-          {
-            "on": "2026-09-15",
-            "text": "'耳语'元素插入"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "自由的真假声转换"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "自由且令人头皮发麻的嘶吼"
-          },
-          {
-            "on": "2026-09-20",
-            "text": "重复（但不单调重复）的标志性记忆旋律，有各种渐进/层次等的变化"
-          },
-          {
-            "on": "2026-10-01",
-            "text": "人声、乐器均清晰可听（除刻意营造的效果外），没有蒙住、糊住的感觉"
-          }
-        ],
-        "note": "",
-        "source": "manuals/音乐学习手册.md §2.9",
-        "targetDue": "2026-12-05",
-        "checkpoints": [
-          {
-            "count": 3,
-            "taskId": "9-0"
-          }
-        ]
-      }
+      "on": "2026-10-01"
     },
     {
       "at": "2026-10-02T01:12:33+08:00",
@@ -5211,25 +4177,21 @@
       "ids": [
         "4-3"
       ],
+      "on": "2026-10-02"
+    },
+    {
+      "at": "2026-10-02T22:05:27+08:00",
+      "action": "checkin",
       "on": "2026-10-02",
-      "before": [
-        {
-          "id": "4-3",
-          "track": "sound",
-          "text": "导出 + 写 notes.md",
-          "done": false,
-          "note": "验收（10-02，本人确认）：导出 export.wav（44.1 kHz／16 bit／立体声／80.00 秒／采样峰值 −1.00 dBFS，作母版）+ export.mp3（320 kbps，发布用）；music-log/01-lemon/notes.md 已落盘（≥100 字，含复刻范围／做了什么／卡点 4 条／下次改什么 2 条）。和弦实况已记：耳扒只到 17 小节（intro+verse1），chorus1 和弦直接用 Studio One 音频识别结果（听感大差不差）；由此「下次改什么」第 1 条 = 副歌和弦先自己耳扒 4 个再对账。",
-          "scheduledDate": "2026-10-02",
-          "dueDate": "2026-10-03",
-          "output": "export.mp3 + notes.md ≥100 字",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "4-2"
-          ]
-        }
-      ]
+      "summary": "2026-10-02"
+    },
+    {
+      "at": "2026-10-02T22:05:27+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-10-02"
     }
   ]
 }
