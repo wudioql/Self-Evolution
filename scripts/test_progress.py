@@ -322,6 +322,20 @@ class ProjectTests(unittest.TestCase):
         self.cli('uncheckin', '--on', '2026-09-06', '--reason', '误记')
         self.assertEqual(self.p()['checkins'], [])
 
+    def test_day_note_appends_without_touching_checkin(self):
+        self.cli('checkin', '--on', '2026-09-06', '--minutes', '25')
+        self.cli('day-note', '--on', '2026-09-06', '--text', '事后补：耳朵用了日语歌词')
+        p = self.p()
+        self.assertEqual(p['checkins'], ['2026-09-06'])
+        self.assertIn('事后补', p['dailyLogs']['2026-09-06']['note'])
+        self.assertEqual(p['dailyLogs']['2026-09-06']['minutes'], 25)
+        before = self.files()
+        self.cli('day-note', '--on', '2026-09-06', '--text', '事后补：耳朵用了日语歌词')
+        self.assertEqual(before, self.files())
+        self.cli('day-note', '--on', '2026-09-07', '--text', '未打卡补备注', ok=False)
+        self.assertEqual(before, self.files())
+        self.assertNotIn('2026-09-07', self.p()['checkins'])
+
     def test_reschedule_keeps_stable_id_state_and_count(self):
         p = self.p()
         self.cli('note', '1-3', '--text', '已看一半')
@@ -334,6 +348,16 @@ class ProjectTests(unittest.TestCase):
         self.assertIn('已看一半', t['note'])
         self.assertEqual(set(task_index(p)), set(task_index(newer)))
         validate_plan(newer)
+
+    def test_reschedule_due_keeps_elasticity(self):
+        self.cli('reschedule', '1-3', '--date', '2026-09-08', '--due', '2026-09-14', '--reason', '提前开工保留弹性')
+        t = task_index(self.p())['1-3']
+        self.assertEqual(t['scheduledDate'], '2026-09-08')
+        self.assertEqual(t['dueDate'], '2026-09-14')
+        validate_plan(self.p())
+        before = self.p()
+        self.cli('reschedule', '1-2', '--date', '2026-09-10', '--due', '2026-09-09', '--reason', '倒置', ok=False)
+        self.assertEqual(self.p(), before)
 
     def test_night_override_and_low_mode_do_not_fake_completion(self):
         self.cli('mode', '--start', '2026-10-05', '--end', '2026-10-10', '--kind', 'night')

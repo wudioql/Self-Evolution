@@ -387,8 +387,10 @@ def build_parser():
     p = sub.add_parser('note'); p.add_argument('id'); p.add_argument('--text', required=True)
     p = sub.add_parser('week-note'); p.add_argument('week', type=int); p.add_argument('--text', required=True)
     p = sub.add_parser('checkin'); p.add_argument('--on'); p.add_argument('--minutes', type=int); p.add_argument('--note', default='')
+    p = sub.add_parser('day-note', help='给已打卡日期补写 / 追加每日备注；不改变打卡状态')
+    p.add_argument('--on'); p.add_argument('--text', required=True)
     p = sub.add_parser('uncheckin'); p.add_argument('--on', required=True); p.add_argument('--reason', required=True)
-    p = sub.add_parser('reschedule'); p.add_argument('id'); p.add_argument('--date', required=True); p.add_argument('--reason', required=True)
+    p = sub.add_parser('reschedule'); p.add_argument('id'); p.add_argument('--date', required=True); p.add_argument('--due', help='只挪排期日、保留弹性时单独指定截止日；缺省 = 与 --date 相同'); p.add_argument('--reason', required=True)
     p = sub.add_parser('mode'); p.add_argument('--start', required=True); p.add_argument('--end', required=True); p.add_argument('--kind', choices=['night', 'low'], required=True); p.add_argument('--note', default='')
     p = sub.add_parser('clear-mode'); p.add_argument('--start', required=True); p.add_argument('--end', required=True)
     p = sub.add_parser('accumulate', help='累计计数型目标：taste 报一行原文 / terms 报累计数；故障库由 fault add 派生，不接受手设计数')
@@ -465,6 +467,17 @@ def main(argv=None):
                 print('该日已打卡，且内容未变化；不重复累计。')
                 return 0
             event(p, 'checkin', on=ds, summary=ds)
+        elif cmd == 'day-note':
+            ds = date_used(args.on)
+            if ds not in p['checkins']:
+                raise ValueError('该日未打卡；补备注不能代替打卡，需要打卡请走 checkin 并经本人确认')
+            log = p.setdefault('dailyLogs', {}).setdefault(ds, {})
+            before = copy.deepcopy(log)
+            log['note'] = merge_notes(log.get('note'), args.text)
+            if log == before:
+                print('备注内容已存在，无变化；未新增版本 / 历史。')
+                return 0
+            event(p, 'day-note', on=ds, before=before, summary=ds)
         elif cmd == 'uncheckin':
             ds = date_used(args.on)
             if ds not in p['checkins']:
@@ -474,8 +487,11 @@ def main(argv=None):
             event(p, 'uncheckin', on=ds, before=log, summary=args.reason)
         elif cmd == 'reschedule':
             ds = parse_date(args.date).isoformat()
+            dues = parse_date(args.due).isoformat() if args.due else ds
             if not p['meta']['day1'] <= ds <= p['meta']['end']:
                 raise ValueError('重排须在 Day 1–98 内；扩期需显式修改整体计划')
+            if not ds <= dues <= p['meta']['end']:
+                raise ValueError('截止日不得早于排期日或超出计划终点')
             t = task_index(p).get(args.id)
             if not t: raise ValueError('只能重排具体任务，ID 不存在')
             if t['done']: raise ValueError('已完成任务不移动；需要更正时先明确撤销')
@@ -484,12 +500,14 @@ def main(argv=None):
                 day['actions'] = [a for a in day['actions'] if a['taskId'] != args.id]
                 if day['date'] == ds:
                     day['actions'].append({'taskId': args.id, 'text': t['text']})
-            t['scheduledDate'] = t['dueDate'] = ds
+            t['scheduledDate'] = ds
+            t['dueDate'] = dues
             t['note'] = merge_notes(t.get('note'), '重排原因：' + args.reason)
             # Wording ID stays stable even if it moves to a different week.
             for w in p['weeks']: w['tasks'] = [x for x in w['tasks'] if x['id'] != args.id]
             next(w for w in p['weeks'] if w['start'] <= ds <= w['end'])['tasks'].append(t)
-            event(p, 'reschedule', ids=[args.id], before=before, summary=f'{args.id} → {ds}；{args.reason}')
+            event(p, 'reschedule', ids=[args.id], before=before,
+                  summary=f'{args.id} → {ds}' + (f'（截止 {dues}）' if dues != ds else '') + f'；{args.reason}')
         elif cmd == 'mode':
             start, end = parse_date(args.start), parse_date(args.end)
             if not p['meta']['day0'] <= start.isoformat() <= end.isoformat() <= p['meta']['end']:

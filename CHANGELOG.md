@@ -4,6 +4,43 @@
 
 本文件记「**改了什么**」；审计核对范围、验证边界与待修登记记 [`AUDIT.md`](AUDIT.md)（2026-09-07 前名「维护审计.md」），记「**核对过什么、边界在哪**」。2026-09-07 前的条目自原 README §6 与原维护审计 §6 迁入，文字基本保留原貌；旧记录保留历史意义，与 2026-09-06 审计不符的旧结论不能作为「已解决」的证据。
 
+> **边界**：日常打卡、积累上报、任务勾项 / 备注属 `progress/plan90.json`（`history` / `dailyLogs`），**不入本文件**。本文件只记文件、规范与工具的变更。
+
+## [2026-10-03]
+
+### 修复 · `reschedule` 支持 `--due`：排期日与截止日可分离（本人确认）
+
+- 起因：按排班优化 W6/W5 排期时发现 `progress.py reschedule` 把 `scheduledDate` 与 `dueDate` 强制合并为同一天，无法表达"提前开工、保留截止弹性"；schema 校验（`project_data.py` / `file-store.js`）本就允许 `scheduledDate ≤ dueDate`，缺陷仅在 CLI。
+- `scripts/progress.py`：`reschedule` 新增可选 `--due`；校验 `排期日 ≤ due ≤ meta.end`，缺省行为不变（due = date，向后兼容）；history summary 在 due 与 date 不同时附注截止日。
+- `scripts/test_progress.py`：新增 `test_reschedule_due_keeps_elasticity`（分离生效 + 倒置拒绝且正本不变）。
+- `manuals/AI与工具手册.md` §4.6：数据约定补一条 `--due` 语义（逾期只看 `dueDate`，推荐只看 `scheduledDate`），示例命令表补一行。
+- 验证：`python -m unittest discover -s scripts` 62 项通过；`node scripts/test-file-store.cjs` 23/23 通过。
+
+### 新增 · `day-note` 命令：事后补写每日备注，不触碰打卡状态（本人确认）
+
+- 起因：打卡备注只能随 `checkin` 一起写；给漏备注的已打卡日期补内容须重跑 `checkin`，若该日实际未打卡会顺手伪造打卡记录。
+- `scripts/progress.py`：新增 `day-note --on DATE --text`，仅向 `dailyLogs[日期].note` 追加（merge 去重）；目标日期不在 `checkins` 即拒绝，不改变打卡与分钟数。
+- `scripts/test_progress.py`：新增 `test_day_note_appends_without_touching_checkin`（追加生效、重复内容零写入、未打卡拒绝）。
+- `manuals/AI与工具手册.md` §4.6 示例命令、`AGENTS.md` §8.1 WF2 第 3 条同步补一句。
+- 同日清理：本文件头部补「边界」约定——日常打卡 / 积累 / 勾项属 `plan90.json`，不入 CHANGELOG；删除此前误入的"记录 · Day 27"小节。
+- 验证：63 项 Python 单测通过；`sync-plan.py --check`、`check-docs.py` 通过。
+
+### 变更 · `tools/90天进度表.html` 打卡展示改版（本人确认方向）
+
+- 起因：`dailyLogs` 备注此前只能在 `进度总览.md` 查看，HTML 无明细。先加了折叠式全量「打卡历史」，经与本人商讨改为跟随日期选择器的当日打卡行，并移除全量列表。
+- 布局：六项交付物移到每日安排卡上方；自上而下为 交付物 → 每日安排（含日期选择器）→ 连续打卡。
+- 每日安排卡底部新增「当日打卡」行：沿用 `.note` 虚线分隔，胶囊徽章（✓ 已打卡 · N′ / ○ 未打卡）+ 备注文本，跟随日期选择器；Day 0 前 / 排期结束后隐藏。连续打卡卡固定跟随系统当日，不随选择器变。
+- 数据源为内嵌 `plan.checkins` + `plan.dailyLogs`，零 schema 变更；改动均在生成块之外，sync-plan 不会覆盖。
+- 验证：`sync-plan.py --check` 一致；`check-docs.py` 16/16；`node scripts/test-file-store.cjs` 23/23；浏览器实测 6 项通过（区块顺序 / 当日行渲染 / 切换日期联动 / 连续打卡不联动 / 旧区块移除 / 控制台无报错）。
+
+### 变更 · 按排班重排 W5/W6 并登记夜班豁免（本人确认）
+
+- 排班事实：10/01–07 国庆假期；10/08–14 夜班（实际 10/09–14 凌晨 0–9 点上班）；10/18–23、10/25–30 白班（周日–周五）；此后常规上五休二。
+- `reschedule 6-0 --date 2026-10-06 --due 2026-10-16`（扒主歌提前进假期，截止弹性不变，跨周 W6→W5，ID 不变）；`reschedule 5-1 --date 2026-10-06 --due 2026-10-07`（预习并入假期，optional 保持）；`reschedule 6-1 --date 2026-10-15 --due 2026-10-16`、`reschedule 6-2 --date 2026-10-16 --due 2026-10-17`（贝斯线与对账挪到夜班后休息日）。
+- `mode --start 2026-10-08 --end 2026-10-14 --kind night`：夜班周只保留墨墨 10 分钟，豁免 ≠ 完成、不堆欠账。
+- 不动：`4-5` 发布（10/04 假期）、`4-6`/`4-7` Day 30 复检（10/06 假期）、`6-3`/`6-4`/`6-6`、`8-0`（保持 due 10/31；「10/24 先录人声」为执行节奏建议，不改排期）、W7 全部。
+- 验证：读盘核验四条重排的 scheduledDate/dueDate/周归属与 overrides 均正确（revision 135）；`sync-plan.py --check` 一致；`check-docs.py` 16/16 通过。
+
 ## [2026-10-02]
 
 ### 变更 · 歌 #1 复盘落盘 `notes.md`；更正 `4-2` 备注中的 LUFS 误记（本人要求）

@@ -177,6 +177,7 @@ Node 20 用于 HTML 语法和文件桥测试；真实浏览器冒烟另需 `pyth
 
 - `meta.day0 / day1 / day90 / end` 是日期基准；`dailyPlan` 覆盖 Day 0–98。日号按上海时区的自然日计算，不按经过的 24 小时累加。
 - `weeks[].tasks[]` 的 `id` 稳定；`scheduledDate / dueDate` 是排期；`done / completedOn / note / evidence` 是状态。移动任务不改 ID。
+- `reschedule` 默认把排期日和截止日合并为同一天；只想提前开工、保留弹性时加 `--due`（须满足 排期日 ≤ due ≤ 计划终点）。逾期判定只看 `dueDate`，推荐出现只看 `scheduledDate`。
 - `weeks[].note` 留周备注；`checkins` 日期去重；`dailyLogs` 记实际分钟与日志；`overrides` 记确认的夜班 / 低能范围。
 - `history` 留变更；`_orphans` 留旧备份中找不到的 ID。**同步脚本不改正本，也不清空历史。**
 - 故障 `items[]` 中 `isSample=true`（以及旧示例标记）不计成果；`isRecurring / isSolved / downtimeMin` 的 `null` 表示未知，不是“否 / 0”。
@@ -203,8 +204,10 @@ python3 scripts/progress.py undo 1-0 --note "更正误勾"
 python3 scripts/progress.py note 1-2 --text "只扒完前四小节；整项尚未结束"
 python3 scripts/progress.py week-note 1 --text "实际产出 / 下一步 / 卡点"
 python3 scripts/progress.py checkin --on 2026-09-06 --minutes 25 --note "实际完成最低剂量"
+python3 scripts/progress.py day-note --on 2026-09-06 --text "事后补：耳朵用了日语歌词"
 python3 scripts/progress.py uncheckin --on 2026-09-06 --reason "更正日期"
 python3 scripts/progress.py reschedule 1-3 --date 2026-09-13 --reason "经本人确认顺延"
+python3 scripts/progress.py reschedule 6-0 --date 2026-10-06 --due 2026-10-16 --reason "提前开工，保留截止弹性"
 python3 scripts/progress.py mode --start 2026-10-05 --end 2026-10-10 --kind night
 python3 scripts/progress.py clear-mode --start 2026-10-05 --end 2026-10-10
 

@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-02T23:22:48+08:00",
+    "updated": "2026-10-03T21:51:22+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 123,
+    "revision": 137,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -568,27 +568,29 @@
           "id": "4-4",
           "track": "equip",
           "text": "故障库 20 条 / 术语表 40 词",
-          "done": false,
+          "done": true,
           "note": "",
           "scheduledDate": "2026-10-03",
           "dueDate": "2026-10-03",
           "output": "真实故障 20 条；术语 40 词",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-10-03",
           "evidence": []
         },
         {
           "id": "4-5",
           "track": "pub",
           "text": "🚀 歌 #1 公开发布",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "歌#1 Lemon 已公开发布（B站视频）；工程 Lemon.song、导出 export.wav/mp3、复盘 notes.md 均在 music-log/01-lemon/",
           "scheduledDate": "2026-10-04",
           "dueDate": "2026-10-04",
           "output": "歌 #1 公开链接；工程、导出音频、≥100 字复盘均存在",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-10-03",
+          "evidence": [
+            "https://www.bilibili.com/video/BV1vPHq6DEZ8/"
+          ],
           "dependsOn": [
             "4-3"
           ]
@@ -646,22 +648,6 @@
           "evidence": []
         },
         {
-          "id": "5-1",
-          "track": "sound",
-          "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-10-07",
-          "dueDate": "2026-10-09",
-          "output": "可继续使用的主旋律草稿（可豁免）",
-          "optional": true,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "4-5"
-          ]
-        },
-        {
           "id": "4-6",
           "track": "pub",
           "text": "Day 30 回顾：核对歌 #1 发布、故障库 20 条、术语 40 词及实际打卡",
@@ -686,6 +672,38 @@
           "optional": false,
           "completedOn": null,
           "evidence": []
+        },
+        {
+          "id": "6-0",
+          "track": "sound",
+          "text": "扒《うっせぇわ》主歌主旋律",
+          "done": false,
+          "note": "重排原因：本人确认：提前进国庆假期开工，保留截止弹性",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-16",
+          "output": "music-log/02-usseewa/melody.mid",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-5"
+          ]
+        },
+        {
+          "id": "5-1",
+          "track": "sound",
+          "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
+          "done": false,
+          "note": "重排原因：本人确认：预习并入假期，可选属性不变",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-07",
+          "output": "可继续使用的主旋律草稿（可豁免）",
+          "optional": true,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-5"
+          ]
         }
       ],
       "title": "浮动缓冲 + Day 30 复检",
@@ -702,51 +720,6 @@
       "start": "2026-10-12",
       "end": "2026-10-18",
       "tasks": [
-        {
-          "id": "6-0",
-          "track": "sound",
-          "text": "扒《うっせぇわ》主歌主旋律",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-10-12",
-          "dueDate": "2026-10-16",
-          "output": "music-log/02-usseewa/melody.mid",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "4-5"
-          ]
-        },
-        {
-          "id": "6-1",
-          "track": "sound",
-          "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-10-14",
-          "dueDate": "2026-10-14",
-          "output": "chords.md 中 bass 的 B→F→E 走线",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "6-2",
-          "track": "sound",
-          "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-10-15",
-          "dueDate": "2026-10-15",
-          "output": "chords.md 中和声 / bass 的听辨核对",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "6-1"
-          ]
-        },
         {
           "id": "6-3",
           "track": "equip",
@@ -798,6 +771,35 @@
           "optional": false,
           "completedOn": null,
           "evidence": []
+        },
+        {
+          "id": "6-1",
+          "track": "sound",
+          "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
+          "done": false,
+          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
+          "scheduledDate": "2026-10-15",
+          "dueDate": "2026-10-16",
+          "output": "chords.md 中 bass 的 B→F→E 走线",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-2",
+          "track": "sound",
+          "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
+          "done": false,
+          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
+          "scheduledDate": "2026-10-16",
+          "dueDate": "2026-10-17",
+          "output": "chords.md 中和声 / bass 的听辨核对",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-1"
+          ]
         }
       ],
       "title": "《うっせぇわ》骨架 + 取数",
@@ -1571,10 +1573,12 @@
       "id": "song1",
       "text": "歌 #1《Lemon》",
       "sub": "工程 + 导出音频 + 公开链接 + ≥100 字复盘；有发布链接",
-      "done": false,
-      "note": "",
-      "evidence": [],
-      "completedOn": null,
+      "done": true,
+      "note": "四件套已核验：工程 music-log/01-lemon/Lemon/Lemon.song · 导出 export.wav/mp3 · 复盘 notes.md（远超100字）· B站链接",
+      "evidence": [
+        "https://www.bilibili.com/video/BV1vPHq6DEZ8/"
+      ],
+      "completedOn": "2026-10-03",
       "dueDate": "2026-10-04"
     },
     {
@@ -1654,13 +1658,14 @@
     "2026-09-29",
     "2026-09-30",
     "2026-10-01",
-    "2026-10-02"
+    "2026-10-02",
+    "2026-10-03"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 34,
-    "pct": 35,
-    "delivDone": 0,
+    "doneTasks": 36,
+    "pct": 38,
+    "delivDone": 1,
     "delivTotal": 6
   },
   "_orphans": [],
@@ -2091,6 +2096,14 @@
         {
           "taskId": "4-7",
           "text": "按歌 #1 是否发布决定继续三首或收缩；不要自动砍 / 自动勾"
+        },
+        {
+          "taskId": "6-0",
+          "text": "扒《うっせぇわ》主歌主旋律"
+        },
+        {
+          "taskId": "5-1",
+          "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律"
         }
       ]
     },
@@ -2098,34 +2111,19 @@
       "day": 31,
       "date": "2026-10-07",
       "budgetMinutes": 25,
-      "actions": [
-        {
-          "taskId": "5-1",
-          "text": "非夜班且歌 #1 已发布：听《うっせぇわ》主歌，标一小句"
-        }
-      ]
+      "actions": []
     },
     {
       "day": 32,
       "date": "2026-10-08",
       "budgetMinutes": 25,
-      "actions": [
-        {
-          "taskId": "5-1",
-          "text": "非夜班：预扒 4 小节主旋律，15 分钟就停"
-        }
-      ]
+      "actions": []
     },
     {
       "day": 33,
       "date": "2026-10-09",
       "budgetMinutes": 25,
-      "actions": [
-        {
-          "taskId": "5-1",
-          "text": "非夜班：回听并保存草稿；夜班仅墨墨 10 分钟"
-        }
-      ]
+      "actions": []
     },
     {
       "day": 34,
@@ -2153,34 +2151,19 @@
       "day": 36,
       "date": "2026-10-12",
       "budgetMinutes": 25,
-      "actions": [
-        {
-          "taskId": "6-0",
-          "text": "扒《うっせぇわ》主歌前半的单音旋律"
-        }
-      ]
+      "actions": []
     },
     {
       "day": 37,
       "date": "2026-10-13",
       "budgetMinutes": 25,
-      "actions": [
-        {
-          "taskId": "6-0",
-          "text": "补主歌旋律并保存 MIDI"
-        }
-      ]
+      "actions": []
     },
     {
       "day": 38,
       "date": "2026-10-14",
       "budgetMinutes": 25,
-      "actions": [
-        {
-          "taskId": "6-1",
-          "text": "只听 bass，画出听到的 B→F→E 走线"
-        }
-      ]
+      "actions": []
     },
     {
       "day": 39,
@@ -2188,8 +2171,8 @@
       "budgetMinutes": 25,
       "actions": [
         {
-          "taskId": "6-2",
-          "text": "把 bass 走线和和声性质分开记录，再核对自己的判断"
+          "taskId": "6-1",
+          "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来"
         }
       ]
     },
@@ -2199,12 +2182,12 @@
       "budgetMinutes": 25,
       "actions": [
         {
-          "taskId": "6-0",
-          "text": "回听骨架，保留一版可继续做的工程"
-        },
-        {
           "taskId": "6-5",
           "text": "顺带比较日语 う 的嘴型，不额外开学习块"
+        },
+        {
+          "taskId": "6-2",
+          "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果"
         }
       ]
     },
@@ -2988,9 +2971,9 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 35,
-      "lastAddedOn": "2026-10-02",
-      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）",
+      "count": 45,
+      "lastAddedOn": "2026-10-03",
+      "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）\n新增 flange/filter/cold trap/gauge port/PVD/CVD/ALD/evaporation/sputtering/implant 共10词",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
       "checkpoints": [
@@ -3157,9 +3140,20 @@
     "2026-10-02": {
       "note": "墨墨10′ + 耳朵15′（最低剂量）",
       "minutes": 25
+    },
+    "2026-10-03": {
+      "note": "最低剂量：墨墨10分钟+耳朵15分钟",
+      "minutes": 25
     }
   },
-  "overrides": [],
+  "overrides": [
+    {
+      "start": "2026-10-08",
+      "end": "2026-10-14",
+      "mode": "night",
+      "note": "本人确认：实际夜班 10/09-14 凌晨 0-9 点，8 号起进入倒班"
+    }
+  ],
   "history": [
     {
       "at": "2026-09-06",
@@ -3983,6 +3977,314 @@
         "terms"
       ],
       "on": "2026-10-02"
+    },
+    {
+      "at": "2026-10-03T15:53:18+08:00",
+      "action": "checkin",
+      "on": "2026-10-03",
+      "summary": "2026-10-03"
+    },
+    {
+      "at": "2026-10-03T15:53:19+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-10-03",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 35,
+        "lastAddedOn": "2026-10-02",
+        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-03T16:05:38+08:00",
+      "action": "done",
+      "ids": [
+        "4-4"
+      ],
+      "on": "2026-10-03",
+      "before": [
+        {
+          "id": "4-4",
+          "track": "equip",
+          "text": "故障库 20 条 / 术语表 40 词",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-03",
+          "dueDate": "2026-10-03",
+          "output": "真实故障 20 条；术语 40 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-03T16:32:42+08:00",
+      "action": "reschedule",
+      "ids": [
+        "6-0"
+      ],
+      "before": {
+        "id": "6-0",
+        "track": "sound",
+        "text": "扒《うっせぇわ》主歌主旋律",
+        "done": false,
+        "note": "",
+        "scheduledDate": "2026-10-12",
+        "dueDate": "2026-10-16",
+        "output": "music-log/02-usseewa/melody.mid",
+        "optional": false,
+        "completedOn": null,
+        "evidence": [],
+        "dependsOn": [
+          "4-5"
+        ]
+      },
+      "summary": "6-0 → 2026-10-06（截止 2026-10-16）；本人确认：提前进国庆假期开工，保留截止弹性"
+    },
+    {
+      "at": "2026-10-03T16:32:47+08:00",
+      "action": "reschedule",
+      "ids": [
+        "6-0"
+      ],
+      "before": {
+        "id": "6-0",
+        "track": "sound",
+        "text": "扒《うっせぇわ》主歌主旋律",
+        "done": false,
+        "note": "重排原因：本人确认：提前进国庆假期开工，保留截止弹性",
+        "scheduledDate": "2026-10-06",
+        "dueDate": "2026-10-16",
+        "output": "music-log/02-usseewa/melody.mid",
+        "optional": false,
+        "completedOn": null,
+        "evidence": [],
+        "dependsOn": [
+          "4-5"
+        ]
+      },
+      "summary": "6-0 → 2026-10-06（截止 2026-10-16）；本人确认：提前进国庆假期开工，保留截止弹性"
+    },
+    {
+      "at": "2026-10-03T16:32:52+08:00",
+      "action": "reschedule",
+      "ids": [
+        "5-1"
+      ],
+      "before": {
+        "id": "5-1",
+        "track": "sound",
+        "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
+        "done": false,
+        "note": "",
+        "scheduledDate": "2026-10-07",
+        "dueDate": "2026-10-09",
+        "output": "可继续使用的主旋律草稿（可豁免）",
+        "optional": true,
+        "completedOn": null,
+        "evidence": [],
+        "dependsOn": [
+          "4-5"
+        ]
+      },
+      "summary": "5-1 → 2026-10-06（截止 2026-10-07）；本人确认：预习并入假期，可选属性不变"
+    },
+    {
+      "at": "2026-10-03T16:32:56+08:00",
+      "action": "reschedule",
+      "ids": [
+        "5-1"
+      ],
+      "before": {
+        "id": "5-1",
+        "track": "sound",
+        "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
+        "done": false,
+        "note": "重排原因：本人确认：预习并入假期，可选属性不变",
+        "scheduledDate": "2026-10-06",
+        "dueDate": "2026-10-07",
+        "output": "可继续使用的主旋律草稿（可豁免）",
+        "optional": true,
+        "completedOn": null,
+        "evidence": [],
+        "dependsOn": [
+          "4-5"
+        ]
+      },
+      "summary": "5-1 → 2026-10-06（截止 2026-10-07）；本人确认：预习并入假期，可选属性不变"
+    },
+    {
+      "at": "2026-10-03T16:33:01+08:00",
+      "action": "reschedule",
+      "ids": [
+        "6-1"
+      ],
+      "before": {
+        "id": "6-1",
+        "track": "sound",
+        "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
+        "done": false,
+        "note": "",
+        "scheduledDate": "2026-10-14",
+        "dueDate": "2026-10-14",
+        "output": "chords.md 中 bass 的 B→F→E 走线",
+        "optional": false,
+        "completedOn": null,
+        "evidence": []
+      },
+      "summary": "6-1 → 2026-10-15（截止 2026-10-16）；本人确认：避开夜班，挪到夜班后休息日"
+    },
+    {
+      "at": "2026-10-03T16:33:05+08:00",
+      "action": "reschedule",
+      "ids": [
+        "6-1"
+      ],
+      "before": {
+        "id": "6-1",
+        "track": "sound",
+        "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
+        "done": false,
+        "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
+        "scheduledDate": "2026-10-15",
+        "dueDate": "2026-10-16",
+        "output": "chords.md 中 bass 的 B→F→E 走线",
+        "optional": false,
+        "completedOn": null,
+        "evidence": []
+      },
+      "summary": "6-1 → 2026-10-15（截止 2026-10-16）；本人确认：避开夜班，挪到夜班后休息日"
+    },
+    {
+      "at": "2026-10-03T16:33:11+08:00",
+      "action": "reschedule",
+      "ids": [
+        "6-2"
+      ],
+      "before": {
+        "id": "6-2",
+        "track": "sound",
+        "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
+        "done": false,
+        "note": "",
+        "scheduledDate": "2026-10-15",
+        "dueDate": "2026-10-15",
+        "output": "chords.md 中和声 / bass 的听辨核对",
+        "optional": false,
+        "completedOn": null,
+        "evidence": [],
+        "dependsOn": [
+          "6-1"
+        ]
+      },
+      "summary": "6-2 → 2026-10-16（截止 2026-10-17）；本人确认：避开夜班，挪到夜班后休息日"
+    },
+    {
+      "at": "2026-10-03T16:33:14+08:00",
+      "action": "reschedule",
+      "ids": [
+        "6-2"
+      ],
+      "before": {
+        "id": "6-2",
+        "track": "sound",
+        "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
+        "done": false,
+        "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
+        "scheduledDate": "2026-10-16",
+        "dueDate": "2026-10-17",
+        "output": "chords.md 中和声 / bass 的听辨核对",
+        "optional": false,
+        "completedOn": null,
+        "evidence": [],
+        "dependsOn": [
+          "6-1"
+        ]
+      },
+      "summary": "6-2 → 2026-10-16（截止 2026-10-17）；本人确认：避开夜班，挪到夜班后休息日"
+    },
+    {
+      "at": "2026-10-03T16:33:21+08:00",
+      "action": "mode",
+      "summary": "2026-10-08—2026-10-14 · night"
+    },
+    {
+      "at": "2026-10-03T21:49:28+08:00",
+      "action": "done",
+      "ids": [
+        "4-5"
+      ],
+      "on": "2026-10-03",
+      "before": [
+        {
+          "id": "4-5",
+          "track": "pub",
+          "text": "🚀 歌 #1 公开发布",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-04",
+          "dueDate": "2026-10-04",
+          "output": "歌 #1 公开链接；工程、导出音频、≥100 字复盘均存在",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-3"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-03T21:51:22+08:00",
+      "action": "done",
+      "ids": [
+        "song1"
+      ],
+      "on": "2026-10-03",
+      "before": [
+        {
+          "id": "song1",
+          "text": "歌 #1《Lemon》",
+          "sub": "工程 + 导出音频 + 公开链接 + ≥100 字复盘；有发布链接",
+          "done": false,
+          "note": "",
+          "evidence": [],
+          "completedOn": null,
+          "dueDate": "2026-10-04"
+        }
+      ]
     }
   ]
 }
