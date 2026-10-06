@@ -6,6 +6,18 @@
 
 > **边界**：日常打卡、积累上报、任务勾项 / 备注属 `progress/plan90.json`（`history` / `dailyLogs`），**不入本文件**。本文件只记文件、规范与工具的变更。
 
+## [2026-10-06]
+
+### 修复 · 重排后周任务数组乱序（本人发现 `进度总览.md` W6 中 6-1/6-2 排在 6-3~6-6 之后）
+
+- 根因：`progress.py reschedule` 跨周挪任务时从原周数组删除后 `append` 到目标周末尾，而 `进度总览.md` / HTML 按数组原始顺序渲染，导致被重排过的任务一律显示在周尾。读盘核验受影响周：W5（4-6/4-7/6-0/5-1）、W6（6-1/6-2）、W9（8-3/8-4/9-6）；其余 11 周本就是 ID 升序，即原始编写顺序 = ID 自然序。
+- `scripts/project_data.py`：新增 `natural_id_key()`（'6-2' < '6-10' < '10-1'）。
+- `scripts/progress.py`：`reschedule` 挪入目标周后按 ID 自然序重排该周数组（治本，防止再发生）。
+- `progress/plan90.json`：一次性规范化各周 tasks 顺序（走 `save_data`，revision 149；ID / done / 备注 / 历史全部不变，仅数组顺序）。
+- `scripts/test_progress.py`：新增 `test_reschedule_keeps_week_array_in_id_order`。
+- 浏览器端 `file-store.js` 无 reschedule 逻辑，不受影响。
+- 验证：`python -m unittest discover -s scripts` 64 项通过；`node scripts/test-file-store.cjs` 23/23；`sync-plan.py --check`、`check-docs.py` 16/16 通过。
+
 ## [2026-10-03]
 
 ### 修复 · `reschedule` 支持 `--due`：排期日与截止日可分离（本人确认）

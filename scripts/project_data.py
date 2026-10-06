@@ -61,6 +61,11 @@ def task_index(plan):
     return {t['id']: t for t in tasks(plan)}
 
 
+def natural_id_key(task_id):
+    """Natural sort key: '6-2' < '6-10' < '10-1'; non-numeric segments compare last."""
+    return [(0, int(p)) if p.isdigit() else (1, p) for p in re.split(r'(\d+)', task_id) if p]
+
+
 def calc_stats(plan):
     ts = tasks(plan)
     done = sum(t['done'] for t in ts)

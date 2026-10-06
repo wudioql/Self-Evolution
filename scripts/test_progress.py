@@ -9,7 +9,8 @@ from pathlib import Path
 
 from project_data import (ROOT, PLAN_PATH, FAULT_PATH, dump, load, tasks, task_index, calc_stats,
                           day_info, overview_md, validate_plan, validate_faults, empty_faults,
-                          real_faults, sync_views, atomic_write, sanitize_faults, save_data)
+                          real_faults, sync_views, atomic_write, sanitize_faults, save_data,
+                          natural_id_key)
 from progress import import_plan_state
 
 
@@ -358,6 +359,13 @@ class ProjectTests(unittest.TestCase):
         before = self.p()
         self.cli('reschedule', '1-2', '--date', '2026-09-10', '--due', '2026-09-09', '--reason', '倒置', ok=False)
         self.assertEqual(self.p(), before)
+
+    def test_reschedule_keeps_week_array_in_id_order(self):
+        self.cli('reschedule', '1-0', '--date', '2026-09-14', '--reason', '本人确认挪周')
+        ids = [x['id'] for x in self.p()['weeks'][1]['tasks']]
+        self.assertEqual(ids, sorted(ids, key=natural_id_key))
+        self.assertEqual(ids[0], '1-0')
+        validate_plan(self.p())
 
     def test_night_override_and_low_mode_do_not_fake_completion(self):
         self.cli('mode', '--start', '2026-10-05', '--end', '2026-10-10', '--kind', 'night')

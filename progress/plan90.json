@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-05T21:57:41+08:00",
+    "updated": "2026-10-06T23:41:23+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 142,
+    "revision": 149,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -635,6 +635,32 @@
       "end": "2026-10-11",
       "tasks": [
         {
+          "id": "4-6",
+          "track": "pub",
+          "text": "Day 30 回顾：核对歌 #1 发布、故障库 20 条、术语 40 词及实际打卡",
+          "done": true,
+          "note": "Day 30核对通过：歌#1已发布(4-5·B站链接)✓、真实故障20≥20✓、术语45≥40✓、10-06打卡25分钟✓",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-06",
+          "output": "Day 30 复检笔记，真实记录达标 / 未达标",
+          "optional": false,
+          "completedOn": "2026-10-06",
+          "evidence": []
+        },
+        {
+          "id": "4-7",
+          "track": "key",
+          "text": "Day 30 决策：歌 #1 未发布则收缩为只完成这一首；已发布则保留三首目标",
+          "done": true,
+          "note": "本人2026-10-06明确决策：歌#1已发布，保留三首目标",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-06",
+          "output": "明确保留三首 / 收缩一首的决策，后续任务由 agent 经确认重排",
+          "optional": false,
+          "completedOn": "2026-10-06",
+          "evidence": []
+        },
+        {
           "id": "5-0",
           "track": "key",
           "text": "确认浮动缓冲安排；真实夜班只保留墨墨 10 分钟，不把豁免记作完成",
@@ -648,58 +674,32 @@
           "evidence": []
         },
         {
-          "id": "4-6",
-          "track": "pub",
-          "text": "Day 30 回顾：核对歌 #1 发布、故障库 20 条、术语 40 词及实际打卡",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-10-06",
-          "dueDate": "2026-10-06",
-          "output": "Day 30 复检笔记，真实记录达标 / 未达标",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "4-7",
-          "track": "key",
-          "text": "Day 30 决策：歌 #1 未发布则收缩为只完成这一首；已发布则保留三首目标",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-10-06",
-          "dueDate": "2026-10-06",
-          "output": "明确保留三首 / 收缩一首的决策，后续任务由 agent 经确认重排",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "6-0",
+          "id": "5-1",
           "track": "sound",
-          "text": "扒《うっせぇわ》主歌主旋律",
-          "done": false,
-          "note": "重排原因：本人确认：提前进国庆假期开工，保留截止弹性",
+          "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
+          "done": true,
+          "note": "重排原因：本人确认：预习并入假期，可选属性不变\n被6-0覆盖：实际扒带已完成，预习任务一并勾销(可选)",
           "scheduledDate": "2026-10-06",
-          "dueDate": "2026-10-16",
-          "output": "music-log/02-usseewa/melody.mid",
-          "optional": false,
-          "completedOn": null,
+          "dueDate": "2026-10-07",
+          "output": "可继续使用的主旋律草稿（可豁免）",
+          "optional": true,
+          "completedOn": "2026-10-06",
           "evidence": [],
           "dependsOn": [
             "4-5"
           ]
         },
         {
-          "id": "5-1",
+          "id": "6-0",
           "track": "sound",
-          "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
-          "done": false,
-          "note": "重排原因：本人确认：预习并入假期，可选属性不变",
+          "text": "扒《うっせぇわ》主歌主旋律",
+          "done": true,
+          "note": "重排原因：本人确认：提前进国庆假期开工，保留截止弹性\n人声主旋律第一段主歌+副歌已扒完，melody.mid已导出",
           "scheduledDate": "2026-10-06",
-          "dueDate": "2026-10-07",
-          "output": "可继续使用的主旋律草稿（可豁免）",
-          "optional": true,
-          "completedOn": null,
+          "dueDate": "2026-10-16",
+          "output": "music-log/02-usseewa/melody.mid",
+          "optional": false,
+          "completedOn": "2026-10-06",
           "evidence": [],
           "dependsOn": [
             "4-5"
@@ -720,6 +720,35 @@
       "start": "2026-10-12",
       "end": "2026-10-18",
       "tasks": [
+        {
+          "id": "6-1",
+          "track": "sound",
+          "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
+          "done": false,
+          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
+          "scheduledDate": "2026-10-15",
+          "dueDate": "2026-10-16",
+          "output": "chords.md 中 bass 的 B→F→E 走线",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "6-2",
+          "track": "sound",
+          "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
+          "done": false,
+          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
+          "scheduledDate": "2026-10-16",
+          "dueDate": "2026-10-17",
+          "output": "chords.md 中和声 / bass 的听辨核对",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-1"
+          ]
+        },
         {
           "id": "6-3",
           "track": "equip",
@@ -771,35 +800,6 @@
           "optional": false,
           "completedOn": null,
           "evidence": []
-        },
-        {
-          "id": "6-1",
-          "track": "sound",
-          "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
-          "done": false,
-          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
-          "scheduledDate": "2026-10-15",
-          "dueDate": "2026-10-16",
-          "output": "chords.md 中 bass 的 B→F→E 走线",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "6-2",
-          "track": "sound",
-          "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
-          "done": false,
-          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
-          "scheduledDate": "2026-10-16",
-          "dueDate": "2026-10-17",
-          "output": "chords.md 中和声 / bass 的听辨核对",
-          "optional": false,
-          "completedOn": null,
-          "evidence": [],
-          "dependsOn": [
-            "6-1"
-          ]
         }
       ],
       "title": "《うっせぇわ》骨架 + 取数",
@@ -1027,6 +1027,32 @@
       "end": "2026-11-08",
       "tasks": [
         {
+          "id": "8-3",
+          "track": "pub",
+          "text": "Day 60 回顾：核对歌 #2、报警帕累托图和改善提案",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-05",
+          "dueDate": "2026-11-05",
+          "output": "Day 60 复检笔记",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "8-4",
+          "track": "key",
+          "text": "Day 60 反思：是否开始享受“做”本身，而不只是“准备做”？",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-05",
+          "dueDate": "2026-11-05",
+          "output": "一段真实反思",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
           "id": "9-0",
           "track": "sound",
           "text": "打开「好听元素清单」，挑 3 个你最喜欢的手法",
@@ -1106,32 +1132,6 @@
           "scheduledDate": "2026-11-06",
           "dueDate": "2026-11-06",
           "output": "继续 / 暂停 IPA 的明确决定",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "8-3",
-          "track": "pub",
-          "text": "Day 60 回顾：核对歌 #2、报警帕累托图和改善提案",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-11-05",
-          "dueDate": "2026-11-05",
-          "output": "Day 60 复检笔记",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "8-4",
-          "track": "key",
-          "text": "Day 60 反思：是否开始享受“做”本身，而不只是“准备做”？",
-          "done": false,
-          "note": "",
-          "scheduledDate": "2026-11-05",
-          "dueDate": "2026-11-05",
-          "output": "一段真实反思",
           "optional": false,
           "completedOn": null,
           "evidence": []
@@ -1661,12 +1661,13 @@
     "2026-10-02",
     "2026-10-03",
     "2026-10-04",
-    "2026-10-05"
+    "2026-10-05",
+    "2026-10-06"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 37,
-    "pct": 39,
+    "doneTasks": 41,
+    "pct": 43,
     "delivDone": 1,
     "delivTotal": 6
   },
@@ -3154,6 +3155,10 @@
     "2026-10-05": {
       "note": "墨墨10分钟+耳朵15分钟",
       "minutes": 25
+    },
+    "2026-10-06": {
+      "note": "",
+      "minutes": 25
     }
   },
   "overrides": [
@@ -4340,6 +4345,120 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "at": "2026-10-06T23:26:14+08:00",
+      "action": "checkin",
+      "on": "2026-10-06",
+      "summary": "2026-10-06"
+    },
+    {
+      "at": "2026-10-06T23:26:14+08:00",
+      "action": "done",
+      "ids": [
+        "4-6"
+      ],
+      "on": "2026-10-06",
+      "before": [
+        {
+          "id": "4-6",
+          "track": "pub",
+          "text": "Day 30 回顾：核对歌 #1 发布、故障库 20 条、术语 40 词及实际打卡",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-06",
+          "output": "Day 30 复检笔记，真实记录达标 / 未达标",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-06T23:26:15+08:00",
+      "action": "done",
+      "ids": [
+        "4-7"
+      ],
+      "on": "2026-10-06",
+      "before": [
+        {
+          "id": "4-7",
+          "track": "key",
+          "text": "Day 30 决策：歌 #1 未发布则收缩为只完成这一首；已发布则保留三首目标",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-06",
+          "output": "明确保留三首 / 收缩一首的决策，后续任务由 agent 经确认重排",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-06T23:26:15+08:00",
+      "action": "done",
+      "ids": [
+        "6-0"
+      ],
+      "on": "2026-10-06",
+      "before": [
+        {
+          "id": "6-0",
+          "track": "sound",
+          "text": "扒《うっせぇわ》主歌主旋律",
+          "done": false,
+          "note": "重排原因：本人确认：提前进国庆假期开工，保留截止弹性",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-16",
+          "output": "music-log/02-usseewa/melody.mid",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-5"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-06T23:26:15+08:00",
+      "action": "done",
+      "ids": [
+        "5-1"
+      ],
+      "on": "2026-10-06",
+      "before": [
+        {
+          "id": "5-1",
+          "track": "sound",
+          "text": "非夜班且歌 #1 已发布：预习《うっせぇわ》主旋律",
+          "done": false,
+          "note": "重排原因：本人确认：预习并入假期，可选属性不变",
+          "scheduledDate": "2026-10-06",
+          "dueDate": "2026-10-07",
+          "output": "可继续使用的主旋律草稿（可豁免）",
+          "optional": true,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "4-5"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-06T23:41:20+08:00",
+      "action": "normalize-order",
+      "summary": "各周任务数组按稳定ID自然序规范化（修正生成视图的显示顺序，状态/ID/备注不变）"
+    },
+    {
+      "at": "2026-10-06T23:41:23+08:00",
+      "action": "normalize-order",
+      "summary": "各周任务数组按稳定ID自然序规范化（修正生成视图的显示顺序，状态/ID/备注不变）"
     }
   ]
 }

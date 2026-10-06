@@ -15,7 +15,7 @@ from project_data import (ROOT, PLAN_PATH, FAULT_PATH, PLAN_SCHEMA, FAULT_SCHEMA
                           real_faults, is_sample, normalize_fault_record, reorder_fault_items, event, save_data,
                           sync_views, day_info, accum_status, sanitize_faults, atomic_write,
                           require, integer_number, ID_RE, validation_day, validate_state,
-                          validate_daily_state)
+                          validate_daily_state, natural_id_key)
 
 
 def get_document(root, relative):
@@ -505,7 +505,11 @@ def main(argv=None):
             t['note'] = merge_notes(t.get('note'), '重排原因：' + args.reason)
             # Wording ID stays stable even if it moves to a different week.
             for w in p['weeks']: w['tasks'] = [x for x in w['tasks'] if x['id'] != args.id]
-            next(w for w in p['weeks'] if w['start'] <= ds <= w['end'])['tasks'].append(t)
+            target = next(w for w in p['weeks'] if w['start'] <= ds <= w['end'])
+            target['tasks'].append(t)
+            # Keep the week array in natural ID order (the authored order);
+            # otherwise a moved task would render at the end of the generated views.
+            target['tasks'].sort(key=lambda x: natural_id_key(x['id']))
             event(p, 'reschedule', ids=[args.id], before=before,
                   summary=f'{args.id} → {ds}' + (f'（截止 {dues}）' if dues != ds else '') + f'；{args.reason}')
         elif cmd == 'mode':
