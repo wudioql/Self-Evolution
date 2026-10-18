@@ -220,6 +220,31 @@ for f in sorted(glob.glob('manuals/*.md')):
         bad_tpl.append(f'{base(f)} 对接表列不齐')
 chk('§6', '5 份手册符合模板（定位说明 + 对接表）', not bad_tpl, '; '.join(bad_tpl))
 
+# ── §6 CHANGELOG：只记文件 / 规范 / 工具变更，不记学习进展 ────
+# 头部边界声明（## [ 之前）自身含「打卡 / 积累 / 勾项」等词，故只扫正文；
+# 「学习手册」是合法文件名，故不按「学习」二字匹配，改用下面这类强标记。
+CL_PROGRESS = [
+    ('打卡', r'\d+\s*分钟\s*(?:已完成|已做|已学)|打卡成功|完成打卡'
+             r'|\d{4}-\d{2}-\d{2}[^。\n]{0,10}(?:已)?打卡|(?:已)?打卡[^。\n]{0,10}\d{4}-\d{2}-\d{2}'),
+    ('任务勾项', r'勾选\s*`?\d+-\d+|勾上|记\s*\d{4}-\d{2}-\d{2}\s*完成'),
+    ('任务 / 周 / 每日备注', r'`?\d+-\d+`?\s*(?:的)?\s*备注|周回顾[^。\n]{0,6}已写入'),
+    ('积累计数上报', r'好听元素清单[^。\n]{0,4}(?:增加|新增)'
+                    r'|(?:术语表|词汇表)[^。\n]{0,4}(?:到|达)\s*\d+\s*[词个]'
+                    r'|(?:故障模式库|故障库)[^。\n]{0,4}(?:到|达)\s*\d+\s*[条个]'),
+]
+CL_ALLOW = r'未打卡|未勾选|状态未变|未变更|不自动勾选|不重复累计'
+cl_lines = strip_fences(docs.get('CHANGELOG.md', '')).split('\n')
+cl_start = next((i for i, l in enumerate(cl_lines) if re.match(r'^## \[', l)), len(cl_lines))
+cl_hits = []
+for i in range(cl_start, len(cl_lines)):
+    if re.search(CL_ALLOW, cl_lines[i]):
+        continue
+    for label, pat in CL_PROGRESS:
+        if re.search(pat, cl_lines[i]):
+            cl_hits.append(f'CHANGELOG.md:{i + 1} {label}')
+            break
+chk('§6', 'CHANGELOG 只记文件 / 规范 / 工具变更（不记打卡 / 勾项 / 备注 / 积累）', not cl_hits, '; '.join(cl_hits[:5]))
+
 # ── §7 工具：零外部依赖 + localStorage 降级 + 标签平衡 ───
 bad_html = []
 for f, s in htmls.items():

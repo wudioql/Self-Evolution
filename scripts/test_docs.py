@@ -100,6 +100,19 @@ class DocumentationChecks(unittest.TestCase):
         self.put('.agents/skills/neat-freak/references/probe.md', '[x](missing.md)\n')
         self.assertIn('链接', self.check(expected=1).stdout)
 
+    def test_b7_changelog_rejects_personal_progress_records(self):
+        # §6 新检查：CHANGELOG 正文记打卡 / 勾项 / 备注 / 积累计数即 FAIL；
+        # 头部边界声明自身含这些词，故只扫第一个 `## [` 之后的正文（正常的干净副本见首例）。
+        changelog = (self.root / 'CHANGELOG.md').read_text(encoding='utf-8')
+        for line in ('- 25 分钟已完成，勾选 `6-1`。', '- 更正 `4-2` 备注中的读数误记。',
+                     '- 好听元素清单增加 2 条。'):
+            with self.subTest(line=line):
+                self.put('CHANGELOG.md', changelog + '\n## [2026-01-01]\n\n' + line + '\n')
+                try:
+                    self.assertIn('CHANGELOG', self.check(expected=1).stdout)
+                finally:
+                    self.put('CHANGELOG.md', changelog)
+
 
     def test_b7_windows_backslash_glob_results_still_check_manuals_and_shell(self):
         # Windows 的 glob 返回反斜杠路径；注入同型结果，防止 docs/htmls 键分隔符回归

@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-08T19:58:08+08:00",
+    "updated": "2026-10-17T21:12:59+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 151,
+    "revision": 183,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -599,21 +599,21 @@
           "id": "4-8",
           "track": "ipa",
           "text": "阶段 1 收尾：把《IPA与音韵学手册》§5.1 普通话声母表抄一份贴在显示器旁",
-          "done": false,
+          "done": true,
           "note": "",
           "scheduledDate": "2026-10-03",
           "dueDate": "2026-10-03",
           "output": "声母表笔记 / 本地贴墙版",
           "optional": true,
-          "completedOn": null,
+          "completedOn": "2026-10-16",
           "evidence": []
         },
         {
           "id": "4-9",
           "track": "ipa",
-          "text": "建立每日习惯：墨墨复习后多花 3 分钟，挑 3 个单词写 IPA",
+          "text": "建立每日习惯：墨墨复习后多花 3 分钟，挑 3 个日语词写 IPA",
           "done": false,
-          "note": "",
+          "note": "本人确认不做（2026-10-16）。该条为 optional、原文即标「可暂停 / 条件执行」，故只留痕、不标完成。",
           "scheduledDate": "2026-10-04",
           "dueDate": "2026-10-04",
           "output": "本人确认采用挂靠习惯；每日无需独立新任务",
@@ -724,27 +724,31 @@
           "id": "6-1",
           "track": "sound",
           "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
-          "done": false,
-          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
+          "done": true,
+          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日\nchords.md 框架已建（music-log/02-usseewa/chords.md），待填 intro/Aメロ/サビ 的耳扒结论\nchords.md 已按本人复核更正段界并回填：intro 1-4 / interlude A 5-12 / verse1 13-27（BFE，2 小节循环）/ bridge1 28-38 / chorus1 39-55（待本人自填）/ interlude B 56-63\nchords.md 已写好：intro/interlude A/verse1(BFE 2 小节循环)/pre-chorus1/chorus1/interlude B 的 bass 走线全部落盘",
           "scheduledDate": "2026-10-15",
           "dueDate": "2026-10-16",
           "output": "chords.md 中 bass 的 B→F→E 走线",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-10-15",
+          "evidence": [
+            "music-log/02-usseewa/chords.md"
+          ]
         },
         {
           "id": "6-2",
           "track": "sound",
           "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
-          "done": false,
-          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日",
+          "done": true,
+          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日\n2026-10-16 听辨：主歌13-20只有人声/鼓/bass、无上层可比(人声主音落在6/1/3,?);20后2拍bass为3(F#)非E,钢琴吉他与bass一致;21-28钢琴只有单音随bass,吉他B/F/E和弦听不真切(Melodyne: B缺3音只见根音+5音,?)。暂结论:未发现bass与上层和声错位。段界更正:主歌结束于28。",
           "scheduledDate": "2026-10-16",
           "dueDate": "2026-10-17",
           "output": "chords.md 中和声 / bass 的听辨核对",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-10-16",
+          "evidence": [
+            "music-log/02-usseewa/chords.md"
+          ],
           "dependsOn": [
             "6-1"
           ]
@@ -779,26 +783,26 @@
           "id": "6-5",
           "track": "ipa",
           "text": "攻克日语坑 ①：う = [ɯ] 不圆唇（配合《うっせぇわ》）",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "本人早已掌握：中文 u 需用力撅嘴；日语 う（[ɯ]）为不圆唇、不撅嘴，收紧嘴唇时会感觉舌头也向后收紧（舌根后部抬起）。2026-10-16。",
           "scheduledDate": "2026-10-16",
           "dueDate": "2026-10-16",
           "output": "う 的发音观察笔记",
           "optional": true,
-          "completedOn": null,
+          "completedOn": "2026-10-16",
           "evidence": []
         },
         {
           "id": "6-6",
           "track": "equip",
           "text": "知识块过一遍 · 热工与温控：PID 三个参数的物理意义、SiC 高温退火为什么用 S/R/B 型热电偶",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "①加热元件：\n电阻丝：传统炉管，成本低升温慢，易氧化断裂、局部过热变形；\n卤素灯：RTP/RTA设备，响应速度快，可能灯丝烧断、石英管污染、光衰；\n红外加热：非接触式，均匀性高，需注意反射率变化导致的温控偏差。\n\n②控制大脑：PID整定\nP（比例proportional）：决定响应速度。P过大导致超调（Overshoot）或震荡（Oscillation），过小则响应迟钝，且有稳态误差。\nI（积分integral）：消除稳态误差。I过强会引起超调和低频震荡。\nD（微分derivative）：预测趋势，抑制超调，增加稳定性。D过大对噪声敏感，过小则无法抑制惯性。\n\n参数调节：\n超调：P过大/I过强，减小P/增大I/增大D\n震荡：P过大/I过强 或 D过大（噪声），减小P/增大I/减小D\n稳态误差：缺乏积分作用/I太弱，减小I（指Ti间隔）\n响应太慢：P太小/I太大，增大P/减小I\n\n③感知神经：热电偶-塞贝克效应\n\n型号：正负极，大致量程，特性\nK：镍铬/镍硅，-200~1200℃，最常用，性价比高，线性度好，适用一般氧化性气氛\nE：镍铬/康铜，-200~900℃，热电动势最大，灵敏度最高，适合低温精密测量\nJ：铁/康铜，-40~750℃，便宜，但正极易生锈，不适合氧化性气氛，常用还原性气氛\nS：铂铑10/铂，0~1600℃，稳定性极好，精度好，适合高温氧化气氛，SiC高温退火常用\nR：铂铑13/铂，0~1600℃，与S型类似，热电动势稍大，灵敏度略高，同样适用于高温退火\nB：铂铑30/铂铑6，200~1700℃，超高温专用，室温下热电动势极小，无需冷端补偿，极稳定，适合极高温度退火\n\nSiC等超高温工艺必须选用S/R/B型（贵金属），原因：普通金属热电偶在极高温会迅速氧化或发生晶格变化，导致漂移甚至熔断；\n冷端补偿：必须精确补偿环境温度对参考端的影响；\n补偿导线：必须使用与热电偶分度号匹配的专用补偿导线，否则引入巨大误差。\n\n总结：\n工艺灵魂：热场均匀性与Thermal Budget（准+匀）\nProfile（温度曲线）：整个工艺中温度随时间变化的完整轨迹\nRamp（升/降温速率）：控制升温速率，防止热应力破裂\nSoak（保温）：目标温度保持，确保晶圆温度均一化\nTUS（Temperature Uniformity Study）：用profile TC mapping炉温，确保片内/键温差在规格内\nThermal Budget（热预算）：时间与温度的等效积分。高温短时间（RTA）与低温长时间可能达到相似的掺杂剂或效果，但扩散程度不同。",
           "scheduledDate": "2026-10-17",
           "dueDate": "2026-10-17",
           "output": "按手册 §2.7 四步法 ≤60 分钟；能答\"超调 / 震荡 / 稳态误差分别调哪个\" + 一句选型理由；术语表 ≥3 词",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-10-17",
           "evidence": []
         }
       ],
@@ -1664,12 +1668,21 @@
     "2026-10-05",
     "2026-10-06",
     "2026-10-07",
-    "2026-10-08"
+    "2026-10-08",
+    "2026-10-09",
+    "2026-10-10",
+    "2026-10-11",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-17"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 41,
-    "pct": 43,
+    "doneTasks": 46,
+    "pct": 48,
     "delivDone": 1,
     "delivTotal": 6
   },
@@ -2924,8 +2937,8 @@
       "unit": "条",
       "target": 30,
       "mode": "items",
-      "count": 8,
-      "lastAddedOn": "2026-10-01",
+      "count": 10,
+      "lastAddedOn": "2026-10-15",
       "items": [
         {
           "on": "2026-09-15",
@@ -2958,6 +2971,14 @@
         {
           "on": "2026-10-01",
           "text": "除了特殊目的和刻意营造的效果外，各频段、区域的声音均'填满'，没有'空'的感觉"
+        },
+        {
+          "on": "2026-10-15",
+          "text": "自由的尾音（放气上挑）"
+        },
+        {
+          "on": "2026-10-15",
+          "text": "好听的和声"
         }
       ],
       "note": "",
@@ -2976,8 +2997,8 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 45,
-      "lastAddedOn": "2026-10-03",
+      "count": 50,
+      "lastAddedOn": "2026-10-17",
       "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）\n新增 flange/filter/cold trap/gauge port/PVD/CVD/ALD/evaporation/sputtering/implant 共10词",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
@@ -3169,14 +3190,50 @@
     "2026-10-08": {
       "note": "",
       "minutes": 25
+    },
+    "2026-10-09": {
+      "note": "夜班：墨墨复习 10 分钟完成",
+      "minutes": 10
+    },
+    "2026-10-10": {
+      "note": "夜班：日语 10 分钟完成",
+      "minutes": 10
+    },
+    "2026-10-11": {
+      "note": "夜班：墨墨复习 10 分钟完成",
+      "minutes": 10
+    },
+    "2026-10-12": {
+      "note": "夜班：10 分钟完成",
+      "minutes": 10
+    },
+    "2026-10-13": {
+      "note": "夜班：10 分钟完成",
+      "minutes": 10
+    },
+    "2026-10-14": {
+      "note": "25 分钟已完成（次日补记）",
+      "minutes": 25
+    },
+    "2026-10-15": {
+      "note": "25 分钟：写 chords.md（歌 #2 段界与 bass 走线）",
+      "minutes": 25
+    },
+    "2026-10-16": {
+      "note": "主歌听辨核对（6-2）",
+      "minutes": 25
+    },
+    "2026-10-17": {
+      "note": "6-6 热工与温控四步法",
+      "minutes": 25
     }
   },
   "overrides": [
     {
       "start": "2026-10-08",
-      "end": "2026-10-14",
+      "end": "2026-10-13",
       "mode": "night",
-      "note": "本人确认：实际夜班 10/09-14 凌晨 0-9 点，8 号起进入倒班"
+      "note": "本人确认：夜班最后一天为 10/13，14 日早上班次结束后恢复正常；8 号起进入倒班"
     }
   ],
   "history": [
@@ -4481,6 +4538,461 @@
       "action": "checkin",
       "on": "2026-10-08",
       "summary": "2026-10-08"
+    },
+    {
+      "at": "2026-10-09T19:46:47+08:00",
+      "action": "checkin",
+      "on": "2026-10-09",
+      "summary": "2026-10-09"
+    },
+    {
+      "at": "2026-10-10T21:29:44+08:00",
+      "action": "checkin",
+      "on": "2026-10-10",
+      "summary": "2026-10-10"
+    },
+    {
+      "at": "2026-10-11T20:29:37+08:00",
+      "action": "checkin",
+      "on": "2026-10-11",
+      "summary": "2026-10-11"
+    },
+    {
+      "at": "2026-10-12T20:16:28+08:00",
+      "action": "checkin",
+      "on": "2026-10-12",
+      "summary": "2026-10-12"
+    },
+    {
+      "at": "2026-10-13T20:22:03+08:00",
+      "action": "checkin",
+      "on": "2026-10-13",
+      "summary": "2026-10-13"
+    },
+    {
+      "at": "2026-10-14T21:52:45+08:00",
+      "action": "clear-mode",
+      "before": [
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-14",
+          "mode": "night",
+          "note": "本人确认：实际夜班 10/09-14 凌晨 0-9 点，8 号起进入倒班"
+        }
+      ],
+      "summary": "2026-10-08—2026-10-14"
+    },
+    {
+      "at": "2026-10-14T21:53:27+08:00",
+      "action": "mode",
+      "summary": "2026-10-08—2026-10-13 · night"
+    },
+    {
+      "at": "2026-10-14T21:54:36+08:00",
+      "action": "clear-mode",
+      "before": [
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-13",
+          "mode": "night",
+          "note": "本人确认：实际夜班 10/09-13 凌晨 0-9 点，8 号起进入倒班；14 日早班结束后恢复正常"
+        }
+      ],
+      "summary": "2026-10-08—2026-10-13"
+    },
+    {
+      "at": "2026-10-14T21:54:36+08:00",
+      "action": "mode",
+      "summary": "2026-10-08—2026-10-13 · night"
+    },
+    {
+      "at": "2026-10-14T21:54:41+08:00",
+      "action": "clear-mode",
+      "before": [
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-13",
+          "mode": "night",
+          "note": "本人确认：夜班最后一天为 10/13，14 日早上班次结束后恢复正常；8 号起进入倒班"
+        }
+      ],
+      "summary": "2026-10-08—2026-10-13"
+    },
+    {
+      "at": "2026-10-14T21:54:41+08:00",
+      "action": "mode",
+      "summary": "2026-10-08—2026-10-13 · night"
+    },
+    {
+      "at": "2026-10-15T00:30:07+08:00",
+      "action": "checkin",
+      "on": "2026-10-14",
+      "summary": "2026-10-14"
+    },
+    {
+      "at": "2026-10-15T00:30:08+08:00",
+      "action": "accumulate",
+      "ids": [
+        "taste"
+      ],
+      "on": "2026-10-15",
+      "before": {
+        "id": "taste",
+        "text": "好听元素清单",
+        "unit": "条",
+        "target": 30,
+        "mode": "items",
+        "count": 8,
+        "lastAddedOn": "2026-10-01",
+        "items": [
+          {
+            "on": "2026-09-15",
+            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
+          },
+          {
+            "on": "2026-09-15",
+            "text": "偶尔出现的'说话'感（而不是纯唱）"
+          },
+          {
+            "on": "2026-09-15",
+            "text": "'耳语'元素插入"
+          },
+          {
+            "on": "2026-09-20",
+            "text": "自由的真假声转换"
+          },
+          {
+            "on": "2026-09-20",
+            "text": "自由且令人头皮发麻的嘶吼"
+          },
+          {
+            "on": "2026-09-20",
+            "text": "重复（但不单调重复）的标志性记忆旋律，有各种渐进/层次等的变化"
+          },
+          {
+            "on": "2026-10-01",
+            "text": "人声、乐器均清晰可听（除刻意营造的效果外），没有蒙住、糊住的感觉"
+          },
+          {
+            "on": "2026-10-01",
+            "text": "除了特殊目的和刻意营造的效果外，各频段、区域的声音均'填满'，没有'空'的感觉"
+          }
+        ],
+        "note": "",
+        "source": "manuals/音乐学习手册.md §2.9",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 3,
+            "taskId": "9-0"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-15T00:30:08+08:00",
+      "action": "accumulate",
+      "ids": [
+        "taste"
+      ],
+      "on": "2026-10-15",
+      "before": {
+        "id": "taste",
+        "text": "好听元素清单",
+        "unit": "条",
+        "target": 30,
+        "mode": "items",
+        "count": 9,
+        "lastAddedOn": "2026-10-15",
+        "items": [
+          {
+            "on": "2026-09-15",
+            "text": "松紧自然转换的人声（缓轻柔/粗放变换，活人感），两端极值差距明显但又不过度/刻意"
+          },
+          {
+            "on": "2026-09-15",
+            "text": "偶尔出现的'说话'感（而不是纯唱）"
+          },
+          {
+            "on": "2026-09-15",
+            "text": "'耳语'元素插入"
+          },
+          {
+            "on": "2026-09-20",
+            "text": "自由的真假声转换"
+          },
+          {
+            "on": "2026-09-20",
+            "text": "自由且令人头皮发麻的嘶吼"
+          },
+          {
+            "on": "2026-09-20",
+            "text": "重复（但不单调重复）的标志性记忆旋律，有各种渐进/层次等的变化"
+          },
+          {
+            "on": "2026-10-01",
+            "text": "人声、乐器均清晰可听（除刻意营造的效果外），没有蒙住、糊住的感觉"
+          },
+          {
+            "on": "2026-10-01",
+            "text": "除了特殊目的和刻意营造的效果外，各频段、区域的声音均'填满'，没有'空'的感觉"
+          },
+          {
+            "on": "2026-10-15",
+            "text": "自由的尾音（放气上挑）"
+          }
+        ],
+        "note": "",
+        "source": "manuals/音乐学习手册.md §2.9",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 3,
+            "taskId": "9-0"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-15T23:02:27+08:00",
+      "action": "note",
+      "ids": [
+        "6-1"
+      ]
+    },
+    {
+      "at": "2026-10-15T23:02:31+08:00",
+      "action": "note",
+      "ids": [
+        "6-1"
+      ]
+    },
+    {
+      "at": "2026-10-15T23:43:54+08:00",
+      "action": "note",
+      "ids": [
+        "6-1"
+      ]
+    },
+    {
+      "at": "2026-10-15T23:43:59+08:00",
+      "action": "note",
+      "ids": [
+        "6-1"
+      ]
+    },
+    {
+      "at": "2026-10-15T23:54:38+08:00",
+      "action": "done",
+      "ids": [
+        "6-1"
+      ],
+      "on": "2026-10-15",
+      "before": [
+        {
+          "id": "6-1",
+          "track": "sound",
+          "text": "【重点】只开贝斯轨，把 bass 的 B→F→E 画出来",
+          "done": false,
+          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日\nchords.md 框架已建（music-log/02-usseewa/chords.md），待填 intro/Aメロ/サビ 的耳扒结论\nchords.md 已按本人复核更正段界并回填：intro 1-4 / interlude A 5-12 / verse1 13-27（BFE，2 小节循环）/ bridge1 28-38 / chorus1 39-55（待本人自填）/ interlude B 56-63",
+          "scheduledDate": "2026-10-15",
+          "dueDate": "2026-10-16",
+          "output": "chords.md 中 bass 的 B→F→E 走线",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-15T23:54:38+08:00",
+      "action": "checkin",
+      "on": "2026-10-15",
+      "summary": "2026-10-15"
+    },
+    {
+      "at": "2026-10-16T18:52:27+08:00",
+      "action": "note",
+      "ids": [
+        "6-2"
+      ]
+    },
+    {
+      "at": "2026-10-16T18:52:30+08:00",
+      "action": "note",
+      "ids": [
+        "6-2"
+      ]
+    },
+    {
+      "at": "2026-10-16T18:56:32+08:00",
+      "action": "done",
+      "ids": [
+        "6-2"
+      ],
+      "on": "2026-10-16",
+      "before": [
+        {
+          "id": "6-2",
+          "track": "sound",
+          "text": "核对主歌和声与 bass 走线的区别，在 chords.md 记录听辨结果",
+          "done": false,
+          "note": "重排原因：本人确认：避开夜班，挪到夜班后休息日\n2026-10-16 听辨：主歌13-20只有人声/鼓/bass、无上层可比(人声主音落在6/1/3,?);20后2拍bass为3(F#)非E,钢琴吉他与bass一致;21-28钢琴只有单音随bass,吉他B/F/E和弦听不真切(Melodyne: B缺3音只见根音+5音,?)。暂结论:未发现bass与上层和声错位。段界更正:主歌结束于28。",
+          "scheduledDate": "2026-10-16",
+          "dueDate": "2026-10-17",
+          "output": "chords.md 中和声 / bass 的听辨核对",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-1"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T18:56:33+08:00",
+      "action": "checkin",
+      "on": "2026-10-16",
+      "summary": "2026-10-16"
+    },
+    {
+      "at": "2026-10-16T20:47:32+08:00",
+      "action": "note",
+      "ids": [
+        "6-5"
+      ]
+    },
+    {
+      "at": "2026-10-16T20:53:27+08:00",
+      "action": "done",
+      "ids": [
+        "6-5"
+      ],
+      "on": "2026-10-16",
+      "before": [
+        {
+          "id": "6-5",
+          "track": "ipa",
+          "text": "攻克日语坑 ①：う = [ɯ] 不圆唇（配合《うっせぇわ》）",
+          "done": false,
+          "note": "本人早已掌握：中文 u 需用力撅嘴；日语 う（[ɯ]）为不圆唇、不撅嘴，收紧嘴唇时会感觉舌头也向后收紧（舌根后部抬起）。2026-10-16。",
+          "scheduledDate": "2026-10-16",
+          "dueDate": "2026-10-16",
+          "output": "う 的发音观察笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T23:13:16+08:00",
+      "action": "done",
+      "ids": [
+        "4-8"
+      ],
+      "on": "2026-10-16",
+      "before": [
+        {
+          "id": "4-8",
+          "track": "ipa",
+          "text": "阶段 1 收尾：把《IPA与音韵学手册》§5.1 普通话声母表抄一份贴在显示器旁",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-03",
+          "dueDate": "2026-10-03",
+          "output": "声母表笔记 / 本地贴墙版",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T23:13:16+08:00",
+      "action": "note",
+      "ids": [
+        "4-9"
+      ]
+    },
+    {
+      "at": "2026-10-16T23:13:19+08:00",
+      "action": "note",
+      "ids": [
+        "4-9"
+      ]
+    },
+    {
+      "at": "2026-10-17T20:59:57+08:00",
+      "action": "done",
+      "ids": [
+        "6-6"
+      ],
+      "on": "2026-10-17",
+      "before": [
+        {
+          "id": "6-6",
+          "track": "equip",
+          "text": "知识块过一遍 · 热工与温控：PID 三个参数的物理意义、SiC 高温退火为什么用 S/R/B 型热电偶",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-17",
+          "dueDate": "2026-10-17",
+          "output": "按手册 §2.7 四步法 ≤60 分钟；能答\"超调 / 震荡 / 稳态误差分别调哪个\" + 一句选型理由；术语表 ≥3 词",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-17T21:12:59+08:00",
+      "action": "checkin",
+      "on": "2026-10-17",
+      "summary": "2026-10-17"
+    },
+    {
+      "at": "2026-10-17T21:12:59+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-10-17",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 45,
+        "lastAddedOn": "2026-10-03",
+        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）\n新增 flange/filter/cold trap/gauge port/PVD/CVD/ALD/evaporation/sputtering/implant 共10词",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
     }
   ]
 }
