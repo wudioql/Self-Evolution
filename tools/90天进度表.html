@@ -221,11 +221,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-18T19:18:56+08:00",
+    "updated": "2026-10-21T23:55:44+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 188,
+    "revision": 201,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -969,27 +969,29 @@
           "id": "6-3",
           "track": "equip",
           "text": "改善项目启动：拉取目标 alarm 的历史记录",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "完成于 2026-10-18：目标机台 alarm 历史已整理为本地原始数据表（data/ 下 *.local.md，gitignored，不入库）。来源＝内部交接系统报表导出快照；125 条，2025-08-26~2026-10-17。仅存本地，不上传。后续 7-5 帕累托图基于此表。",
           "scheduledDate": "2026-10-17",
           "dueDate": "2026-10-17",
           "output": "本地原始数据表与来源说明；不上传内部日志",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-10-18",
           "evidence": []
         },
         {
           "id": "6-4",
           "track": "pub",
           "text": "commit",
-          "done": false,
+          "done": true,
           "note": "2026-10-18 周回顾三行已写入 W6 note（groups[].note）；chords.md 已在版本库中（HEAD 940e0c0），本次补「我的盲区」1 条；commit 由本人自行执行，故本项不勾。",
           "scheduledDate": "2026-10-18",
           "dueDate": "2026-10-18",
           "output": "可公开的音乐骨架笔记版本",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-10-18",
+          "evidence": [
+            "music-log/02-usseewa/chords.md"
+          ]
         },
         {
           "id": "6-5",
@@ -1033,14 +1035,16 @@
           "id": "7-0",
           "track": "sound",
           "text": "扒《うっせぇわ》副歌和声（先自行听辨，再对账；参考音乐手册 §2.12）",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "2026-10-19 本人自扒副歌（サビ）和声判断已写入 chords.md（music-log/02-usseewa/chords.md）；对照参考（音乐手册 §2.12）的答案核对随后进行。\n2026-10-20：来源已整理，逐段比对结论已写入 chords.md「对账」节（对上 / 对不上 / 原因 / 待复听 / 首调辅助）；本项收工。",
           "scheduledDate": "2026-10-19",
           "dueDate": "2026-10-19",
           "output": "副歌和声笔记及对账结果",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-10-19",
+          "evidence": [
+            "music-log/02-usseewa/chords.md"
+          ],
           "dependsOn": [
             "6-0"
           ]
@@ -1049,27 +1053,32 @@
           "id": "7-1",
           "track": "sound",
           "text": "结构图 + 鼓型",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "2026-10-20：①时间戳 / ②全曲方块图 / ③段落表 / ⑤鼓型均已补齐（structure.md），drum.mid 自 verse1 13-20 基本型导出（音色未还原，只录节奏）；对账已做（lrc + ChordWiki 分段基本一致，interlude 归并与 はぁ？ 归属差 1 小节）。",
           "scheduledDate": "2026-10-20",
           "dueDate": "2026-10-20",
           "output": "structure.md + 鼓型工程",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-10-20",
+          "evidence": [
+            "music-log/02-usseewa/structure.md",
+            "music-log/02-usseewa/drum.mid"
+          ]
         },
         {
           "id": "7-2",
           "track": "sound",
           "text": "改一处：换和弦 / 改节奏型 / 转调式，都行",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "2026-10-21：verse1 13/15/17/19 小节前 2 拍 B5 → Bm/D（bass B→D），工程已改（usseewa.song 23:35）。\n2026-10-21：最终定稿 B5 → Bm（根位，bass 仍为 B，只加三音 D），保留低音重量；A/B 差异小但可听辨（更像原曲的阴郁底色）。工程已改：usseewa.song。",
           "scheduledDate": "2026-10-21",
           "dueDate": "2026-10-24",
           "output": "工程中至少一处自己的改动",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-10-21",
+          "evidence": [
+            "music-log/02-usseewa/usseewa/usseewa.song"
+          ],
           "dependsOn": [
             "7-0",
             "7-1"
@@ -1079,14 +1088,16 @@
           "id": "7-3",
           "track": "jp",
           "text": "抄一遍歌词，逐句查意思，写\"这首歌在讲什么\"",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "2026-10-21：逐句抄写并查意思，完整翻译与解析存 lyrics.local.md（本地私有）；notes.md 写一句大意。",
           "scheduledDate": "2026-10-22",
           "dueDate": "2026-10-22",
           "output": "notes.md 的歌词大意（不公开整篇歌词）",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-10-21",
+          "evidence": [
+            "music-log/02-usseewa/notes.md"
+          ]
         },
         {
           "id": "7-4",
@@ -1890,12 +1901,15 @@
     "2026-10-15",
     "2026-10-16",
     "2026-10-17",
-    "2026-10-18"
+    "2026-10-18",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 46,
-    "pct": 48,
+    "doneTasks": 52,
+    "pct": 54,
     "delivDone": 1,
     "delivTotal": 6
   },
@@ -3443,6 +3457,18 @@
     "2026-10-18": {
       "note": "",
       "minutes": 25
+    },
+    "2026-10-19": {
+      "note": "扒《うっせぇわ》副歌和声 25 分钟",
+      "minutes": 25
+    },
+    "2026-10-20": {
+      "note": "7-1 结构图 + 鼓型：补完 structure.md ①-③⑤，导出 drum.mid",
+      "minutes": 25
+    },
+    "2026-10-21": {
+      "note": "音乐：7-2 改动 + 7-3 歌词逐句",
+      "minutes": 5
     }
   },
   "overrides": [
@@ -5240,6 +5266,197 @@
       "ids": [
         "6-4"
       ]
+    },
+    {
+      "at": "2026-10-18T19:23:35+08:00",
+      "action": "done",
+      "ids": [
+        "6-4"
+      ],
+      "on": "2026-10-18",
+      "before": [
+        {
+          "id": "6-4",
+          "track": "pub",
+          "text": "commit",
+          "done": false,
+          "note": "2026-10-18 周回顾三行已写入 W6 note（groups[].note）；chords.md 已在版本库中（HEAD 940e0c0），本次补「我的盲区」1 条；commit 由本人自行执行，故本项不勾。",
+          "scheduledDate": "2026-10-18",
+          "dueDate": "2026-10-18",
+          "output": "可公开的音乐骨架笔记版本",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-18T22:28:52+08:00",
+      "action": "done",
+      "ids": [
+        "6-3"
+      ],
+      "on": "2026-10-18",
+      "before": [
+        {
+          "id": "6-3",
+          "track": "equip",
+          "text": "改善项目启动：拉取目标 alarm 的历史记录",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-17",
+          "dueDate": "2026-10-17",
+          "output": "本地原始数据表与来源说明；不上传内部日志",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T23:58:17+08:00",
+      "action": "done",
+      "ids": [
+        "7-0"
+      ],
+      "on": "2026-10-19",
+      "before": [
+        {
+          "id": "7-0",
+          "track": "sound",
+          "text": "扒《うっせぇわ》副歌和声（先自行听辨，再对账；参考音乐手册 §2.12）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-19",
+          "dueDate": "2026-10-19",
+          "output": "副歌和声笔记及对账结果",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-0"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T23:58:17+08:00",
+      "action": "checkin",
+      "on": "2026-10-19",
+      "summary": "2026-10-19"
+    },
+    {
+      "at": "2026-10-20T01:14:23+08:00",
+      "action": "note",
+      "ids": [
+        "7-0"
+      ]
+    },
+    {
+      "at": "2026-10-20T01:14:27+08:00",
+      "action": "note",
+      "ids": [
+        "7-0"
+      ]
+    },
+    {
+      "at": "2026-10-20T23:54:15+08:00",
+      "action": "done",
+      "ids": [
+        "7-1"
+      ],
+      "on": "2026-10-20",
+      "before": [
+        {
+          "id": "7-1",
+          "track": "sound",
+          "text": "结构图 + 鼓型",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-20",
+          "dueDate": "2026-10-20",
+          "output": "structure.md + 鼓型工程",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-20T23:54:40+08:00",
+      "action": "checkin",
+      "on": "2026-10-20",
+      "summary": "2026-10-20"
+    },
+    {
+      "at": "2026-10-21T23:41:22+08:00",
+      "action": "done",
+      "ids": [
+        "7-2"
+      ],
+      "on": "2026-10-21",
+      "before": [
+        {
+          "id": "7-2",
+          "track": "sound",
+          "text": "改一处：换和弦 / 改节奏型 / 转调式，都行",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-21",
+          "dueDate": "2026-10-24",
+          "output": "工程中至少一处自己的改动",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "7-0",
+            "7-1"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-21T23:55:20+08:00",
+      "action": "note",
+      "ids": [
+        "7-2"
+      ]
+    },
+    {
+      "at": "2026-10-21T23:55:22+08:00",
+      "action": "note",
+      "ids": [
+        "7-2"
+      ]
+    },
+    {
+      "at": "2026-10-21T23:55:27+08:00",
+      "action": "done",
+      "ids": [
+        "7-3"
+      ],
+      "on": "2026-10-21",
+      "before": [
+        {
+          "id": "7-3",
+          "track": "jp",
+          "text": "抄一遍歌词，逐句查意思，写\"这首歌在讲什么\"",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-22",
+          "dueDate": "2026-10-22",
+          "output": "notes.md 的歌词大意（不公开整篇歌词）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-21T23:55:44+08:00",
+      "action": "checkin",
+      "on": "2026-10-21",
+      "summary": "2026-10-21"
     }
   ]
 }
