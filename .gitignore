@@ -22,6 +22,10 @@ music-log/**/stems/
 # 歌词 = 原作品的文字复制，与音频同等对待
 *.lrc
 
+# Praat 分析工作区：跟唱录音 / 原唱音频 / 绘图导出的 png・eps・emf・prapic
+# 全部派生自受版权保护的音频或本人录音，仅本地保存，不入库
+music-log/**/praat/
+
 # DAW 工程（二进制，且常含插件/路径等本机信息）
 *.song
 *.songx

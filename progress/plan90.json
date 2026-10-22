@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-21T23:55:44+08:00",
+    "updated": "2026-10-22T23:53:29+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 201,
+    "revision": 204,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -891,14 +891,16 @@
           "id": "7-4",
           "track": "jp",
           "text": "Praat 把 Ado 的基频曲线和你跟唱的叠在一起",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "Praat 叠曲线：低八度精确；音头形状重合；句尾 5 处提前 0.16–0.48s，末 0.2s 电平掉 12–19dB（气息先衰减，非时值短）。观察见 notes.md",
           "scheduledDate": "2026-10-23",
           "dueDate": "2026-10-23",
           "output": "一条关于音头 / 长音 / 句尾的观察",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-10-22",
+          "evidence": [
+            "music-log/02-usseewa/notes.md"
+          ]
         },
         {
           "id": "7-5",
@@ -1692,12 +1694,13 @@
     "2026-10-18",
     "2026-10-19",
     "2026-10-20",
-    "2026-10-21"
+    "2026-10-21",
+    "2026-10-22"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 52,
-    "pct": 54,
+    "doneTasks": 53,
+    "pct": 55,
     "delivDone": 1,
     "delivTotal": 6
   },
@@ -3257,6 +3260,10 @@
     "2026-10-21": {
       "note": "音乐：7-2 改动 + 7-3 歌词逐句",
       "minutes": 5
+    },
+    "2026-10-22": {
+      "note": "日语：7-4 Praat 叠基频曲线（两轮跟唱，句尾观察已写入 notes.md）",
+      "minutes": 25
     }
   },
   "overrides": [
@@ -5245,6 +5252,45 @@
       "action": "checkin",
       "on": "2026-10-21",
       "summary": "2026-10-21"
+    },
+    {
+      "at": "2026-10-22T23:52:41+08:00",
+      "action": "done",
+      "ids": [
+        "7-4"
+      ],
+      "on": "2026-10-22",
+      "before": [
+        {
+          "id": "7-4",
+          "track": "jp",
+          "text": "Praat 把 Ado 的基频曲线和你跟唱的叠在一起",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-23",
+          "dueDate": "2026-10-23",
+          "output": "一条关于音头 / 长音 / 句尾的观察",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-22T23:52:57+08:00",
+      "action": "checkin",
+      "on": "2026-10-22",
+      "summary": "2026-10-22"
+    },
+    {
+      "at": "2026-10-22T23:53:29+08:00",
+      "action": "day-note",
+      "on": "2026-10-22",
+      "before": {
+        "note": "",
+        "minutes": 25
+      },
+      "summary": "2026-10-22"
     }
   ]
 }

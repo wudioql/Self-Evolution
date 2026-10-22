@@ -6,6 +6,14 @@
 
 > **边界**：日常打卡、积累上报、任务勾项 / 备注属 `progress/plan90.json`（`history` / `dailyLogs`），**不入本文件**。本文件只记文件、规范与工具的变更。
 
+## [2026-10-22]
+
+### 变更 · `.gitignore` 排除 `music-log/**/praat/`
+
+- 起因：`7-4` 的 Praat 工作区存放跟唱录音、原唱音频与导出的 `praat.png` / `.eps` / `.emf` / `.prapic`。`*.wav` 已覆盖音频，但绘图与 `.prapic` 未被忽略，`git status` 显示整个目录可被误提交。
+- 改动：`.gitignore` §1 新增 `music-log/**/praat/`（整个目录仅本地，不入库）。
+- 验证：`git check-ignore` 命中目录内全部文件；`check-docs.py` 通过。
+
 ## [2026-10-16]
 
 ### 变更 · `4-9` 文本收窄为「日语词」（本人确认 2026-10-16）
