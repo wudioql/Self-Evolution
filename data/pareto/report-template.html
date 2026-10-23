@@ -31,6 +31,9 @@
   .kpi .t{font-size:12.5px;color:var(--ink-2);margin-top:4px}
   .kpi.accent .n{color:var(--steel)}
   .kpi.rust .n{color:var(--rust)}
+  .toggle{display:inline-flex;gap:4px;background:#eef2f6;border:1px solid var(--line);border-radius:8px;padding:3px;margin:0 0 14px}
+  .toggle button{border:0;background:transparent;color:var(--ink-2);font:inherit;font-size:12.5px;padding:5px 14px;border-radius:6px;cursor:pointer}
+  .toggle button.on{background:#fff;color:var(--steel);font-weight:600;box-shadow:0 1px 2px rgba(29,39,51,.08)}
   section{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:18px}
   h2{font-size:17px;margin:0 0 4px;font-weight:650}
   .sub{font-size:12.5px;color:var(--ink-3);margin:0 0 16px}
@@ -87,10 +90,14 @@
 
   <section>
     <h2>帕累托图 · 报警类别分布</h2>
-    <p class="sub">按主诉现象归类，一条记录只归一类；按次数降序，折线为累计占比。</p>
+    <p class="sub">按主诉现象归类，一条记录只归一类；默认按独立事件计数，可切换记录级对照。</p>
+    <div class="toggle" id="pareto-toggle">
+      <button type="button" data-mode="event" class="on">事件级</button>
+      <button type="button" data-mode="record">记录级</button>
+    </div>
     <svg id="pareto" class="chart" viewBox="0 0 860 400" role="img" aria-label="报警类别帕累托图"></svg>
     <div class="legend">
-      <span><i style="background:var(--steel)"></i>报警次数</span>
+      <span><i style="background:var(--steel)"></i>报警事件数 / 记录数</span>
       <span><i style="background:var(--rust)"></i>累计占比</span>
       <span><i style="background:#b9c4cf"></i>80% 参考线</span>
     </div>
@@ -98,13 +105,14 @@
 
   <section>
     <h2>分类明细</h2>
-    <p class="sub">DOWN = 该记录中机台处于 DOWN 状态；MON PA 标记 = 记录被标记为颗粒复测相关。</p>
+    <p class="sub">记录数保留交接原貌；独立事件按跨班重复归并后计数。DOWN / MON PA 在事件级取组内任一。</p>
     <table>
       <thead>
-        <tr><th>类别</th><th>次数</th><th>占比</th><th>累计</th><th>其中 DOWN</th><th>MON PA 标记</th></tr>
+        <tr><th>类别</th><th>记录数</th><th>独立事件</th><th>事件占比</th><th>累计</th><th>DOWN（事件）</th><th>MON PA（事件）</th></tr>
       </thead>
       <tbody id="tbody"></tbody>
     </table>
+    <p class="sub" id="event-info" style="margin:10px 0 0"></p>
   </section>
 
   <div class="grid2">
@@ -175,8 +183,8 @@ var D = __PARETO_DATA_JSON__;
   $("kpis").innerHTML =
     '<div class="kpi"><div class="n">' + D.kpis.records + '<small> 条</small></div><div class="t">交接记录总数（含计划保养）</div></div>' +
     '<div class="kpi accent"><div class="n">' + D.kpis.alarms + '<small> 条</small></div><div class="t">报警类记录（剔除 ' + D.kpis.excluded + ' 条 PM/复机）</div></div>' +
-    '<div class="kpi rust"><div class="n">' + D.kpis.top1Pct.toFixed(1) + '<small> %</small></div><div class="t">颗粒超标占比（' + D.kpis.top1Count + ' 条）</div></div>' +
-    '<div class="kpi"><div class="n">' + D.kpis.top3Cum.toFixed(1) + '<small> %</small></div><div class="t">Top 3 类别累计占比</div></div>';
+    '<div class="kpi"><div class="n">' + D.kpis.events + '<small> 起</small></div><div class="t">独立事件（归并 ' + D.eventInfo.groups + ' 组 / ' + D.eventInfo.merged + ' 条重复）</div></div>' +
+    '<div class="kpi rust"><div class="n">' + D.kpis.top1Pct.toFixed(1) + '<small> %</small></div><div class="t">颗粒超标事件占比（' + D.kpis.top1Count + ' 起）</div></div>';
 
   /* ---------- pareto ---------- */
   var NS = "http://www.w3.org/2000/svg";
@@ -193,9 +201,9 @@ var D = __PARETO_DATA_JSON__;
     return t;
   }
 
-  function renderPareto(){
+  function renderPareto(data){
     var svg = $("pareto");
-    var data = D.pareto;
+    while (svg.firstChild){ svg.removeChild(svg.firstChild); }
     var W = 860, H = 400, m = {l:56, r:58, t:24, b:64};
     var iw = W - m.l - m.r, ih = H - m.t - m.b;
     var maxCount = data[0].count;
@@ -242,18 +250,23 @@ var D = __PARETO_DATA_JSON__;
       var py = m.t + ih - (p/100) * ih;
       txt(svg, m.l + iw + 10, py + 4, p + "%", {"font-size":11, fill:"#b0bcc9"});
     }
-    txt(svg, m.l, m.t + ih + 46, "类别（按次数降序）", {"font-size":11.5, fill:"#8b97a6"});
+    txt(svg, m.l, m.t + ih + 46, "类别（按数量降序）", {"font-size":11.5, fill:"#8b97a6"});
   }
 
   /* ---------- table ---------- */
   function renderTable(){
     var tb = $("tbody");
-    var total = 0, totalDown = 0, totalMp = 0;
+    var recMap = {};
+    D.paretoRecord.forEach(function(d){ recMap[d.code] = d; });
+    var totalRec = 0, totalEvt = 0, totalDown = 0, totalMp = 0;
     D.pareto.forEach(function(d){
-      total += d.count; totalDown += d.down; totalMp += d.monpa;
+      var rec = recMap[d.code] || d;
+      totalRec += rec.count; totalEvt += d.count;
+      totalDown += d.down; totalMp += d.monpa;
       var tr = document.createElement("tr");
       tr.innerHTML =
         "<td>" + esc(d.name) + (d.code === "A" ? '<span class="tag">主要矛盾</span>' : "") + "</td>" +
+        "<td>" + rec.count + "</td>" +
         "<td>" + d.count + "</td>" +
         "<td>" + d.pct.toFixed(1) + "%</td>" +
         "<td>" + d.cum.toFixed(1) + "%</td>" +
@@ -263,7 +276,8 @@ var D = __PARETO_DATA_JSON__;
     });
     var tr = document.createElement("tr");
     tr.className = "total";
-    tr.innerHTML = "<td>合计（报警类）</td><td>" + total + "</td><td>100%</td><td>—</td><td>" + totalDown + "</td><td>" + totalMp + "</td>";
+    tr.innerHTML = "<td>合计（报警类）</td><td>" + totalRec + "</td><td>" + totalEvt +
+      "</td><td>100%</td><td>—</td><td>" + totalDown + "</td><td>" + totalMp + "</td>";
     tb.appendChild(tr);
   }
 
@@ -376,7 +390,7 @@ var D = __PARETO_DATA_JSON__;
       "<p style=\"margin:10px 0 0\">输出文件：</p><ul class=\"plain\" style=\"padding-left:18px\">" + files + "</ul>";
   }
 
-  renderPareto();
+  renderPareto(D.pareto);
   renderTable();
   renderMonths();
   renderFacets();
@@ -384,6 +398,25 @@ var D = __PARETO_DATA_JSON__;
   renderList();
   setText("months-note", D.monthsNote);
   setText("facets-note", D.facets.note);
+  setText("event-info",
+    "事件级：按 " + D.eventInfo.groups + " 组归并、合并 " + D.eventInfo.merged +
+    " 条重复记录。" + (D.eventInfo.pending
+      ? "另有 " + D.eventInfo.pending + " 组待确认，若全部采纳最多再减 " + D.eventInfo.pendingReduction + " 起。"
+      : ""));
+
+  (function(){
+    var sets = {event: D.pareto, record: D.paretoRecord};
+    var toggle = $("pareto-toggle");
+    toggle.addEventListener("click", function(e){
+      var btn = e.target.closest("button");
+      if (!btn || !btn.getAttribute("data-mode")){ return; }
+      var mode = btn.getAttribute("data-mode");
+      var all = toggle.querySelectorAll("button");
+      for (var i = 0; i < all.length; i++){ all[i].classList.remove("on"); }
+      btn.classList.add("on");
+      renderPareto(sets[mode]);
+    });
+  })();
 })();
 </script>
 </body>

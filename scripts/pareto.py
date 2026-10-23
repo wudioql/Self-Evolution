@@ -36,8 +36,6 @@ import json
 import os
 import re
 import sys
-from collections import OrderedDict
-from datetime import date
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -109,38 +107,79 @@ def month_range(months):
     return out
 
 
-def dedupe_events(rows, min_chars, max_gap):
-    """描述互相包含且间隔在 max_gap 天内 → 视为同一事件的跨班重复交接。"""
-    parent = {r["n"]: r["n"] for r in rows}
+def merge_events(rows, categories, groups_cfg, monpa_mark):
+    """按配置的 eventGroups 把同一事件的跨班记录合并成一条事件记录。
 
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
+    规则由人工确认后写进配置，本函数只负责合并与校验：
+    组内默认必须同类；确属同一事件但主诉类别不同时，可用组的 `cat` 字段
+    指定归入哪一类（如颗粒 NG 由密封圈泄漏引发）。行号必须存在、不与其他组重叠；
+    合并后 DOWN / MON PA 取组内任一。
+    """
+    by_n = {r["n"]: r for r in rows}
+    cat_of = {n: c["code"] for c in categories for n in c["rows"]}
+    valid_cats = {c["code"] for c in categories}
+    group_of = {}
+    for gi, g in enumerate(groups_cfg):
+        cats = set()
+        for n in g["rows"]:
+            if n not in by_n:
+                raise SystemExit(f"eventGroups 引用了不存在的行号：{n}")
+            if n in group_of:
+                raise SystemExit(f"行号 {n} 出现在多个 eventGroups")
+            group_of[n] = gi
+            cats.add(cat_of[n])
+        if len(cats) > 1 and not g.get("cat"):
+            raise SystemExit(f"eventGroup {g['rows']} 跨类别且未指定 cat：{sorted(cats)}")
+        if g.get("cat") and g["cat"] not in valid_cats:
+            raise SystemExit(f"eventGroup {g['rows']} 的 cat 不存在：{g['cat']}")
 
-    def union(a, b):
-        ra, rb = find(a), find(b)
-        if ra != rb:
-            parent[rb] = ra
-
-    for i, a in enumerate(rows):
-        da = re.sub(r"\s+", "", a["desc"])
-        for b in rows[i + 1:]:
-            db = re.sub(r"\s+", "", b["desc"])
-            short, long_ = (da, db) if len(da) <= len(db) else (db, da)
-            if len(short) < min_chars or short not in long_:
-                continue
-            try:
-                gap = abs((date.fromisoformat(a["date"]) - date.fromisoformat(b["date"])).days)
-            except ValueError:
-                continue
-            if gap <= max_gap:
-                union(a["n"], b["n"])
-    groups = {}
+    event_rows = []
+    seen = set()
     for r in rows:
-        groups.setdefault(find(r["n"]), []).append(r["n"])
-    return groups
+        gi = group_of.get(r["n"])
+        if gi is None:
+            event_rows.append({"n": r["n"], "cat": cat_of[r["n"]], "date": r["date"],
+                               "status": r["status"], "monpa": r["monpa"] == monpa_mark})
+            continue
+        if gi in seen:
+            continue
+        seen.add(gi)
+        members = [by_n[n] for n in groups_cfg[gi]["rows"]]
+        first = groups_cfg[gi]["rows"][0]
+        event_rows.append({
+            "n": first,
+            "cat": groups_cfg[gi].get("cat") or cat_of[first],
+            "date": min(m["date"] for m in members),
+            "status": "DOWN" if any(m["status"] == "DOWN" for m in members) else members[0]["status"],
+            "monpa": any(m["monpa"] == monpa_mark for m in members),
+        })
+    return event_rows
+
+
+def live_list(event_rows, categories, alarms_total):
+    """非排除类别按计数降序，返回带占比与累计的帕累托序列。"""
+    stats = []
+    for cat in categories:
+        if cat.get("excluded"):
+            continue
+        sel = [e for e in event_rows if e["cat"] == cat["code"]]
+        stats.append({
+            "code": cat["code"],
+            "name": cat["name"],
+            "short": cat.get("short", cat["name"]),
+            "count": len(sel),
+            "down": sum(1 for e in sel if e["status"] == "DOWN"),
+            "monpa": sum(1 for e in sel if e["monpa"]),
+        })
+    stats.sort(key=lambda s: (-s["count"], s["code"]))
+    cum = 0.0
+    for s in stats:
+        s["pct"] = round(s["count"] / alarms_total * 100, 1) if alarms_total else 0.0
+        cum += s["count"] / alarms_total * 100 if alarms_total else 0.0
+        s["cum"] = round(cum, 1)
+    if stats:
+        stats[-1]["cum"] = 100.0
+    return stats
 
 
 def build(cfg, rows):
@@ -148,31 +187,23 @@ def build(cfg, rows):
     excluded = [c for c in cfg["categories"] if c.get("excluded")]
     alarm_rows = [r for r in rows if assigned[r["n"]] not in {c["code"] for c in excluded}]
     alarms = len(alarm_rows)
+    monpa_mark = cfg.get("monpaMark", "✔")
 
-    stats = OrderedDict()
-    for cat in cfg["categories"]:
-        sel = [by_n[n] for n in cat["rows"]]
-        stats[cat["code"]] = {
-            "code": cat["code"],
-            "name": cat["name"],
-            "short": cat.get("short", cat["name"]),
-            "count": len(sel),
-            "down": sum(1 for r in sel if r.get("status") == "DOWN"),
-            "monpa": sum(1 for r in sel if r.get("monpa") == cfg.get("monpaMark", "✔")),
-            "excluded": bool(cat.get("excluded")),
-        }
+    # 记录级
+    record_rows = [{"n": r["n"], "cat": assigned[r["n"]], "date": r["date"],
+                    "status": r["status"], "monpa": r["monpa"] == monpa_mark} for r in rows]
+    record_live = live_list(record_rows, cfg["categories"], alarms)
 
-    live = [s for s in stats.values() if not s["excluded"]]
-    live.sort(key=lambda s: (-s["count"], s["code"]))
-    cum = 0.0
-    for s in live:
-        s["pct"] = round(s["count"] / alarms * 100, 1)
-        cum += s["count"] / alarms * 100
-        s["cum"] = round(cum, 1)
-    if live:
-        live[-1]["cum"] = 100.0
+    # 事件级（人工确认的 eventGroups）
+    event_groups = cfg.get("eventGroups", [])
+    pending_groups = cfg.get("pendingGroups", [])
+    event_rows = merge_events(rows, cfg["categories"], event_groups, monpa_mark)
+    excluded_codes = {c["code"] for c in excluded}
+    alarm_event_rows = [e for e in event_rows if e["cat"] not in excluded_codes]
+    alarm_events = len(alarm_event_rows)
+    event_live = live_list(event_rows, cfg["categories"], alarm_events)
 
-    # 月度（报警口径）
+    # 月度（报警口径，记录级）
     months = {}
     for r in alarm_rows:
         months[r["date"][:7]] = months.get(r["date"][:7], 0) + 1
@@ -184,7 +215,7 @@ def build(cfg, rows):
     if zero_months:
         months_note += "（" + "、".join(zero_months) + " 无记录）"
 
-    # 类别内处置指向（多标签）
+    # 类别内处置指向（多标签，记录级）
     facet_cfg = cfg.get("facets")
     facets = {"note": "", "total": 0, "items": []}
     if facet_cfg:
@@ -200,15 +231,16 @@ def build(cfg, rows):
                     hits += 1
             facets["items"].append({"label": item["label"], "count": hits})
 
-    # 事件归并
-    dd = cfg.get("dedupe", {})
-    groups = dedupe_events(rows, int(dd.get("minChars", 20)), int(dd.get("maxDayGap", 7)))
-    events = len(groups)
-    multi = sum(1 for v in groups.values() if len(v) > 1)
+    merged = len(rows) - len(event_rows)
+    pending_reduction = sum(len(g["rows"]) - 1 for g in pending_groups)
     extra_caveat = (
-        f"按描述重复归并（较短描述 ≥{dd.get('minChars', 20)} 字、间隔 ≤{dd.get('maxDayGap', 7)} 天）"
-        f"后约 {events} 起；记录 {len(rows)} 条，跨班重复 {len(rows) - events} 条（{multi} 组多记录）。"
+        f"事件级按配置中 {len(event_groups)} 组跨班重复归并：记录 {len(rows)} 条 → 独立事件 "
+        f"{len(event_rows)} 起（报警类 {alarm_events} 起）。"
     )
+    if pending_groups:
+        extra_caveat += (
+            f"另有 {len(pending_groups)} 组待确认，若全部采纳，事件数最多再减 {pending_reduction} 起。"
+        )
 
     data = {
         "title": cfg["title"],
@@ -219,16 +251,26 @@ def build(cfg, rows):
             "records": len(rows),
             "alarms": alarms,
             "excluded": len(rows) - alarms,
-            "top1Pct": live[0]["pct"] if live else 0,
-            "top1Count": live[0]["count"] if live else 0,
-            "top3Cum": live[min(2, len(live) - 1)]["cum"] if live else 0,
+            "events": len(event_rows),
+            "alarmEvents": alarm_events,
+            "merged": merged,
+            "top1Pct": event_live[0]["pct"] if event_live else 0,
+            "top1Count": event_live[0]["count"] if event_live else 0,
+            "top3Cum": event_live[min(2, len(event_live) - 1)]["cum"] if event_live else 0,
         },
-        "pareto": [{k: v for k, v in s.items() if k != "excluded"} for s in live],
+        "pareto": event_live,
+        "paretoRecord": record_live,
         "months": month_list,
         "monthsPeak": peak,
         "monthsNote": months_note,
         "facets": facets,
         "top3": cfg.get("top3", []),
+        "eventInfo": {
+            "groups": len(event_groups),
+            "merged": merged,
+            "pending": len(pending_groups),
+            "pendingReduction": pending_reduction,
+        },
         "rules": [{"name": c["name"], "rule": c.get("rule", "")} for c in cfg["categories"]],
         "otherNotes": cfg.get("otherNotes", []),
         "caveats": list(cfg.get("caveats", [])) + [extra_caveat],
