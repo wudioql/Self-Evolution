@@ -80,7 +80,7 @@ Self-Evolution/
 │   └── IPA与音韵学手册.md
 │
 ├── progress/                    📈 记录：plan90.json + 自动生成的进度总览.md
-├── data/                        🔒 本地故障数据（*.local.* 不入公开 Git）
+├── data/                        🔒 本地故障数据 + 分析产出（*.local.* 不入公开 Git）
 ├── tools/                       🔧 工具层：单文件离线 HTML
 │   ├── 故障模式库.html
 │   ├── 90天进度表.html
@@ -111,6 +111,7 @@ Self-Evolution/
 | **打开 DAW 之前** | `04-扒带作业单.md` |
 | **记录 / 查询故障** | 告诉获准的 agent；`data/faults.local.json` |
 | **看完整故障库** | 本地 `data/故障模式库.local.md` / `tools/故障模式库.local.html` |
+| **看 / 复现报警帕累托分析** | `data/pareto/README.md` |
 | **卡在某个具体问题** | `manuals/` 里对应那份 |
 | **想开新坑 / 想改主线** | `01-个人档案.md` §7 §8 §9 + `02-方向分析.md` |
 | **交给新 agent** | `AGENTS.md` |

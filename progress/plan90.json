@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-22T23:53:29+08:00",
+    "updated": "2026-10-23T23:54:01+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 204,
+    "revision": 210,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -906,14 +906,16 @@
           "id": "7-5",
           "track": "equip",
           "text": "完成 alarm 分析，画帕累托图，找出 Top 3 根因",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "2026-10-23：已由 agent 基于 6-3 本地表完成分类与统计草稿——125 条记录按主诉归 9 类，剔除 13 条计划保养后报警类 112 条；颗粒 73（65.2%）、均匀性 13（11.6%）、真空压力 9（8.0%），Top3 累计 84.8%。帕累托图与 Top3 待验证假设见 data/pareto-alarm-2025-08_2026-10.html（已脱敏，不含机台编号/报警码/人名）。待本人核对归类口径后再确认完成。\n2026-10-23：报告与配置已迁至 data/pareto/（报警帕累托-2025-08_2026-10.html）；生成器 scripts/pareto.py，复现步骤见 data/pareto/README.md。分类数字未变。",
           "scheduledDate": "2026-10-24",
           "dueDate": "2026-10-24",
           "output": "帕累托图 + Top 3 根因 / 待验证假设",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-10-23",
+          "evidence": [
+            "data/pareto/报警帕累托-2025-08_2026-10.html"
+          ],
           "dependsOn": [
             "6-3"
           ]
@@ -1695,12 +1697,13 @@
     "2026-10-19",
     "2026-10-20",
     "2026-10-21",
-    "2026-10-22"
+    "2026-10-22",
+    "2026-10-23"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 53,
-    "pct": 55,
+    "doneTasks": 54,
+    "pct": 56,
     "delivDone": 1,
     "delivTotal": 6
   },
@@ -3263,6 +3266,10 @@
     },
     "2026-10-22": {
       "note": "日语：7-4 Praat 叠基频曲线（两轮跟唱，句尾观察已写入 notes.md）",
+      "minutes": 25
+    },
+    "2026-10-23": {
+      "note": "墨墨 10 分钟 + 耳朵 15 分钟（最低剂量）",
       "minutes": 25
     }
   },
@@ -5291,6 +5298,66 @@
         "minutes": 25
       },
       "summary": "2026-10-22"
+    },
+    {
+      "at": "2026-10-23T23:37:06+08:00",
+      "action": "note",
+      "ids": [
+        "7-5"
+      ]
+    },
+    {
+      "at": "2026-10-23T23:37:10+08:00",
+      "action": "note",
+      "ids": [
+        "7-5"
+      ]
+    },
+    {
+      "at": "2026-10-23T23:48:24+08:00",
+      "action": "note",
+      "ids": [
+        "7-5"
+      ]
+    },
+    {
+      "at": "2026-10-23T23:48:27+08:00",
+      "action": "note",
+      "ids": [
+        "7-5"
+      ]
+    },
+    {
+      "at": "2026-10-23T23:53:43+08:00",
+      "action": "done",
+      "ids": [
+        "7-5"
+      ],
+      "on": "2026-10-23",
+      "before": [
+        {
+          "id": "7-5",
+          "track": "equip",
+          "text": "完成 alarm 分析，画帕累托图，找出 Top 3 根因",
+          "done": false,
+          "note": "2026-10-23：已由 agent 基于 6-3 本地表完成分类与统计草稿——125 条记录按主诉归 9 类，剔除 13 条计划保养后报警类 112 条；颗粒 73（65.2%）、均匀性 13（11.6%）、真空压力 9（8.0%），Top3 累计 84.8%。帕累托图与 Top3 待验证假设见 data/pareto-alarm-2025-08_2026-10.html（已脱敏，不含机台编号/报警码/人名）。待本人核对归类口径后再确认完成。\n2026-10-23：报告与配置已迁至 data/pareto/（报警帕累托-2025-08_2026-10.html）；生成器 scripts/pareto.py，复现步骤见 data/pareto/README.md。分类数字未变。",
+          "scheduledDate": "2026-10-24",
+          "dueDate": "2026-10-24",
+          "output": "帕累托图 + Top 3 根因 / 待验证假设",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "6-3"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-23T23:54:01+08:00",
+      "action": "checkin",
+      "on": "2026-10-23",
+      "summary": "2026-10-23"
     }
   ]
 }

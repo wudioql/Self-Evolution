@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>报警帕累托分析 · __TITLE_META__</title>
+<style>
+  :root{
+    --ink:#1d2733; --ink-2:#4a5768; --ink-3:#7b8798;
+    --line:#e3e8ee; --bg:#f5f7fa; --card:#ffffff;
+    --steel:#2f6f8f; --rust:#c9743a;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI","Microsoft YaHei","PingFang SC",system-ui,-apple-system,sans-serif;
+    font-size:14px; line-height:1.65;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:32px 24px 64px}
+  header.top{border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:24px}
+  .eyebrow{font-size:12px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+  h1{font-size:26px;line-height:1.3;margin:6px 0 8px;font-weight:650}
+  .meta{font-size:13px;color:var(--ink-2)}
+  .meta span{margin-right:16px;white-space:nowrap}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+  .kpi .n{font-size:30px;font-weight:650;line-height:1.15;letter-spacing:-.01em}
+  .kpi .n small{font-size:15px;color:var(--ink-3);font-weight:500;margin-left:2px}
+  .kpi .t{font-size:12.5px;color:var(--ink-2);margin-top:4px}
+  .kpi.accent .n{color:var(--steel)}
+  .kpi.rust .n{color:var(--rust)}
+  section{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:18px}
+  h2{font-size:17px;margin:0 0 4px;font-weight:650}
+  .sub{font-size:12.5px;color:var(--ink-3);margin:0 0 16px}
+  .chart{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin-top:8px}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-weight:600;color:var(--ink-2);background:#fafbfc;border-bottom:1px solid #cfd8e2}
+  tr.total td{font-weight:650;background:#fafbfc}
+  .tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:99px;background:#eef3f6;color:var(--steel);margin-left:6px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .top3{display:grid;gap:14px}
+  .cause{border:1px solid var(--line);border-left:4px solid var(--steel);border-radius:8px;padding:16px 20px;background:#fbfcfd}
+  .cause:nth-child(2){border-left-color:#4d86a0}
+  .cause:nth-child(3){border-left-color:#6d9caf}
+  .cause h3{margin:0 0 10px;font-size:15.5px;font-weight:650}
+  .cause h3 em{font-style:normal;font-weight:500;color:var(--ink-3);font-size:13px;margin-left:8px}
+  .cause dl{margin:0;display:grid;grid-template-columns:78px 1fr;gap:6px 14px;font-size:13px}
+  .cause dt{color:var(--ink-3)}
+  .cause dd{margin:0;color:var(--ink-2)}
+  .note{font-size:12.5px;color:var(--ink-3);border-top:1px dashed var(--line);margin-top:22px;padding-top:14px}
+  .note ol{margin:6px 0 0;padding-left:20px}
+  .note li{margin:3px 0}
+  ul.plain{margin:4px 0 0;padding-left:18px;font-size:13px;color:var(--ink-2)}
+  ul.plain li{margin:4px 0}
+  .repro{font-size:12.5px;color:var(--ink-2)}
+  .repro code{display:inline-block;background:#f0f3f6;border:1px solid var(--line);border-radius:4px;padding:2px 8px;font-family:Consolas,"Courier New",monospace;font-size:12px;color:#24506a}
+  .repro ol{margin:6px 0 0;padding-left:20px}
+  .repro li{margin:4px 0}
+  @media (max-width:860px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .grid2{grid-template-columns:1fr}
+    .cause dl{grid-template-columns:1fr;gap:2px}
+    .cause dt{margin-top:6px}
+  }
+  @media print{
+    body{background:#fff}
+    section,.kpi{break-inside:avoid;border-color:#bbb}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>帕累托图 · 报警类别分布</h2>
+    <p class="sub">按主诉现象归类，一条记录只归一类；按次数降序，折线为累计占比。</p>
+    <svg id="pareto" class="chart" viewBox="0 0 860 400" role="img" aria-label="报警类别帕累托图"></svg>
+    <div class="legend">
+      <span><i style="background:var(--steel)"></i>报警次数</span>
+      <span><i style="background:var(--rust)"></i>累计占比</span>
+      <span><i style="background:#b9c4cf"></i>80% 参考线</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>分类明细</h2>
+    <p class="sub">DOWN = 该记录中机台处于 DOWN 状态；MON PA 标记 = 记录被标记为颗粒复测相关。</p>
+    <table>
+      <thead>
+        <tr><th>类别</th><th>次数</th><th>占比</th><th>累计</th><th>其中 DOWN</th><th>MON PA 标记</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+
+  <div class="grid2">
+    <section style="margin-bottom:18px">
+      <h2>月度分布</h2>
+      <p class="sub" id="months-note"></p>
+      <svg id="months" class="chart" viewBox="0 0 520 210" role="img" aria-label="月度报警次数"></svg>
+    </section>
+    <section style="margin-bottom:18px">
+      <h2>颗粒类：处置指向</h2>
+      <p class="sub" id="facets-note"></p>
+      <svg id="facets" class="chart" viewBox="0 0 520 210" role="img" aria-label="颗粒类处置指向"></svg>
+    </section>
+  </div>
+
+  <section>
+    <h2>Top 3 根因 / 待验证假设</h2>
+    <p class="sub">证据来自记录文本规律，尚不足以直接定论；每条区分「根因判断」与「待验证」，验证前不改机台参数。</p>
+    <div class="top3" id="top3"></div>
+  </section>
+
+  <section>
+    <h2>归类口径</h2>
+    <p class="sub">同一份数据换人重做时，按这张表保持一致。</p>
+    <table>
+      <thead><tr><th>类别</th><th>判定规则</th></tr></thead>
+      <tbody id="rules"></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>未进入 Top 3 但值得记录</h2>
+    <ul class="plain" id="other"></ul>
+  </section>
+
+  <section>
+    <h2>复现方法</h2>
+    <div class="repro" id="repro"></div>
+  </section>
+
+  <div class="note">
+    <b>口径与边界</b>
+    <ol id="caveats"></ol>
+  </div>
+
+</div>
+
+<script>
+var D = __PARETO_DATA_JSON__;
+
+(function(){
+  "use strict";
+
+  function esc(s){
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function $(id){ return document.getElementById(id); }
+  function setText(id, s){ $(id).textContent = s; }
+
+  /* ---------- header + kpis ---------- */
+  setText("eyebrow", D.eyebrow);
+  setText("title", D.title);
+  $("meta").innerHTML =
+    "<span>统计区间：" + esc(D.period) + "</span>" +
+    "<span>数据口径：交接记录 " + D.kpis.records + " 条（报警类 " + D.kpis.alarms + " 条）</span>" +
+    "<span>生成日期：" + esc(D.generatedOn) + "</span>";
+
+  $("kpis").innerHTML =
+    '<div class="kpi"><div class="n">' + D.kpis.records + '<small> 条</small></div><div class="t">交接记录总数（含计划保养）</div></div>' +
+    '<div class="kpi accent"><div class="n">' + D.kpis.alarms + '<small> 条</small></div><div class="t">报警类记录（剔除 ' + D.kpis.excluded + ' 条 PM/复机）</div></div>' +
+    '<div class="kpi rust"><div class="n">' + D.kpis.top1Pct.toFixed(1) + '<small> %</small></div><div class="t">颗粒超标占比（' + D.kpis.top1Count + ' 条）</div></div>' +
+    '<div class="kpi"><div class="n">' + D.kpis.top3Cum.toFixed(1) + '<small> %</small></div><div class="t">Top 3 类别累计占比</div></div>';
+
+  /* ---------- pareto ---------- */
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent){
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs){ e.setAttribute(k, attrs[k]); }
+    if (parent){ parent.appendChild(e); }
+    return e;
+  }
+  function txt(parent, x, y, s, attrs){
+    var t = el("text", {x:x, y:y}, parent);
+    for (var k in (attrs||{})){ t.setAttribute(k, attrs[k]); }
+    t.textContent = s;
+    return t;
+  }
+
+  function renderPareto(){
+    var svg = $("pareto");
+    var data = D.pareto;
+    var W = 860, H = 400, m = {l:56, r:58, t:24, b:64};
+    var iw = W - m.l - m.r, ih = H - m.t - m.b;
+    var maxCount = data[0].count;
+    var yMax = Math.ceil(maxCount / 10) * 10;
+    var yStep = yMax / 4;
+    var n = data.length;
+    var band = iw / n, bw = Math.min(64, band * 0.56);
+
+    for (var v = 0; v <= yMax; v += yStep){
+      var gy = m.t + ih - (v / yMax) * ih;
+      el("line", {x1:m.l, y1:gy, x2:m.l+iw, y2:gy, stroke:"#eef1f5", "stroke-width":1}, svg);
+      txt(svg, m.l-10, gy+4, String(Math.round(v)), {"text-anchor":"end", "font-size":11.5, fill:"#8b97a6"});
+    }
+    el("line", {x1:m.l, y1:m.t+ih, x2:m.l+iw, y2:m.t+ih, stroke:"#cfd8e2"}, svg);
+
+    data.forEach(function(d, i){
+      var x = m.l + band * i + (band - bw) / 2;
+      var h = (d.count / yMax) * ih;
+      var y = m.t + ih - h;
+      var rect = el("rect", {x:x, y:y, width:bw, height:h, rx:3, fill:"#2f6f8f", opacity: i === 0 ? 1 : 0.88}, svg);
+      var tip = el("title", {}, rect);
+      tip.textContent = d.name + "：" + d.count + " 次（" + d.pct.toFixed(1) + "%）";
+      txt(svg, x + bw/2, y - 7, String(d.count), {"text-anchor":"middle","font-size":12.5,"font-weight":600,fill:"#2f6f8f"});
+      txt(svg, x + bw/2, m.t + ih + 20, d.short, {"text-anchor":"middle","font-size":11.5,fill:"#5b6878"});
+    });
+
+    var pts = data.map(function(d, i){
+      return [m.l + band * i + band/2, m.t + ih - (d.cum / 100) * ih];
+    });
+    el("polyline", {
+      points: pts.map(function(p){ return p[0] + "," + p[1]; }).join(" "),
+      fill:"none", stroke:"#c9743a", "stroke-width":2
+    }, svg);
+    pts.forEach(function(p, i){
+      var c = el("circle", {cx:p[0], cy:p[1], r:3.5, fill:"#fff", stroke:"#c9743a", "stroke-width":2}, svg);
+      var tip = el("title", {}, c);
+      tip.textContent = data[i].name + " 累计 " + data[i].cum.toFixed(1) + "%";
+    });
+
+    var y80 = m.t + ih - 0.8 * ih;
+    el("line", {x1:m.l, y1:y80, x2:m.l+iw, y2:y80, stroke:"#b9c4cf", "stroke-dasharray":"6 4"}, svg);
+    txt(svg, m.l + iw + 6, y80 + 4, "80%", {"font-size":11, fill:"#8b97a6"});
+    for (var p = 0; p <= 100; p += 20){
+      var py = m.t + ih - (p/100) * ih;
+      txt(svg, m.l + iw + 10, py + 4, p + "%", {"font-size":11, fill:"#b0bcc9"});
+    }
+    txt(svg, m.l, m.t + ih + 46, "类别（按次数降序）", {"font-size":11.5, fill:"#8b97a6"});
+  }
+
+  /* ---------- table ---------- */
+  function renderTable(){
+    var tb = $("tbody");
+    var total = 0, totalDown = 0, totalMp = 0;
+    D.pareto.forEach(function(d){
+      total += d.count; totalDown += d.down; totalMp += d.monpa;
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        "<td>" + esc(d.name) + (d.code === "A" ? '<span class="tag">主要矛盾</span>' : "") + "</td>" +
+        "<td>" + d.count + "</td>" +
+        "<td>" + d.pct.toFixed(1) + "%</td>" +
+        "<td>" + d.cum.toFixed(1) + "%</td>" +
+        "<td>" + d.down + "</td>" +
+        "<td>" + d.monpa + "</td>";
+      tb.appendChild(tr);
+    });
+    var tr = document.createElement("tr");
+    tr.className = "total";
+    tr.innerHTML = "<td>合计（报警类）</td><td>" + total + "</td><td>100%</td><td>—</td><td>" + totalDown + "</td><td>" + totalMp + "</td>";
+    tb.appendChild(tr);
+  }
+
+  /* ---------- months ---------- */
+  function renderMonths(){
+    var svg = $("months");
+    var data = D.months;
+    var W = 520, H = 210, m = {l:34, r:12, t:16, b:34};
+    var iw = W - m.l - m.r, ih = H - m.t - m.b;
+    var maxCount = Math.max.apply(null, data.map(function(d){ return d[1]; }));
+    var yMax = Math.max(4, Math.ceil(maxCount / 4) * 4);
+    var yStep = yMax / 4;
+    var band = iw / data.length;
+    var peakLabel = D.monthsPeak;
+
+    for (var v = 0; v <= yMax; v += yStep){
+      var gy = m.t + ih - (v/yMax) * ih;
+      el("line", {x1:m.l, y1:gy, x2:m.l+iw, y2:gy, stroke:"#eef1f5"}, svg);
+      txt(svg, m.l-8, gy+4, String(Math.round(v)), {"text-anchor":"end","font-size":10.5,fill:"#8b97a6"});
+    }
+    data.forEach(function(d, i){
+      var h = (d[1]/yMax) * ih;
+      var x = m.l + band*i + band*0.18;
+      var y = m.t + ih - h;
+      var r = el("rect", {x:x, y:y, width:band*0.64, height:h, rx:2, fill: d[0] === peakLabel ? "#c9743a" : "#5b97b3"}, svg);
+      var tip = el("title", {}, r);
+      tip.textContent = d[0] + "：" + d[1] + " 条";
+      if (d[1] > 0 && data.length <= 16){
+        txt(svg, x + band*0.32, y - 5, String(d[1]), {"text-anchor":"middle","font-size":10.5,fill:"#5b6878"});
+      }
+      var every = data.length > 12 ? 2 : 1;
+      if (i % every === 0){
+        txt(svg, m.l + band*i + band*0.5, m.t + ih + 18, d[0].slice(2), {"text-anchor":"middle","font-size":10,fill:"#8b97a6"});
+      }
+    });
+    el("line", {x1:m.l, y1:m.t+ih, x2:m.l+iw, y2:m.t+ih, stroke:"#cfd8e2"}, svg);
+  }
+
+  /* ---------- facets ---------- */
+  function renderFacets(){
+    var svg = $("facets");
+    var data = D.facets.items;
+    var W = 520, H = 210, m = {l:150, r:56, t:14, b:14};
+    var iw = W - m.l - m.r, ih = H - m.t - m.b;
+    var rowH = ih / data.length;
+    var max = D.facets.total;
+    data.forEach(function(d, i){
+      var y = m.t + i * rowH + rowH * 0.18;
+      var h = rowH * 0.56;
+      var w = (d.count / max) * iw;
+      el("rect", {x:m.l, y:y, width:iw, height:h, rx:3, fill:"#f0f3f6"}, svg);
+      var r = el("rect", {x:m.l, y:y, width:w, height:h, rx:3, fill:"#2f6f8f", opacity:0.85}, svg);
+      var tip = el("title", {}, r);
+      tip.textContent = d.label + "：" + d.count + "/" + D.facets.total;
+      txt(svg, m.l-10, y + h*0.72, d.label, {"text-anchor":"end","font-size":11,fill:"#5b6878"});
+      txt(svg, m.l + w + 8, y + h*0.72, d.count + " / " + D.facets.total, {"font-size":11,fill:"#7b8798"});
+    });
+  }
+
+  /* ---------- top 3 ---------- */
+  function renderTop3(){
+    var host = $("top3");
+    D.top3.forEach(function(c, i){
+      var p = D.pareto[i];
+      var div = document.createElement("div");
+      div.className = "cause";
+      div.innerHTML =
+        "<h3>" + (i + 1) + ". " + esc(c.title) +
+        "<em>" + p.count + " 次 · " + p.pct.toFixed(1) + "% · 其中 DOWN " + p.down + " 次</em></h3>" +
+        "<dl>" +
+        "<dt>根因判断</dt><dd>" + esc(c.root) + "</dd>" +
+        "<dt>证据</dt><dd>" + esc(c.evidence) + "</dd>" +
+        "<dt>待验证</dt><dd>" + esc(c.verify) + "</dd>" +
+        "<dt>预期</dt><dd>" + esc(c.expect) + "</dd>" +
+        "</dl>";
+      host.appendChild(div);
+    });
+  }
+
+  /* ---------- rules / other / caveats / repro ---------- */
+  function renderList(){
+    var tb = $("rules");
+    D.rules.forEach(function(r){
+      var tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + esc(r.name) + "</td><td style=\"text-align:left;color:#4a5768\">" + esc(r.rule) + "</td>";
+      tb.appendChild(tr);
+    });
+    var ul = $("other");
+    D.otherNotes.forEach(function(t){
+      var li = document.createElement("li");
+      li.textContent = t;
+      ul.appendChild(li);
+    });
+    var ol = $("caveats");
+    D.caveats.forEach(function(t){
+      var li = document.createElement("li");
+      li.textContent = t;
+      ol.appendChild(li);
+    });
+    var repro = $("repro");
+    var files = D.repro.files.map(function(f){ return "<li><code>" + esc(f) + "</code></li>"; }).join("");
+    repro.innerHTML =
+      "<p>本页由配置驱动生成，换一份本地表或调整分类即可复用同一套形式。</p>" +
+      "<ol>" +
+      "<li>原始数据：<code>" + esc(D.repro.input) + "</code>（本地不入库，格式为 Markdown 表格，一行一条记录）</li>" +
+      "<li>分类配置：<code>" + esc(D.repro.config) + "</code>（类别、行号归属、关键词、Top 3 文案）</li>" +
+      "<li>页面模板：<code>" + esc(D.repro.template) + "</code></li>" +
+      "<li>生成命令：<code>" + esc(D.repro.command) + "</code></li>" +
+      "</ol>" +
+      "<p style=\"margin:10px 0 0\">输出文件：</p><ul class=\"plain\" style=\"padding-left:18px\">" + files + "</ul>";
+  }
+
+  renderPareto();
+  renderTable();
+  renderMonths();
+  renderFacets();
+  renderTop3();
+  renderList();
+  setText("months-note", D.monthsNote);
+  setText("facets-note", D.facets.note);
+})();
+</script>
+</body>
+</html>
