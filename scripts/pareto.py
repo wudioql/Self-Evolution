@@ -99,11 +99,11 @@ def month_range(months):
     nums = []
     for m in months:
         y, mm = m.split("-")
-        nums.append(int(y) * 12 + int(mm))
+        nums.append(int(y) * 12 + int(mm) - 1)
     start, end = min(nums), max(nums)
     out = []
     for v in range(start, end + 1):
-        out.append(f"{v // 12:04d}-{v % 12:02d}")
+        out.append(f"{v // 12:04d}-{v % 12 + 1:02d}")
     return out
 
 
