@@ -221,11 +221,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-24T03:16:54+08:00",
+    "updated": "2026-10-24T20:30:28+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 212,
+    "revision": 215,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -1136,27 +1136,31 @@
           "id": "7-6",
           "track": "pub",
           "text": "commit 分析图（记得脱敏）",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "脱敏复核完成：无机台编号/报警代码/人员姓名；config 的 eventGroups 注释已去除具体数值（951a12e）；月度图 2025-12 丢失已修复并重生成。提交在本机，尚未 push。",
           "scheduledDate": "2026-10-25",
           "dueDate": "2026-10-25",
           "output": "复核脱敏后的分析图版本",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-10-24",
+          "evidence": [
+            "data/pareto/报警帕累托-2025-08_2026-10.html"
+          ]
         },
         {
           "id": "7-7",
           "track": "ipa",
           "text": "把《うっせぇわ》主歌歌词做 IPA 转写",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "全文 IPA 转写已完成：主歌 28 句 + 副歌 16 句 + 尾声 12 句，本地笔记 ipa.local.md；Ado 演唱的夸张处理待本人对着音频补 1-2 处",
           "scheduledDate": "2026-10-24",
           "dueDate": "2026-10-24",
           "output": "本地 IPA 转写笔记",
           "optional": true,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-10-24",
+          "evidence": [
+            "music-log/02-usseewa/ipa.local.md"
+          ]
         },
         {
           "id": "7-8",
@@ -1910,12 +1914,13 @@
     "2026-10-20",
     "2026-10-21",
     "2026-10-22",
-    "2026-10-23"
+    "2026-10-23",
+    "2026-10-24"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 54,
-    "pct": 56,
+    "doneTasks": 56,
+    "pct": 58,
     "delivDone": 1,
     "delivTotal": 6
   },
@@ -3482,6 +3487,10 @@
     },
     "2026-10-23": {
       "note": "墨墨 10 分钟 + 耳朵 15 分钟（最低剂量）",
+      "minutes": 25
+    },
+    "2026-10-24": {
+      "note": "墨墨 + 耳朵听读，最低剂量完成",
       "minutes": 25
     }
   },
@@ -5583,6 +5592,58 @@
       "action": "note",
       "ids": [
         "7-5"
+      ]
+    },
+    {
+      "at": "2026-10-24T20:22:18+08:00",
+      "action": "checkin",
+      "on": "2026-10-24",
+      "summary": "2026-10-24"
+    },
+    {
+      "at": "2026-10-24T20:22:18+08:00",
+      "action": "done",
+      "ids": [
+        "7-7"
+      ],
+      "on": "2026-10-24",
+      "before": [
+        {
+          "id": "7-7",
+          "track": "ipa",
+          "text": "把《うっせぇわ》主歌歌词做 IPA 转写",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-24",
+          "dueDate": "2026-10-24",
+          "output": "本地 IPA 转写笔记",
+          "optional": true,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-24T20:30:28+08:00",
+      "action": "done",
+      "ids": [
+        "7-6"
+      ],
+      "on": "2026-10-24",
+      "before": [
+        {
+          "id": "7-6",
+          "track": "pub",
+          "text": "commit 分析图（记得脱敏）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-10-25",
+          "dueDate": "2026-10-25",
+          "output": "复核脱敏后的分析图版本",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
       ]
     }
   ]
