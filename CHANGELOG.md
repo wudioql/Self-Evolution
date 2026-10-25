@@ -6,6 +6,22 @@
 
 > **边界**：日常打卡、积累上报、任务勾项 / 备注属 `progress/plan90.json`（`history` / `dailyLogs`），**不入本文件**。本文件只记文件、规范与工具的变更。
 
+## [2026-10-25]
+
+### 变更 · 进度备注改为纯文本（去掉 Markdown 标记）
+
+- 起因：本人指出 HTML 进度表里周备注显示 `##` / `**`，既不渲染又看着奇怪。
+- `progress/plan90.json`（2026-10-25）：W7、W3 周备注的章节标题改为全角 `【本周产出】` / `【卡点】` 等，内容不变；`history` 保留 `before` 原文。
+- `AGENTS.md` §6：新增备注写法约定——任务 / 周 / 每日备注用换行分段，需要列表时用 `- `，周备注章节标题用全角 `【…】`，不写 `#`、`**`、`>`、`|` 等 Markdown 标记。
+- 方案取舍：不保留 Markdown 标记，因为 HTML 周备注是 `<textarea>`，无法渲染标记；若强行渲染需改「查看 + 编辑」双模式并升级 `safe_md()`，维护两套解释器。
+- 验证：扫描全部任务 / 周 / 每日 / 故障备注，无 Markdown 标记残留；`sync-plan.py --check` 一致；`check-docs.py` 通过。
+
+### 变更 · 进度表周备注框改为自动高度
+
+- 起因：本人反馈周备注 `<textarea>` 固定默认高度太低，长备注要内部滚动，不方便查看。
+- `tools/90天进度表.html`：`.note textarea` 保留 `min-height:52px` 兜底，改为 `overflow:hidden` / `resize:none`；新增 `autoGrow()`，`render()` 末尾对可见文本框按 `scrollHeight` 设高，输入时（`oninput`）实时增高。
+- 验证：本地静态服务 + 浏览器实测 W7 / W6 / W3 文本框 `scrollHeight == offsetHeight`（无内部滚动），控制台无错误；`sync-plan.py --check` 一致；`check-docs.py` 17/17 通过；65 项单元测试通过。
+
 ## [2026-10-24]
 
 ### 修复 · 帕累托月度分布丢失 2025-12
