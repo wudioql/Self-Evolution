@@ -221,11 +221,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-10-29T02:09:59+08:00",
+    "updated": "2026-10-31T22:01:30+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 240,
+    "revision": 247,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -1210,13 +1210,13 @@
           "id": "8-1",
           "track": "equip",
           "text": "针对 Top 1 根因写一页改善提案",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "已起草一页改善提案本地稿 data/改善提案-颗粒超标.local.md（Top1=颗粒超标，5 段结构；停机时长/备件库存/费用/责任人待填）",
           "scheduledDate": "2026-10-31",
           "dueDate": "2026-10-31",
           "output": "一页改善提案（敏感内容留本地）",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-10-31",
           "evidence": [],
           "dependsOn": [
             "7-5"
@@ -1226,14 +1226,16 @@
           "id": "8-2",
           "track": "pub",
           "text": "🚀 歌 #2 公开发布",
-          "done": false,
+          "done": true,
           "note": "计划 B 站发布，约 10-31；视频用 JIZURA 自动文字 PV（同 Lemon 做法），需公开链接",
           "scheduledDate": "2026-11-01",
           "dueDate": "2026-11-01",
           "output": "歌 #2 公开链接 + 至少一处自己的改动",
           "optional": false,
-          "completedOn": null,
-          "evidence": [],
+          "completedOn": "2026-10-30",
+          "evidence": [
+            "https://www.bilibili.com/video/BV1MTxc6mEGL/"
+          ],
           "dependsOn": [
             "8-0"
           ]
@@ -1922,12 +1924,15 @@
     "2026-10-25",
     "2026-10-26",
     "2026-10-27",
-    "2026-10-28"
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30",
+    "2026-10-31"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 59,
-    "pct": 61,
+    "doneTasks": 61,
+    "pct": 64,
     "delivDone": 1,
     "delivTotal": 6
   },
@@ -3513,6 +3518,17 @@
       "minutes": 25
     },
     "2026-10-28": {
+      "note": "",
+      "minutes": 25
+    },
+    "2026-10-29": {
+      "note": ""
+    },
+    "2026-10-30": {
+      "note": "",
+      "minutes": 25
+    },
+    "2026-10-31": {
       "note": "",
       "minutes": 25
     }
@@ -5890,6 +5906,90 @@
       "ids": [
         "8-0"
       ]
+    },
+    {
+      "at": "2026-10-29T23:28:02+08:00",
+      "action": "checkin",
+      "on": "2026-10-29",
+      "summary": "2026-10-29"
+    },
+    {
+      "at": "2026-10-29T23:29:41+08:00",
+      "action": "note",
+      "ids": [
+        "8-1"
+      ]
+    },
+    {
+      "at": "2026-10-29T23:29:45+08:00",
+      "action": "note",
+      "ids": [
+        "8-1"
+      ]
+    },
+    {
+      "at": "2026-10-30T22:28:23+08:00",
+      "action": "done",
+      "ids": [
+        "8-2"
+      ],
+      "on": "2026-10-30",
+      "before": [
+        {
+          "id": "8-2",
+          "track": "pub",
+          "text": "🚀 歌 #2 公开发布",
+          "done": false,
+          "note": "计划 B 站发布，约 10-31；视频用 JIZURA 自动文字 PV（同 Lemon 做法），需公开链接",
+          "scheduledDate": "2026-11-01",
+          "dueDate": "2026-11-01",
+          "output": "歌 #2 公开链接 + 至少一处自己的改动",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "8-0"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-30T22:54:59+08:00",
+      "action": "checkin",
+      "on": "2026-10-30",
+      "summary": "2026-10-30"
+    },
+    {
+      "at": "2026-10-31T21:59:52+08:00",
+      "action": "done",
+      "ids": [
+        "8-1"
+      ],
+      "on": "2026-10-31",
+      "before": [
+        {
+          "id": "8-1",
+          "track": "equip",
+          "text": "针对 Top 1 根因写一页改善提案",
+          "done": false,
+          "note": "已起草一页改善提案本地稿 data/改善提案-颗粒超标.local.md（Top1=颗粒超标，5 段结构；停机时长/备件库存/费用/责任人待填）",
+          "scheduledDate": "2026-10-31",
+          "dueDate": "2026-10-31",
+          "output": "一页改善提案（敏感内容留本地）",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "7-5"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-10-31T22:01:30+08:00",
+      "action": "checkin",
+      "on": "2026-10-31",
+      "summary": "2026-10-31"
     }
   ]
 }
