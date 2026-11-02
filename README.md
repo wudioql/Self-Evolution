@@ -88,6 +88,7 @@ Self-Evolution/
 │
 │   ── 以下不属于六层，是配套目录 ──
 ├── music-log/                   🎼 产出：三首歌在这里做（音频不入库，见下）
+├── equip-log/                   🧰 产出：设备线知识块笔记 + 索引（学到的原文，不含敏感字段）
 ├── scripts/                    🩺 agent 文件操作、视图同步、数据与文档体检
 ├── AUDIT.md                     🧹 核对范围、结果与待修问题（不是学习任务）
 ├── CHANGELOG.md                 📝 变更记录（唯一入口，按日期倒序）
@@ -109,6 +110,7 @@ Self-Evolution/
 | **看完整进度、备注和日期** | `progress/进度总览.md` / `tools/90天进度表.html` |
 | **每周日回顾** | `03-90天计划.md` |
 | **打开 DAW 之前** | `04-扒带作业单.md` |
+| **查设备知识块学过什么 / 笔记在哪** | `equip-log/README.md` |
 | **记录 / 查询故障** | 告诉获准的 agent；`data/faults.local.json` |
 | **看完整故障库** | 本地 `data/故障模式库.local.md` / `tools/故障模式库.local.html` |
 | **看 / 复现报警帕累托分析** | `data/pareto/README.md` |

@@ -24,7 +24,7 @@
 | **参考** | `manuals/*.md` | 查，不通读 | 字典式。按主题跳读。每份结尾必须有 **「与执行层的对接」** 章节 |
 | **工具** | `tools/*.html` | 单文件离线应用 | 见 §7 |
 
-> **六层说的是"文档体系"。** 配套目录不属于任何一层（README §3）：`music-log/` 产出 · `progress/` 计划与状态 · `data/` 本地故障 · `scripts/` + `.github/` 维护 · `.agents/skills/` 第三方 skill；`AUDIT.md` = 已核对范围与待修缺口、`CHANGELOG.md` = 变更记录，都不是学习任务。
+> **六层说的是"文档体系"。** 配套目录不属于任何一层（README §3）：`music-log/` 产出 · `equip-log/` 设备笔记产出 · `progress/` 计划与状态 · `data/` 本地故障 · `scripts/` + `.github/` 维护 · `.agents/skills/` 第三方 skill；`AUDIT.md` = 已核对范围与待修缺口、`CHANGELOG.md` = 变更记录，都不是学习任务。
 
 > 📌 **三条边界说明**（改执行层前先看这里）：
 >
