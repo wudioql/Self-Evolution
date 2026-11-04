@@ -673,7 +673,7 @@ def fault_md(data):
 def execution_block(p):
     lines = ['<!-- PLAN-SCHEDULE:BEGIN -->', '> 本节由 `progress/plan90.json` 生成；改排期由 agent 改 JSON 后同步，不在此维护状态。',
              '> **每日动作、勾选、备注和证据 → [`progress/进度总览.md`](progress/进度总览.md)。**',
-             '> 夜班日期未确认；W5 / W10 仅预留缓冲。实际夜班只保留墨墨 10 分钟，其余暂停，不自动算完成。', '']
+             '> 夜班日期以 `progress/plan90.json` 的豁免记录为准；本表只列排期与截止日。夜班段只保留墨墨 10 分钟，其余暂停，不自动算完成。', '']
     for w in p['weeks']:
         lines += [f'### W{w["n"]} · Day {w["days"]}（{w["start"]}—{w["end"]}）· {w["title"]}', '',
                   '| 截止日 | 轨道 / ID | 动作 | 验收产出 |', '|---|---|---|---|']
