@@ -55,7 +55,9 @@
   .search .clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--fg3);cursor:pointer;font-size:16px;line-height:1;padding:2px 4px}
   .search .clr:hover{color:var(--fg)}
 
-  .filters{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center}
+  .filters{margin-top:8px}
+  .frow{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;align-items:center}
+  .frow:first-child{margin-top:0}
   .chip{
     padding:4px 11px;background:var(--bg3);border:1px solid var(--bd);border-radius:20px;
     font-size:12px;color:var(--fg2);cursor:pointer;user-select:none;white-space:nowrap;
@@ -281,6 +283,11 @@ button[hidden]{display:none}
     <div class="mbody">
       <div class="form-grid">
         <div class="sec-title">① 基本信息</div>
+        <div class="fg full">
+          <label>标题</label>
+          <input id="f_title" placeholder="一句话概括，如：上片 mapping error">
+          <div class="hint">卡片与 Markdown 的显示名；留空回退为现象描述</div>
+        </div>
         <div class="fg">
           <label>发生日期</label>
           <input type="date" id="f_date"><div class="hint" id="dateHint">未知日期留空；不会默认伪造成录入日。</div>
@@ -790,7 +797,7 @@ function projectDayInfo(p,ds) {
 }
 /* FILE-STORE:END */
 const $=id=>document.getElementById(id), esc=escapeHTML;
-let state=JSON.parse($('project-data').textContent), editingId=null, openIds=new Set(), filters={eq:'',cat:'',rec:''};
+let state=JSON.parse($('project-data').textContent), editingId=null, openIds=new Set(), filters={eq:[],cat:[],rec:''};
 function convertFaultBackup(d,current){
   if(d&&d.schema==='self-evolution/faults/v1')return d;
   must(d&&Array.isArray(d.items)&&!d.schema,'不是受支持的故障备份');
@@ -804,16 +811,19 @@ function toast(msg){$('toast').textContent=msg;$('toast').classList.add('on');se
 const today=projectToday;
 const download=downloadText;
 function buildFilters(){
-  let h='<span class="flabel">机台：</span>';
-  function chips(kind,values){return [''].concat(values).map(v=>`<button class="chip ${filters[kind]===v?'on':''}" onclick="setFilter('${kind}',${esc(JSON.stringify(v))})">${esc(v||'全部')}</button>`).join('');}
   const allEq=[...new Set(state.config.eqTypes.concat(state.items.map(i=>i.eqType).filter(Boolean)))];
   const allCat=[...new Set(state.config.categories.concat(state.items.map(i=>i.causeCategory).filter(Boolean)))];
-  h+=chips('eq',allEq);h+='<span class="flabel">类别：</span>'+chips('cat',allCat);
-  h+=`<button class="chip ${filters.rec==='rec'?'on':''}" onclick="setFilter('rec',filters.rec==='rec'?'':'rec')">仅复发</button>`;
-  h+=`<button class="chip ${filters.rec==='unsolved'?'on':''}" onclick="setFilter('rec',filters.rec==='unsolved'?'':'unsolved')">未解决 / 待确认</button>`;
+  function chips(kind,values){
+    const sel=filters[kind]||[];
+    return [''].concat(values).map(v=>`<button class="chip ${(v?sel.includes(v):!sel.length)?'on':''}" onclick="toggleFilter('${kind}',${esc(JSON.stringify(v))})">${esc(v||'全部')}</button>`).join('');
+  }
+  let h=`<div class="frow"><span class="flabel">机台：</span>${chips('eq',allEq)}</div>`;
+  h+=`<div class="frow"><span class="flabel">类别：</span>${chips('cat',allCat)}</div>`;
+  h+=`<div class="frow"><span class="flabel">状态：</span><button class="chip ${filters.rec==='rec'?'on':''}" onclick="setFilter('rec',filters.rec==='rec'?'':'rec')">仅复发</button><button class="chip ${filters.rec==='unsolved'?'on':''}" onclick="setFilter('rec',filters.rec==='unsolved'?'':'unsolved')">未解决 / 待确认</button></div>`;
   $('filters').innerHTML=h;
 }
 function setFilter(k,v){filters[k]=v;buildFilters();render();}
+function toggleFilter(k,v){filters[k]=v?((filters[k]||[]).includes(v)?filters[k].filter(x=>x!==v):(filters[k]||[]).concat(v)):[];buildFilters();render();}
 function buildSelects(){
   for(const [id,values] of [['f_eqType',state.config.eqTypes],['f_causeCategory',state.config.categories]]){
     const current=$(id).value, key=id.replace('f_',''), choices=[...new Set(values.concat(state.items.map(i=>i[key]).filter(Boolean),current?[current]:[]))];
@@ -824,7 +834,7 @@ function buildSelects(){
 function visible(){
   const query=$('q').value.trim().toLowerCase();
   const arr=state.items.filter(i=>{
-    if(filters.eq&&i.eqType!==filters.eq)return false;if(filters.cat&&i.causeCategory!==filters.cat)return false;
+    if(filters.eq.length&&!filters.eq.includes(i.eqType))return false;if(filters.cat.length&&!filters.cat.includes(i.causeCategory))return false;
     if(filters.rec==='rec'&&i.isRecurring!==true)return false;if(filters.rec==='unsolved'&&i.isSolved===true)return false;
     return !query||faultTextFields.map(f=>i[f]||'').concat(i.id).join(' ').toLowerCase().includes(query);
   });
@@ -842,13 +852,14 @@ function render(){
   $('clrBtn').style.display=$('q').value?'block':'none';const list=visible(),real=state.items.filter(i=>!sampleItem(i));
   const rec=real.filter(i=>i.isRecurring===true).length,unknown=real.filter(i=>i.isSolved==null).length,unsolved=real.filter(i=>i.isSolved===false).length;
   const dt=real.filter(i=>typeof i.downtimeMin==='number').map(i=>i.downtimeMin),total=dt.reduce((a,b)=>a+b,0);
-  $('stats').innerHTML=`<div class="stat a"><div class="k">真实记录 / 目标</div><div class="v">${real.length} <span style="font-size:14px">/ 30</span></div><div class="s">示例 ${state.items.length-real.length} 条，不计入成果</div></div>
+  const samples=state.items.length-real.length;
+  $('stats').innerHTML=`<div class="stat a"><div class="k">真实记录 / 目标</div><div class="v">${real.length} <span style="font-size:14px">/ 30</span></div>${samples?`<div class="s">示例 ${samples} 条，不计入成果</div>`:''}</div>
     <div class="stat r"><div class="k">已确认复发</div><div class="v">${rec}</div><div class="s">未确认的复发状态不猜测</div></div>
     <div class="stat w"><div class="k">未彻底解决</div><div class="v">${unsolved}</div><div class="s">另有 ${unknown} 条解决状态待确认</div></div>
     <div class="stat"><div class="k">已记录停机总量</div><div class="v">${(total/60).toFixed(1)} <span style="font-size:14px">h</span></div><div class="s">${dt.length} 条有时长；其余不当作 0</div></div>`;
   const categories={},equip={};list.filter(i=>!sampleItem(i)).forEach(i=>{const c=i.causeCategory||'未分类',e=i.eqType||'待确认';categories[c]=(categories[c]||0)+1;equip[e]=(equip[e]||0)+1;});
   $('chartCat').innerHTML=chartHTML(categories);$('chartEq').innerHTML=chartHTML(equip);
-  $('count').textContent='显示 '+list.length+' 条（含示例；真实 '+real.length+' 条）';
+  $('count').textContent='筛选 '+list.length+' 条（共 '+state.items.length+' 条）';
   const privateView=document.body.dataset.private==='true';
   $('demoWarn').innerHTML=`<div class="banner info">${privateView?'本地私有视图：包含原始内容，不要公开分享此 HTML / Markdown / JSON。':'公开工具壳默认空白。已有真实记录请打开「故障模式库.local.html」，或连接项目 data/faults.local.json。'} 示例仅用于演示，不是已验证的安全操作规程；现场以批准的 SOP 与安全要求为准。</div>`;
   if(!list.length){$('list').innerHTML='<div class="empty"><div class="big">📋</div><p>'+ (state.items.length?'没有匹配的记录':'尚未录入真实故障')+'</p><p>直接向 agent 描述一个亲身处理的故障；未知根因、时长和状态留待确认。</p></div>';return;}
@@ -856,7 +867,7 @@ function render(){
   $('list').innerHTML=list.map(i=>{
     const open=openIds.has(i.id),dot=i.isRecurring===true?'var(--err)':i.isSolved===true?'var(--ok)':'var(--warn)';
     const field=(label,value,sensitive=false)=>`<div class="fld"><div class="lb">${esc(label)}</div><div class="vl ${sensitive&&value?'sens':''}">${esc(value||'待确认 / 未提供')}</div></div>`;
-    return `<div class="card ${open?'open':''}" id="c_${i.id}"><div class="chead" onclick="toggleCard('${i.id}')"><div class="cdot" style="background:${dot}"></div><div class="cmain"><div class="ctitle">${sampleItem(i)?'【示例】 ':''}${esc(i.symptom||i.alarmCode||'待补现象')}</div><div class="cmeta"><span class="tag">${esc(i.id)}</span><span class="tag eq">${esc(i.eqType||'机台待确认')}</span><span class="tag cat">${esc(i.causeCategory||'未分类')}</span>${i.rootCauseTag?'<span class="tag">'+esc(i.rootCauseTag)+'</span>':''}<span class="tag date">${esc(i.date||'日期待确认')}</span><span class="tag">复发：${flag(i.isRecurring)}</span><span class="tag">解决：${flag(i.isSolved)}</span></div></div><div class="cside"><button class="btn-sm" onclick="event.stopPropagation();openEditor('${i.id}')">编辑</button></div></div>
+    return `<div class="card ${open?'open':''}" id="c_${i.id}"><div class="chead" onclick="toggleCard('${i.id}')"><div class="cdot" style="background:${dot}"></div><div class="cmain"><div class="ctitle">${sampleItem(i)?'【示例】 ':''}${esc(i.title||i.symptom||i.alarmCode||'待补现象')}</div><div class="cmeta"><span class="tag">${esc(i.id)}</span><span class="tag eq">${esc(i.eqType||'机台待确认')}</span><span class="tag cat">${esc(i.causeCategory||'未分类')}</span>${i.rootCauseTag?'<span class="tag">'+esc(i.rootCauseTag)+'</span>':''}<span class="tag date">${esc(i.date||'日期待确认')}</span><span class="tag">复发：${flag(i.isRecurring)}</span><span class="tag">解决：${flag(i.isSolved)}</span></div></div><div class="cside"><button class="btn-sm" onclick="event.stopPropagation();openEditor('${i.id}')">编辑</button></div></div>
     <div class="cbody"><div class="fld-grid">${field('机台型号（敏感）',i.eqModel,true)}${field('机台编号（敏感）',i.eqId,true)}${field('报警代码（敏感）',i.alarmCode,true)}</div>${field('现象',i.symptom)}${field('发生条件（敏感）',i.condition,true)}${field('排查路径 ★',i.troubleshootPath)}${field('根因（未经验证时请注明假设）',i.rootCause)}${field('处理',i.action)}${field('预防 / 改善 ★',i.prevention)}${field('停机分钟',i.downtimeMin==null?'待确认':String(i.downtimeMin))}${field('相关文件（敏感）',i.links,true)}${field('备注',i.notes)}
     <div class="cfoot"><button onclick="openEditor('${i.id}')">编辑</button><button onclick="copyMD('${i.id}')">复制原始 Markdown</button><button class="btn-danger" onclick="delItem('${i.id}')">删除</button></div></div></div>`;
   }).join('');
@@ -875,7 +886,7 @@ function openEditor(id){
     else el.value=value==null?'':value;
     if(el.tagName==='SELECT'&&value&&f!=='isRecurring'&&f!=='isSolved'&&el.value!==value){const option=document.createElement('option');option.value=value;option.textContent=value;el.appendChild(option);el.value=value;}
   });
-  $('editMask').classList.add('on');setTimeout(()=>$('f_symptom').focus(),40);
+  $('editMask').classList.add('on');setTimeout(()=>($(id?'f_symptom':'f_title')).focus(),40);
 }
 function closeEditor(){$('editMask').classList.remove('on');editingId=null;}
 async function saveItem(){
@@ -917,7 +928,7 @@ function exportCSV(){
 }
 function itemToMD(i){
   const txt=v=>String(v==null?'待确认':v).replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  return '## '+i.id+' · '+txt(i.symptom||'待补现象')+'\n\n'+FIELDS.map(k=>'- **'+k+'**：'+txt(i[k])).join('\n');
+  return '## '+i.id+' · '+txt(i.title||i.symptom||'待补现象')+'\n\n'+FIELDS.map(k=>'- **'+k+'**：'+txt(i[k])).join('\n');
 }
 function exportMD(){download('故障模式库_'+today()+'.local.md','# 故障模式库 · 原始私有数据\n\n'+visible().map(itemToMD).join('\n\n---\n\n'),'text/markdown;charset=utf-8');toast('原始 Markdown 含敏感内容，仅留本地');}
 async function copyMD(id){const i=state.items.find(i=>i.id===id);if(!i)return;try{await navigator.clipboard.writeText(itemToMD(i));toast('原始内容已复制，请勿公开');}catch(e){download(id+'.local.md',itemToMD(i),'text/markdown');}}
@@ -926,7 +937,7 @@ function closeSettings(){$('setMask').classList.remove('on');}
 async function saveSettings(){
   const parse=id=>[...new Set($(id).value.split('\n').map(s=>s.trim()).filter(Boolean))];
   const config={eqTypes:parse('s_eqTypes'),categories:parse('s_categories'),sensitive:parse('s_sensitive')};
-  if(await fs.update(d=>{const before=deepCopy(d.config);d.config={...d.config,...config};recordEvent(d,'fault-settings',{before});})){filters={eq:'',cat:'',rec:''};closeSettings();buildFilters();render();}
+  if(await fs.update(d=>{const before=deepCopy(d.config);d.config={...d.config,...config};recordEvent(d,'fault-settings',{before});})){filters={eq:[],cat:[],rec:''};closeSettings();buildFilters();render();}
 }
 async function clearAll(){
   if(!confirm('将清空 '+state.items.length+' 条记录，建议先导出原始备份。是否继续？'))return;

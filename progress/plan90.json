@@ -9,11 +9,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-11-02T23:38:03+08:00",
+    "updated": "2026-11-04T22:02:04+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 269,
+    "revision": 274,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -1097,13 +1097,13 @@
           "id": "9-1",
           "track": "sound",
           "text": "从两首扒过的歌里拼一个 8 小节动机",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "11-03 已导出 4 小节动机（A 段本体）；8 小节待 11-04 补：重复一遍并改最后一小节\n8 小节已导出；第 5-8 小节以变奏展开，重复留到最终编曲版再补",
           "scheduledDate": "2026-11-03",
           "dueDate": "2026-11-04",
           "output": "自己的 8 小节 motif.mid",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-11-04",
           "evidence": [],
           "dependsOn": [
             "9-0"
@@ -1719,12 +1719,14 @@
     "2026-10-30",
     "2026-10-31",
     "2026-11-01",
-    "2026-11-02"
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 64,
-    "pct": 67,
+    "doneTasks": 65,
+    "pct": 68,
     "delivDone": 2,
     "delivTotal": 6
   },
@@ -3334,6 +3336,14 @@
     },
     "2026-11-02": {
       "note": "",
+      "minutes": 25
+    },
+    "2026-11-03": {
+      "note": "动机 4 小节编写与导出",
+      "minutes": 25
+    },
+    "2026-11-04": {
+      "note": "动机 8 小节完成并导出 motif.mid；故障库补 4 条",
       "minutes": 25
     }
   },
@@ -6059,6 +6069,58 @@
       "action": "checkin",
       "on": "2026-11-02",
       "summary": "2026-11-02"
+    },
+    {
+      "at": "2026-11-03T23:13:23+08:00",
+      "action": "note",
+      "ids": [
+        "9-1"
+      ]
+    },
+    {
+      "at": "2026-11-03T23:13:27+08:00",
+      "action": "note",
+      "ids": [
+        "9-1"
+      ]
+    },
+    {
+      "at": "2026-11-03T23:13:32+08:00",
+      "action": "checkin",
+      "on": "2026-11-03",
+      "summary": "2026-11-03"
+    },
+    {
+      "at": "2026-11-04T20:53:12+08:00",
+      "action": "done",
+      "ids": [
+        "9-1"
+      ],
+      "on": "2026-11-04",
+      "before": [
+        {
+          "id": "9-1",
+          "track": "sound",
+          "text": "从两首扒过的歌里拼一个 8 小节动机",
+          "done": false,
+          "note": "11-03 已导出 4 小节动机（A 段本体）；8 小节待 11-04 补：重复一遍并改最后一小节",
+          "scheduledDate": "2026-11-03",
+          "dueDate": "2026-11-04",
+          "output": "自己的 8 小节 motif.mid",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "9-0"
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T22:02:04+08:00",
+      "action": "checkin",
+      "on": "2026-11-04",
+      "summary": "2026-11-04"
     }
   ]
 }
