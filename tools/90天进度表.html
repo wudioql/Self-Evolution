@@ -221,11 +221,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-11-04T23:04:26+08:00",
+    "updated": "2026-11-12T22:12:16+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 299,
+    "revision": 350,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -1326,11 +1326,11 @@
           "track": "equip",
           "text": "把改善提案给主管看；验证须按现场批准流程，不自行改机台参数",
           "done": false,
-          "note": "",
+          "note": "本人 2026-11-07 确认不做：一页提案仅作模拟，不提交主管\n2026-11-09 收口：转为可选，不再按逾期催办，也不计完成",
           "scheduledDate": "2026-11-07",
           "dueDate": "2026-11-07",
           "output": "主管反馈 / 已批准验证结果（仅本地）",
-          "optional": false,
+          "optional": true,
           "completedOn": null,
           "evidence": [],
           "dependsOn": [
@@ -1341,57 +1341,59 @@
           "id": "9-3",
           "track": "equip",
           "text": "故障库 25 条",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "新增 3 条：取片位置报警、控压不稳、臭氧无流量；故障库 27 条",
           "scheduledDate": "2026-11-07",
           "dueDate": "2026-11-07",
           "output": "真实故障累计 25 条",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-11-07",
           "evidence": []
         },
         {
           "id": "9-4",
           "track": "pub",
           "text": "保存 / commit 动机的文字记录（MIDI 默认只在本地，不擅自公开）",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "2026-11-05 生成 music-log/03-buhaore/motif.md：来源按小节交叉拼贴（1、3 为 Lemon intro 音高 + うっせぇわ 副歌节奏，2、4 反之）；5、7 改部分音高，6、8 换音符顺序保持节奏；含 v0.1 / v0.2 / v0.3 版本记录。MIDI 与 .song 保持本地未公开，逐音以 motif.mid 为准。",
           "scheduledDate": "2026-11-08",
           "dueDate": "2026-11-08",
           "output": "动机文字说明的版本记录",
           "optional": false,
-          "completedOn": null,
-          "evidence": []
+          "completedOn": "2026-11-05",
+          "evidence": [
+            "music-log/03-buhaore/motif.md"
+          ]
         },
         {
           "id": "9-5",
           "track": "key",
           "text": "IPA 检查点：是否拖累音乐线？是则暂停到 W13 后再评估",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "2026-11-05 复检结论：音乐线未落后（歌 2 于 10-30 发布早于 due 11-01；9-0、9-1 按期完成；全库仅 4-9 逾期且系本人确认不做）。IPA 不拖累音乐线，不暂停、不新增时间块，维持挂靠；11-6 按原计划 2026-11-22 执行。",
           "scheduledDate": "2026-11-06",
           "dueDate": "2026-11-06",
           "output": "继续 / 暂停 IPA 的明确决定",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-11-05",
           "evidence": []
         },
         {
           "id": "9-6",
           "track": "equip",
-          "text": "知识块过一遍 · RF 与等离子体：阻抗匹配、C1/C2 调谐、反射功率说明什么（PECVD 的 matcher）",
-          "done": false,
-          "note": "",
+          "text": "知识块过一遍 · RF 与等离子体：阻抗匹配、tune / load 调谐、反射功率说明什么（PECVD 的 matcher）",
+          "done": true,
+          "note": "笔记与一句输出写入 equip-log/04-RF与等离子体.md",
           "scheduledDate": "2026-11-07",
           "dueDate": "2026-11-07",
           "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条笔记 + 一句\"反射功率高意味着什么\"",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-11-07",
           "evidence": []
         }
       ],
       "title": "动机 + Day 60 复检",
-      "note": "",
+      "note": "【本周做了什么】\n- W9 共 8 项，完成 7：Day 60 复检、8 小节动机、故障库 +3（27 条）、RF 与等离子体知识块、IPA 复检未落后。\n- 动机 8 小节已导出 motif.mid，按小节交叉拼贴 1、3 小节，文字记录写入 music-log/03-buhaore/motif.md。\n- 打卡 10-27 至 11-07 连续 12 天。\n\n【没做到的 / 卡点】\n- 9-2 改善提案本人确认不做（一页仅模拟，不提交主管），不算欠账。\n- 好听元素清单 11/30，11-02 后 6 天无新增；术语表 11-08 补 PM、spindle 到 61 词。\n- 歌 #3 封面出图 11-08 提前起步（纸底木刻风），只到候选，未定稿。\n\n【下周唯一大事】\n- 10-1：把 8 小节动机发展成 16–32 小节（A 段 + B 段），截止 11-13。\n- 顺带：11-0 扒《不好惹》主旋律 + 和声 + 结构（11-12）；10-0 确认第二个浮动缓冲位。\n【本周做了什么】\n- W9 共 8 项，完成 7：Day 60 复检、8 小节动机、故障库 +3（27 条）、RF 与等离子体知识块、IPA 复检未落后。\n- 动机 8 小节已导出 motif.mid，按小节交叉拼贴 1、3 小节，文字记录写入 music-log/03-buhaore/motif.md。\n- 打卡 10-27 至 11-07 连续 12 天。\n\n【没做到的 / 卡点】\n- 9-2 改善提案本人确认不做（一页仅模拟，不提交主管），不算欠账。\n- 好听元素清单 11/30，最后一次新增为 11-02；术语表 11-08 补 PM、spindle 到 61 词。\n- 歌 #3 封面出图 11-08 起步（纸底木刻风），只到候选，未定稿。\n\n【下周唯一大事】\n- 10-1：把 8 小节动机发展成 16–32 小节（A 段 + B 段），截止 11-13。\n- 顺带：11-0 扒《不好惹》主旋律 + 和声 + 结构（11-12）；10-0 确认第二个浮动缓冲位。\n【W9 做了什么 · 回顾日期 2026-11-08】\n- W9 共 8 项，完成 7：Day 60 复检、8 小节动机、故障库 +3（27 条）、RF 与等离子体知识块、IPA 复检未落后。\n- 动机 8 小节已导出 motif.mid，按小节交叉拼贴 1、3 小节，文字记录写入 music-log/03-buhaore/motif.md。\n- 打卡 2026-10-27 至 2026-11-07 连续 12 天。\n\n【没做到的 / 卡点】\n- 9-2 改善提案本人确认不做（一页仅模拟，不提交主管），不算欠账。\n- 好听元素清单 11/30，最后一次新增为 2026-11-02；术语表 2026-11-08 补 PM、spindle 到 61 词。\n- 歌 #3 封面出图 2026-11-08 起步（纸底木刻风），只到候选，未定稿。\n\n【W10 唯一大事】\n- 10-1：把 8 小节动机发展成 16–32 小节（A 段 + B 段），截止 2026-11-13。\n- 顺带：11-0 扒《不好惹》主旋律 + 和声 + 结构（2026-11-12）；10-0 确认第二个浮动缓冲位。",
       "milestone": "Day 60 · 11/05"
     },
     {
@@ -1406,13 +1408,13 @@
           "id": "10-0",
           "track": "key",
           "text": "确认第二个浮动缓冲位；实际夜班日期另记，其他动作可豁免",
-          "done": false,
-          "note": "",
+          "done": true,
+          "note": "2026-11-09 确认：夜班段已在 overrides 固定为 11-25~12-01（11-25 白天准备，11-26~12-01 凌晨 0-9 点上班），制作链已按此整体前移一周；W10（11-09~11-15）即第二个浮动缓冲位，期内只做 11-0、11-1 等前移任务，其余动作可豁免。",
           "scheduledDate": "2026-11-09",
           "dueDate": "2026-11-15",
           "output": "夜班日期或缓冲安排的确认",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-11-09",
           "evidence": []
         },
         {
@@ -1435,13 +1437,13 @@
           "id": "11-0",
           "track": "sound",
           "text": "扒《不好惹》主旋律 + 和声 + 结构（纯耳朵，不查答案）",
-          "done": false,
-          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
-          "scheduledDate": "2026-11-11",
+          "done": true,
+          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n重排原因：本人 2026-11-09 确认：W10 缓冲期提前开工关键路径，扒带多出 2 天容错；截止仍为 11-12\n2026-11-09 纯耳朵划出全曲段落：intro 1-4、主歌 5-20（13 起为念白，并入主歌）、预副歌 21-24、副歌 25-40；41 起同构重复至 76，77 收尾，无 bridge；已写入 music-log/03-buhaore/structure.md。旋律与和声尚未开始。\n2026-11-10 纯耳朵扒完副歌 25-32、主歌 5-12 各 8 小节旋律，melody.mid 已导出；和声与 chords.md 未开始。\n2026-11-11 只开 bass 轨扒完 5-12 与 21-32 的 bass 走线，重复性强；节奏型不易描述，留到写 chords.md 时用文字记；chords.md 未写。\n2026-11-12 chords.md 已写大部分（主歌/预副歌/副歌表），差对账与待定项收尾。\n副歌25-32、主歌5-12、预副歌21-24 旋律与和声扒完；melody.mid 与 chords.md（BPM105、F♯m）已出",
+          "scheduledDate": "2026-11-09",
           "dueDate": "2026-11-12",
           "output": "《不好惹》片段的 melody.mid、chords.md、structure.md",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-11-12",
           "evidence": []
         },
         {
@@ -1508,7 +1510,7 @@
           "track": "equip",
           "text": "故障库 30 条 / 术语表 60 词",
           "done": false,
-          "note": "",
+          "note": "本项已大半达标：术语表 61 已超 60 词要求，只剩故障 27 到 30 三条；用 fault add 逐条补，不整块占一天",
           "scheduledDate": "2026-11-21",
           "dueDate": "2026-11-21",
           "output": "真实故障 30 条；术语 60 词",
@@ -1521,7 +1523,7 @@
           "track": "pub",
           "text": "commit 半成品（允许发半成品，这是反完美的训练）",
           "done": false,
-          "note": "",
+          "note": "可与 12-6 合并为一次 commit：歌词 / 人声 / 编曲半成品说明 + 封面，同一次留言提交，不拆两次",
           "scheduledDate": "2026-11-22",
           "dueDate": "2026-11-22",
           "output": "可公开的半成品说明版本",
@@ -1558,32 +1560,6 @@
             "11-1",
             "11-3"
           ]
-        },
-        {
-          "id": "12-1",
-          "track": "sound",
-          "text": "封面：ComfyUI（Z-Image / Flux2 Klein）",
-          "done": false,
-          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
-          "scheduledDate": "2026-11-21",
-          "dueDate": "2026-11-21",
-          "output": "封面图片",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
-        },
-        {
-          "id": "12-6",
-          "track": "pub",
-          "text": "commit 封面",
-          "done": false,
-          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
-          "scheduledDate": "2026-11-22",
-          "dueDate": "2026-11-22",
-          "output": "封面及说明的版本记录",
-          "optional": false,
-          "completedOn": null,
-          "evidence": []
         }
       ],
       "title": "《不好惹》骨架与中文词",
@@ -1598,6 +1574,19 @@
       "end": "2026-11-29",
       "tasks": [
         {
+          "id": "12-1",
+          "track": "sound",
+          "text": "封面：ComfyUI（MOSS-Image 出带字版 / Qwen-Image-2.1 修图）",
+          "done": false,
+          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n前置：方向与视觉以 music-log/03-buhaore/brief.md 为准（C 江湖毒舌，A 小调五声，人设=和气但不吃亏的茶馆掌柜；纸底木刻/年画一套主轴，不走夜景写实）。\n先出 4 张 16:9 无字候选定构图，再让 MOSS-Image 直接出带字版（字错用 Qwen-Image-2.1 局部改，退路是无字版后期叠字）；1:1 用 Qwen-Image-2.1 扩图派生，9:16 按竖版重生成。\n进展 2026-11-09：封面候选已出（纸底木刻风），未定稿；下一步从候选里挑最标准的一张存 _refs/ref-master.png 当母版。\n进展 2026-11-09：母版已定并存为 images/_refs/ref-master.png（即 cover-c）；后续 6 张歌词图 + 4 张空镜以它为参考图出一致风格。\n重排原因：拆峰：夜班前移后 W11 单周 7 项硬任务过挤；封面母版 11-09 已定，定稿与出图移到 11-23（仍在 11-24 硬截止前）",
+          "scheduledDate": "2026-11-23",
+          "dueDate": "2026-11-23",
+          "output": "封面图片",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
           "id": "12-3",
           "track": "sound",
           "text": "字幕：用你自己的 Qwen3-Subtitle-Studio",
@@ -1606,6 +1595,19 @@
           "scheduledDate": "2026-11-23",
           "dueDate": "2026-11-23",
           "output": "已核对的字幕文件",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        },
+        {
+          "id": "12-6",
+          "track": "pub",
+          "text": "commit 封面",
+          "done": false,
+          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n重排原因：拆峰：commit 封面移到 11-23，与 11-5 的半成品 commit 一并提交",
+          "scheduledDate": "2026-11-23",
+          "dueDate": "2026-11-23",
+          "output": "封面及说明的版本记录",
           "optional": false,
           "completedOn": null,
           "evidence": []
@@ -1641,7 +1643,7 @@
         {
           "id": "12-2",
           "track": "sound",
-          "text": "视频：kdenlive",
+          "text": "视频：JIZURA 黑底导出 + 剪映滤色垫图（kdenlive 不用装）",
           "done": false,
           "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
           "scheduledDate": "2026-12-03",
@@ -1857,10 +1859,12 @@
       "id": "chart",
       "text": "一张能拿去汇报的图",
       "sub": "报警帕累托 / MTBF 看板",
-      "done": false,
-      "note": "",
-      "evidence": [],
-      "completedOn": null,
+      "done": true,
+      "note": "交付物已核验：3 张内联 SVG（帕累托图/月度分布/处置指向）+ 分类明细 + Top 3；事件级口径 记录 125 条 · 报警类 112 条 · Top1 64.8% · Top3 累计 82.4%；已脱敏可公开",
+      "evidence": [
+        "data/pareto/报警帕累托-2025-08_2026-10.html"
+      ],
+      "completedOn": "2026-10-24",
       "dueDate": "2026-11-05"
     },
     {
@@ -1933,13 +1937,21 @@
     "2026-11-01",
     "2026-11-02",
     "2026-11-03",
-    "2026-11-04"
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06",
+    "2026-11-07",
+    "2026-11-08",
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 65,
-    "pct": 68,
-    "delivDone": 2,
+    "doneTasks": 71,
+    "pct": 74,
+    "delivDone": 3,
     "delivTotal": 6
   },
   "_orphans": [],
@@ -2756,8 +2768,8 @@
       "budgetMinutes": 25,
       "actions": [
         {
-          "taskId": "10-0",
-          "text": "确认实际夜班日期；未轮到则保留缓冲"
+          "taskId": "11-0",
+          "text": "扒《不好惹》主旋律 + 和声 + 结构（纯耳朵，不查答案）"
         }
       ]
     },
@@ -2767,8 +2779,8 @@
       "budgetMinutes": 25,
       "actions": [
         {
-          "taskId": "10-1",
-          "text": "非夜班：把 8 小节动机延长成 A 段"
+          "taskId": "11-0",
+          "text": "副歌旋律 8 小节：只开主唱轨，静音和声垫音；70% → 50% 减速"
         }
       ]
     },
@@ -2778,12 +2790,8 @@
       "budgetMinutes": 25,
       "actions": [
         {
-          "taskId": "10-1",
-          "text": "非夜班：给 B 段换一个节奏或音区"
-        },
-        {
           "taskId": "11-0",
-          "text": "扒《不好惹》主旋律 + 和声 + 结构（纯耳朵，不查答案）"
+          "text": "和声：只开 bass 轨，扒 21-32 与 5-12 的走线，抽根音"
         }
       ]
     },
@@ -2793,8 +2801,8 @@
       "budgetMinutes": 25,
       "actions": [
         {
-          "taskId": "10-1",
-          "text": "非夜班：拼 A / B，目标 16–32 小节，不加长度"
+          "taskId": "11-0",
+          "text": "写 chords.md：4-6 个和弦循环 + 变化点，与 melody.mid 对账（本项截止）"
         }
       ]
     },
@@ -2805,7 +2813,7 @@
       "actions": [
         {
           "taskId": "10-1",
-          "text": "非夜班：保存版本即可；夜班仅墨墨 10 分钟"
+          "text": "可选：把动机延长成 A 段，为 12-0 铺路"
         }
       ]
     },
@@ -2814,10 +2822,6 @@
       "date": "2026-11-14",
       "budgetMinutes": 60,
       "actions": [
-        {
-          "taskId": "10-0",
-          "text": "缓冲或休息，不堆欠账"
-        },
         {
           "taskId": "11-1",
           "text": "拼 8 小节动机（偷来的和声 + 自己的旋律）"
@@ -2830,8 +2834,8 @@
       "budgetMinutes": 60,
       "actions": [
         {
-          "taskId": "10-0",
-          "text": "周回顾：恢复后的第一天仍只做 25 分钟"
+          "taskId": "11-1",
+          "text": "收动机：保存版本 + 周回顾，写当周 note"
         }
       ]
     },
@@ -2888,10 +2892,6 @@
         {
           "taskId": "11-4",
           "text": "设备时间：故障累计 30 条、术语 60 词"
-        },
-        {
-          "taskId": "12-1",
-          "text": "封面：ComfyUI（Z-Image / Flux2 Klein）"
         }
       ]
     },
@@ -2907,10 +2907,6 @@
         {
           "taskId": "11-6",
           "text": "音乐未落后才看一句粤语歌词的协音"
-        },
-        {
-          "taskId": "12-6",
-          "text": "commit 封面"
         }
       ]
     },
@@ -2922,6 +2918,14 @@
         {
           "taskId": "12-3",
           "text": "字幕：用你自己的 Qwen3-Subtitle-Studio"
+        },
+        {
+          "taskId": "12-1",
+          "text": "封面：ComfyUI（MOSS-Image 出带字版 / Qwen-Image-2.1 修图）"
+        },
+        {
+          "taskId": "12-6",
+          "text": "commit 封面"
         }
       ]
     },
@@ -3223,8 +3227,8 @@
       "unit": "词",
       "target": 80,
       "mode": "reported",
-      "count": 50,
-      "lastAddedOn": "2026-10-17",
+      "count": 61,
+      "lastAddedOn": "2026-11-08",
       "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）\n新增 flange/filter/cold trap/gauge port/PVD/CVD/ALD/evaporation/sputtering/implant 共10词",
       "source": "manuals/半导体设备成长手册.md §2.6",
       "targetDue": "2026-12-05",
@@ -3522,6 +3526,38 @@
     },
     "2026-11-04": {
       "note": "动机 8 小节完成并导出 motif.mid；故障库补 4 条",
+      "minutes": 25
+    },
+    "2026-11-05": {
+      "note": "完成 9-4 动机文字记录，25 分钟",
+      "minutes": 25
+    },
+    "2026-11-06": {
+      "note": "最低剂量 25 分钟：墨墨 10 分钟 + 耳朵 15 分钟",
+      "minutes": 25
+    },
+    "2026-11-07": {
+      "note": "最低剂量：墨墨 + 耳朵",
+      "minutes": 25
+    },
+    "2026-11-08": {
+      "note": "",
+      "minutes": 25
+    },
+    "2026-11-09": {
+      "note": "纯耳朵听《不好惹》全曲结构（25 分钟），段落已写入 structure.md",
+      "minutes": 25
+    },
+    "2026-11-10": {
+      "note": "扒《不好惹》副歌 25-32 与主歌 5-12 人声旋律（25 分钟），melody.mid 已导出",
+      "minutes": 25
+    },
+    "2026-11-11": {
+      "note": "只开 bass 轨扒《不好惹》5-12、21-32 走线，并整理 chords.md 和弦表",
+      "minutes": 25
+    },
+    "2026-11-12": {
+      "note": "整理 chords.md 和弦表、确认循环与节奏型",
       "minutes": 25
     }
   },
@@ -6430,7 +6466,7 @@
       "before": {
         "id": "12-1",
         "track": "sound",
-        "text": "封面：ComfyUI（Z-Image / Flux2 Klein）",
+        "text": "封面：ComfyUI（MOSS-Image 出带字版 / Qwen-Image-2.1 修图）",
         "done": false,
         "note": "",
         "scheduledDate": "2026-11-25",
@@ -6566,7 +6602,7 @@
       "before": {
         "id": "12-1",
         "track": "sound",
-        "text": "封面：ComfyUI（Z-Image / Flux2 Klein）",
+        "text": "封面：ComfyUI（MOSS-Image 出带字版 / Qwen-Image-2.1 修图）",
         "done": false,
         "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
         "scheduledDate": "2026-11-21",
@@ -6653,7 +6689,7 @@
       "before": {
         "id": "12-2",
         "track": "sound",
-        "text": "视频：kdenlive",
+        "text": "视频：JIZURA 黑底导出 + 剪映滤色垫图（kdenlive 不用装）",
         "done": false,
         "note": "",
         "scheduledDate": "2026-11-26",
@@ -6785,7 +6821,7 @@
       "before": {
         "id": "12-2",
         "track": "sound",
-        "text": "视频：kdenlive",
+        "text": "视频：JIZURA 黑底导出 + 剪映滤色垫图（kdenlive 不用装）",
         "done": false,
         "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
         "scheduledDate": "2026-12-03",
@@ -6846,6 +6882,606 @@
       "at": "2026-11-04T23:04:26+08:00",
       "action": "mode",
       "summary": "2026-11-25—2026-12-01 · night"
+    },
+    {
+      "at": "2026-11-05T19:04:45+08:00",
+      "action": "done",
+      "ids": [
+        "9-5"
+      ],
+      "on": "2026-11-05",
+      "before": [
+        {
+          "id": "9-5",
+          "track": "key",
+          "text": "IPA 检查点：是否拖累音乐线？是则暂停到 W13 后再评估",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-06",
+          "dueDate": "2026-11-06",
+          "output": "继续 / 暂停 IPA 的明确决定",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-11-05T23:05:39+08:00",
+      "action": "done",
+      "ids": [
+        "9-4"
+      ],
+      "on": "2026-11-05",
+      "before": [
+        {
+          "id": "9-4",
+          "track": "pub",
+          "text": "保存 / commit 动机的文字记录（MIDI 默认只在本地，不擅自公开）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-08",
+          "dueDate": "2026-11-08",
+          "output": "动机文字说明的版本记录",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-11-05T23:05:39+08:00",
+      "action": "checkin",
+      "on": "2026-11-05",
+      "summary": "2026-11-05"
+    },
+    {
+      "at": "2026-11-06T22:37:46+08:00",
+      "action": "checkin",
+      "on": "2026-11-06",
+      "summary": "2026-11-06"
+    },
+    {
+      "at": "2026-11-07T22:24:17+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-11-07",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 50,
+        "lastAddedOn": "2026-10-17",
+        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）\n新增 flange/filter/cold trap/gauge port/PVD/CVD/ALD/evaporation/sputtering/implant 共10词",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-07T23:04:36+08:00",
+      "action": "done",
+      "ids": [
+        "9-6"
+      ],
+      "on": "2026-11-07",
+      "before": [
+        {
+          "id": "9-6",
+          "track": "equip",
+          "text": "知识块过一遍 · RF 与等离子体：阻抗匹配、tune / load 调谐、反射功率说明什么（PECVD 的 matcher）",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-07",
+          "dueDate": "2026-11-07",
+          "output": "按手册 §2.7 四步法 ≤60 分钟；术语表 3 条笔记 + 一句\"反射功率高意味着什么\"",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-11-07T23:04:37+08:00",
+      "action": "done",
+      "ids": [
+        "9-3"
+      ],
+      "on": "2026-11-07",
+      "before": [
+        {
+          "id": "9-3",
+          "track": "equip",
+          "text": "故障库 25 条",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-07",
+          "dueDate": "2026-11-07",
+          "output": "真实故障累计 25 条",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-11-07T23:04:37+08:00",
+      "action": "note",
+      "ids": [
+        "9-2"
+      ]
+    },
+    {
+      "at": "2026-11-07T23:04:37+08:00",
+      "action": "checkin",
+      "on": "2026-11-07",
+      "summary": "2026-11-07"
+    },
+    {
+      "at": "2026-11-07T23:04:42+08:00",
+      "action": "note",
+      "ids": [
+        "9-2"
+      ]
+    },
+    {
+      "at": "2026-11-07T23:48:38+08:00",
+      "action": "done",
+      "ids": [
+        "chart"
+      ],
+      "on": "2026-10-24",
+      "before": [
+        {
+          "id": "chart",
+          "text": "一张能拿去汇报的图",
+          "sub": "报警帕累托 / MTBF 看板",
+          "done": false,
+          "note": "",
+          "evidence": [],
+          "completedOn": null,
+          "dueDate": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "at": "2026-11-08T15:40:15+08:00",
+      "action": "accumulate",
+      "ids": [
+        "terms"
+      ],
+      "on": "2026-11-08",
+      "before": {
+        "id": "terms",
+        "text": "英语术语表",
+        "unit": "词",
+        "target": 80,
+        "mode": "reported",
+        "count": 59,
+        "lastAddedOn": "2026-11-07",
+        "note": "墨墨新增 4 词\n今日新增 semiconductor、robot、doping/dopant、deposition 4 词（6→10）\n今日新增 etch、lithography、implant、yield 4 词（10→14）\n今日新增 vacuum / vacuum level / standard atmospheric pressure（真空技术处方当日术语）\n真空系统术语 9 词（roughing/pumping/vacuum line、outgassing、vacuum gauge、pirani/ionization gauge、capacitance manometer、full range gauge）\n新增 flange/filter/cold trap/gauge port/PVD/CVD/ALD/evaporation/sputtering/implant 共10词",
+        "source": "manuals/半导体设备成长手册.md §2.6",
+        "targetDue": "2026-12-05",
+        "checkpoints": [
+          {
+            "count": 10,
+            "taskId": "2-5"
+          },
+          {
+            "count": 25,
+            "taskId": "3-3"
+          },
+          {
+            "count": 40,
+            "taskId": "4-4"
+          },
+          {
+            "count": 60,
+            "taskId": "11-4"
+          },
+          {
+            "count": 80,
+            "taskId": "12-4"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-08T16:36:21+08:00",
+      "action": "note",
+      "ids": [
+        "12-1"
+      ]
+    },
+    {
+      "at": "2026-11-08T16:36:26+08:00",
+      "action": "note",
+      "ids": [
+        "12-1"
+      ]
+    },
+    {
+      "at": "2026-11-08T22:37:25+08:00",
+      "action": "week-note",
+      "summary": "W9"
+    },
+    {
+      "at": "2026-11-08T22:37:29+08:00",
+      "action": "week-note",
+      "summary": "W9"
+    },
+    {
+      "at": "2026-11-08T22:37:42+08:00",
+      "action": "week-note",
+      "summary": "W9"
+    },
+    {
+      "at": "2026-11-08T22:37:45+08:00",
+      "action": "week-note",
+      "summary": "W9"
+    },
+    {
+      "at": "2026-11-08T22:38:02+08:00",
+      "action": "week-note",
+      "summary": "W9"
+    },
+    {
+      "at": "2026-11-08T22:38:07+08:00",
+      "action": "week-note",
+      "summary": "W9"
+    },
+    {
+      "at": "2026-11-08T22:47:32+08:00",
+      "action": "checkin",
+      "on": "2026-11-08",
+      "summary": "2026-11-08"
+    },
+    {
+      "at": "2026-11-09T21:26:29+08:00",
+      "action": "note",
+      "ids": [
+        "12-1"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:26:33+08:00",
+      "action": "note",
+      "ids": [
+        "12-1"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:32:48+08:00",
+      "action": "note",
+      "ids": [
+        "12-1"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:32:53+08:00",
+      "action": "note",
+      "ids": [
+        "12-1"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:36:21+08:00",
+      "action": "note",
+      "ids": [
+        "12-1"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:36:25+08:00",
+      "action": "note",
+      "ids": [
+        "12-1"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:43:37+08:00",
+      "action": "done",
+      "ids": [
+        "10-0"
+      ],
+      "on": "2026-11-09",
+      "before": [
+        {
+          "id": "10-0",
+          "track": "key",
+          "text": "确认第二个浮动缓冲位；实际夜班日期另记，其他动作可豁免",
+          "done": false,
+          "note": "",
+          "scheduledDate": "2026-11-09",
+          "dueDate": "2026-11-15",
+          "output": "夜班日期或缓冲安排的确认",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-11-09T21:43:53+08:00",
+      "action": "reschedule",
+      "ids": [
+        "12-1"
+      ],
+      "before": {
+        "id": "12-1",
+        "track": "sound",
+        "text": "封面：ComfyUI（MOSS-Image 出带字版 / Qwen-Image-2.1 修图）",
+        "done": false,
+        "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n前置：方向与视觉以 music-log/03-buhaore/brief.md 为准（C 江湖毒舌，A 小调五声，人设=和气但不吃亏的茶馆掌柜；纸底木刻/年画一套主轴，不走夜景写实）。\n先出 4 张 16:9 无字候选定构图，再让 MOSS-Image 直接出带字版（字错用 Qwen-Image-2.1 局部改，退路是无字版后期叠字）；1:1 用 Qwen-Image-2.1 扩图派生，9:16 按竖版重生成。\n进展 2026-11-09：封面候选已出（纸底木刻风），未定稿；下一步从候选里挑最标准的一张存 _refs/ref-master.png 当母版。\n进展 2026-11-09：母版已定并存为 images/_refs/ref-master.png（即 cover-c）；后续 6 张歌词图 + 4 张空镜以它为参考图出一致风格。",
+        "scheduledDate": "2026-11-21",
+        "dueDate": "2026-11-21",
+        "output": "封面图片",
+        "optional": false,
+        "completedOn": null,
+        "evidence": []
+      },
+      "summary": "12-1 → 2026-11-23；拆峰：夜班前移后 W11 单周 7 项硬任务过挤；封面母版 11-09 已定，定稿与出图移到 11-23（仍在 11-24 硬截止前）"
+    },
+    {
+      "at": "2026-11-09T21:43:53+08:00",
+      "action": "reschedule",
+      "ids": [
+        "12-6"
+      ],
+      "before": {
+        "id": "12-6",
+        "track": "pub",
+        "text": "commit 封面",
+        "done": false,
+        "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
+        "scheduledDate": "2026-11-22",
+        "dueDate": "2026-11-22",
+        "output": "封面及说明的版本记录",
+        "optional": false,
+        "completedOn": null,
+        "evidence": []
+      },
+      "summary": "12-6 → 2026-11-23；拆峰：commit 封面移到 11-23，与 11-5 的半成品 commit 一并提交"
+    },
+    {
+      "at": "2026-11-09T21:43:53+08:00",
+      "action": "note",
+      "ids": [
+        "11-5"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:43:54+08:00",
+      "action": "note",
+      "ids": [
+        "11-4"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:43:58+08:00",
+      "action": "reschedule",
+      "ids": [
+        "12-1"
+      ],
+      "before": {
+        "id": "12-1",
+        "track": "sound",
+        "text": "封面：ComfyUI（MOSS-Image 出带字版 / Qwen-Image-2.1 修图）",
+        "done": false,
+        "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n前置：方向与视觉以 music-log/03-buhaore/brief.md 为准（C 江湖毒舌，A 小调五声，人设=和气但不吃亏的茶馆掌柜；纸底木刻/年画一套主轴，不走夜景写实）。\n先出 4 张 16:9 无字候选定构图，再让 MOSS-Image 直接出带字版（字错用 Qwen-Image-2.1 局部改，退路是无字版后期叠字）；1:1 用 Qwen-Image-2.1 扩图派生，9:16 按竖版重生成。\n进展 2026-11-09：封面候选已出（纸底木刻风），未定稿；下一步从候选里挑最标准的一张存 _refs/ref-master.png 当母版。\n进展 2026-11-09：母版已定并存为 images/_refs/ref-master.png（即 cover-c）；后续 6 张歌词图 + 4 张空镜以它为参考图出一致风格。\n重排原因：拆峰：夜班前移后 W11 单周 7 项硬任务过挤；封面母版 11-09 已定，定稿与出图移到 11-23（仍在 11-24 硬截止前）",
+        "scheduledDate": "2026-11-23",
+        "dueDate": "2026-11-23",
+        "output": "封面图片",
+        "optional": false,
+        "completedOn": null,
+        "evidence": []
+      },
+      "summary": "12-1 → 2026-11-23；拆峰：夜班前移后 W11 单周 7 项硬任务过挤；封面母版 11-09 已定，定稿与出图移到 11-23（仍在 11-24 硬截止前）"
+    },
+    {
+      "at": "2026-11-09T21:43:58+08:00",
+      "action": "reschedule",
+      "ids": [
+        "12-6"
+      ],
+      "before": {
+        "id": "12-6",
+        "track": "pub",
+        "text": "commit 封面",
+        "done": false,
+        "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n重排原因：拆峰：commit 封面移到 11-23，与 11-5 的半成品 commit 一并提交",
+        "scheduledDate": "2026-11-23",
+        "dueDate": "2026-11-23",
+        "output": "封面及说明的版本记录",
+        "optional": false,
+        "completedOn": null,
+        "evidence": []
+      },
+      "summary": "12-6 → 2026-11-23；拆峰：commit 封面移到 11-23，与 11-5 的半成品 commit 一并提交"
+    },
+    {
+      "at": "2026-11-09T21:43:58+08:00",
+      "action": "note",
+      "ids": [
+        "11-5"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:43:58+08:00",
+      "action": "note",
+      "ids": [
+        "11-4"
+      ]
+    },
+    {
+      "at": "2026-11-09T21:53:13+08:00",
+      "action": "reschedule",
+      "ids": [
+        "11-0"
+      ],
+      "before": {
+        "id": "11-0",
+        "track": "sound",
+        "text": "扒《不好惹》主旋律 + 和声 + 结构（纯耳朵，不查答案）",
+        "done": false,
+        "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
+        "scheduledDate": "2026-11-11",
+        "dueDate": "2026-11-12",
+        "output": "《不好惹》片段的 melody.mid、chords.md、structure.md",
+        "optional": false,
+        "completedOn": null,
+        "evidence": []
+      },
+      "summary": "11-0 → 2026-11-09（截止 2026-11-12）；本人 2026-11-09 确认：W10 缓冲期提前开工关键路径，扒带多出 2 天容错；截止仍为 11-12"
+    },
+    {
+      "at": "2026-11-09T21:53:16+08:00",
+      "action": "reschedule",
+      "ids": [
+        "11-0"
+      ],
+      "before": {
+        "id": "11-0",
+        "track": "sound",
+        "text": "扒《不好惹》主旋律 + 和声 + 结构（纯耳朵，不查答案）",
+        "done": false,
+        "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n重排原因：本人 2026-11-09 确认：W10 缓冲期提前开工关键路径，扒带多出 2 天容错；截止仍为 11-12",
+        "scheduledDate": "2026-11-09",
+        "dueDate": "2026-11-12",
+        "output": "《不好惹》片段的 melody.mid、chords.md、structure.md",
+        "optional": false,
+        "completedOn": null,
+        "evidence": []
+      },
+      "summary": "11-0 → 2026-11-09（截止 2026-11-12）；本人 2026-11-09 确认：W10 缓冲期提前开工关键路径，扒带多出 2 天容错；截止仍为 11-12"
+    },
+    {
+      "at": "2026-11-09T23:24:39+08:00",
+      "action": "checkin",
+      "on": "2026-11-09",
+      "summary": "2026-11-09"
+    },
+    {
+      "at": "2026-11-09T23:24:40+08:00",
+      "action": "note",
+      "ids": [
+        "11-0"
+      ]
+    },
+    {
+      "at": "2026-11-09T23:24:45+08:00",
+      "action": "note",
+      "ids": [
+        "11-0"
+      ]
+    },
+    {
+      "at": "2026-11-10T22:44:11+08:00",
+      "action": "note",
+      "ids": [
+        "11-0"
+      ]
+    },
+    {
+      "at": "2026-11-10T22:44:11+08:00",
+      "action": "checkin",
+      "on": "2026-11-10",
+      "summary": "2026-11-10"
+    },
+    {
+      "at": "2026-11-10T22:44:15+08:00",
+      "action": "note",
+      "ids": [
+        "11-0"
+      ]
+    },
+    {
+      "at": "2026-11-11T21:49:44+08:00",
+      "action": "note",
+      "ids": [
+        "11-0"
+      ]
+    },
+    {
+      "at": "2026-11-11T21:49:48+08:00",
+      "action": "note",
+      "ids": [
+        "11-0"
+      ]
+    },
+    {
+      "at": "2026-11-12T00:00:35+08:00",
+      "action": "checkin",
+      "on": "2026-11-11",
+      "summary": "2026-11-11"
+    },
+    {
+      "at": "2026-11-12T00:00:35+08:00",
+      "action": "note",
+      "ids": [
+        "11-0"
+      ]
+    },
+    {
+      "at": "2026-11-12T00:00:38+08:00",
+      "action": "note",
+      "ids": [
+        "11-0"
+      ]
+    },
+    {
+      "at": "2026-11-12T22:12:15+08:00",
+      "action": "done",
+      "ids": [
+        "11-0"
+      ],
+      "on": "2026-11-12",
+      "before": [
+        {
+          "id": "11-0",
+          "track": "sound",
+          "text": "扒《不好惹》主旋律 + 和声 + 结构（纯耳朵，不查答案）",
+          "done": false,
+          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n重排原因：本人 2026-11-09 确认：W10 缓冲期提前开工关键路径，扒带多出 2 天容错；截止仍为 11-12\n2026-11-09 纯耳朵划出全曲段落：intro 1-4、主歌 5-20（13 起为念白，并入主歌）、预副歌 21-24、副歌 25-40；41 起同构重复至 76，77 收尾，无 bridge；已写入 music-log/03-buhaore/structure.md。旋律与和声尚未开始。\n2026-11-10 纯耳朵扒完副歌 25-32、主歌 5-12 各 8 小节旋律，melody.mid 已导出；和声与 chords.md 未开始。\n2026-11-11 只开 bass 轨扒完 5-12 与 21-32 的 bass 走线，重复性强；节奏型不易描述，留到写 chords.md 时用文字记；chords.md 未写。\n2026-11-12 chords.md 已写大部分（主歌/预副歌/副歌表），差对账与待定项收尾。",
+          "scheduledDate": "2026-11-09",
+          "dueDate": "2026-11-12",
+          "output": "《不好惹》片段的 melody.mid、chords.md、structure.md",
+          "optional": false,
+          "completedOn": null,
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "at": "2026-11-12T22:12:16+08:00",
+      "action": "checkin",
+      "on": "2026-11-12",
+      "summary": "2026-11-12"
     }
   ]
 }
