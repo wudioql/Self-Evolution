@@ -221,11 +221,11 @@
     "totalWeeks": 14,
     "planSource": "progress/plan90.json",
     "stateOwner": "progress/plan90.json",
-    "updated": "2026-11-12T22:12:16+08:00",
+    "updated": "2026-11-14T22:32:51+08:00",
     "day90": "2026-12-05",
     "end": "2026-12-13",
     "timezone": "Asia/Shanghai",
-    "revision": 350,
+    "revision": 354,
     "calendarNote": "90 天是目标窗口；保留 14 周 / 98 天含缓冲与收尾，不把 Day 98 叫 Day 90。"
   },
   "tracks": {
@@ -1450,13 +1450,13 @@
           "id": "11-1",
           "track": "sound",
           "text": "拼 8 小节动机（偷来的和声 + 自己的旋律）",
-          "done": false,
-          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）",
+          "done": true,
+          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n2026-11-14 副歌25-28 按吉他现成和弦照抄 D-C♯m-F♯m-A（1=A：IV-iii-vi-I），移到 C 调为 F-Em-Am-C（同为 IV-iii-vi-I），8小节=和弦循环两遍；旋律沿用 9-1，只换和声床，属偷和声不重写旋律。已导出 music-log/03-buhaore/motif-11-1-C.mid；记录见 motif.md v0.4、chords.md 移调节。待核对：导出文件末音在 tick 22800（约11.9小节），多于8小节，需确认是旋律与和声同轨导出还是多导段落。\n收尾说明：导出时同选旋律轨与和声轨各一个事件合并导出，MIDI 单轨单通道含旋律+和弦；前4小节为额外增加、和弦不同，第5小节起为8小节动机+和弦循环。文件 music-log/03-buhaore/motif-11-1-C.mid；记录见 motif.md v0.4、chords.md 移调节。",
           "scheduledDate": "2026-11-14",
           "dueDate": "2026-11-15",
           "output": "来自借鉴手法但旋律为自己写的动机",
           "optional": false,
-          "completedOn": null,
+          "completedOn": "2026-11-14",
           "evidence": [],
           "dependsOn": [
             "11-0"
@@ -1945,12 +1945,14 @@
     "2026-11-09",
     "2026-11-10",
     "2026-11-11",
-    "2026-11-12"
+    "2026-11-12",
+    "2026-11-13",
+    "2026-11-14"
   ],
   "stats": {
     "totalTasks": 96,
-    "doneTasks": 71,
-    "pct": 74,
+    "doneTasks": 72,
+    "pct": 75,
     "delivDone": 3,
     "delivTotal": 6
   },
@@ -3558,6 +3560,14 @@
     },
     "2026-11-12": {
       "note": "整理 chords.md 和弦表、确认循环与节奏型",
+      "minutes": 25
+    },
+    "2026-11-13": {
+      "note": "",
+      "minutes": 25
+    },
+    "2026-11-14": {
+      "note": "",
       "minutes": 25
     }
   },
@@ -7482,6 +7492,51 @@
       "action": "checkin",
       "on": "2026-11-12",
       "summary": "2026-11-12"
+    },
+    {
+      "at": "2026-11-13T23:07:02+08:00",
+      "action": "checkin",
+      "on": "2026-11-13",
+      "summary": "2026-11-13"
+    },
+    {
+      "at": "2026-11-14T21:48:47+08:00",
+      "action": "checkin",
+      "on": "2026-11-14",
+      "summary": "2026-11-14"
+    },
+    {
+      "at": "2026-11-14T22:25:05+08:00",
+      "action": "note",
+      "ids": [
+        "11-1"
+      ]
+    },
+    {
+      "at": "2026-11-14T22:32:51+08:00",
+      "action": "done",
+      "ids": [
+        "11-1"
+      ],
+      "on": "2026-11-14",
+      "before": [
+        {
+          "id": "11-1",
+          "track": "sound",
+          "text": "拼 8 小节动机（偷来的和声 + 自己的旋律）",
+          "done": false,
+          "note": "重排原因：夜班重排：制作链前移一周（11-25~12-01 夜班）\n2026-11-14 副歌25-28 按吉他现成和弦照抄 D-C♯m-F♯m-A（1=A：IV-iii-vi-I），移到 C 调为 F-Em-Am-C（同为 IV-iii-vi-I），8小节=和弦循环两遍；旋律沿用 9-1，只换和声床，属偷和声不重写旋律。已导出 music-log/03-buhaore/motif-11-1-C.mid；记录见 motif.md v0.4、chords.md 移调节。待核对：导出文件末音在 tick 22800（约11.9小节），多于8小节，需确认是旋律与和声同轨导出还是多导段落。",
+          "scheduledDate": "2026-11-14",
+          "dueDate": "2026-11-15",
+          "output": "来自借鉴手法但旋律为自己写的动机",
+          "optional": false,
+          "completedOn": null,
+          "evidence": [],
+          "dependsOn": [
+            "11-0"
+          ]
+        }
+      ]
     }
   ]
 }
